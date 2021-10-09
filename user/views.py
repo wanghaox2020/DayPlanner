@@ -35,7 +35,7 @@ def login_view(request):
             return HttpResponse('Login failed')
         else:
             login(request, user)
-            return HttpResponseRedirect('/index')
+            return HttpResponseRedirect('user/index')
 
 def index_view(request):
 
