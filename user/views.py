@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 
-from user.models import userInfo
+
 from django.http import HttpResponse
 
 # Create your views here.
@@ -16,8 +16,8 @@ def register_view(request):
         if password1 != password2:
             return HttpResponse('two password must align with eachother')
 
-    user = userInfo.objects.create_user(username=username,password=password1)
-    return HttpResponseRedirect('user/Login.html')
+    user = user.objects.create_user(username=username,password=password1)
+    return HttpResponseRedirect('user/SignUp.html')
 
 def login_view(request):
     if request.method == 'GET':
