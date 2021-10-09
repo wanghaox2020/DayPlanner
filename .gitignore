@@ -1,1 +1,4 @@
 .DS_Store
+*.bak
+*/**/*.bak
+*/**/*__pycache__
