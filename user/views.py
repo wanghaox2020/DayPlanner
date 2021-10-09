@@ -19,7 +19,7 @@ def register_view(request):
             return HttpResponse('two password must align with eachother')
 
     user = User.objects.create_user(username=username,password=password1)
-    return HttpResponseRedirect('user/Login.html')
+    return HttpResponseRedirect('login')
 
 def login_view(request):
     if request.method == 'GET':
@@ -35,10 +35,9 @@ def login_view(request):
             return HttpResponse('Login failed')
         else:
             login(request, user)
-            return HttpResponseRedirect('user/index')
+            return HttpResponseRedirect('index')
 
 def index_view(request):
-
-    return render(request,'user/index.html',locals())
+    return HttpResponse("Login successful")
         
 
