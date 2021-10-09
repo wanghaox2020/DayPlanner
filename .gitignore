@@ -1,4 +1,5 @@
 .DS_Store
 *.bak
+*.sqlite3
 */**/*.bak
 */**/*__pycache__
