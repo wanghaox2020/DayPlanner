@@ -1,4 +1,8 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
+
+from user.models import userInfo
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -17,7 +21,7 @@ def register_view(request):
 
 def login_view(request):
     if request.method == 'GET':
-        return 
+        return
     elif request.method == 'POST':
         return
 
