@@ -1,7 +1,8 @@
+from django.contrib import auth
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 from django.http import HttpResponse
@@ -35,9 +36,16 @@ def login_view(request):
             return HttpResponse('Login failed')
         else:
             login(request, user)
-            return HttpResponseRedirect('index')
+            path = request.GET.get ("next") or ('index')
+            return HttpResponseRedirect(path)
+
+def logout(request):
+    p = auth.logout(request)
+    print(p)
+    return HttpResponseRedirect('index')
 
 def index_view(request):
-    return HttpResponse("Login successful")
+    login_user = request.user
+    return render(request, "user/index.html",locals())
         
 
