@@ -11,7 +11,7 @@ from django.http import HttpResponse
 
 def register_view(request):
     if request.method =='GET':
-        return render(request, 'auth/signup.html')
+        return render(request, 'authentication/signup.html')
     elif request.method == 'POST':
         username = request.POST['username']
         password1 = request.POST['password1']
@@ -25,7 +25,7 @@ def register_view(request):
 def login_view(request):
     if request.method == 'GET':
         # if this is a get we return a Login page
-        return render(request, 'auth/login.html')
+        return render(request, 'authentication/login.html')
     elif request.method == 'POST':
         user = request.POST['username']
         pwd = request.POST['password']
