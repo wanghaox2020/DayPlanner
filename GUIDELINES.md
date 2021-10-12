@@ -21,3 +21,5 @@ $ git checkout my_branch
 $ git pull origin my_branch
 $ git merge develop
 ```
+
+If you have merge conflicts, I recommend resolving them from inside VSCode.  
