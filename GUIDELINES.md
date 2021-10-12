@@ -1,5 +1,9 @@
 # Guidelines
 
+## Docker
+### Using docker compose:
+https://docs.docker.com/samples/django/
+
 ## Git/Github
 1. **Pull** `develop` before you create a new branch from it
 2. Name new branches after the issue you are working on.  Eg, `issue23`.
