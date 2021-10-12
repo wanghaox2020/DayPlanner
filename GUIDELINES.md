@@ -13,6 +13,14 @@ https://docs.docker.com/samples/django/
 6. Open pull requests **early** and **push often**
 
 ## Git Commands:
+### Create branch `new_branch` off of `existing_branch`
+``` shell
+$ git checkout existing_branch
+$ git pull origin existing_branch
+$ git checkout -b new_branch
+$ git push origin new_branch -u
+```
+
 ### Merge Branch `develop` into branch `my_branch`
 ``` shell
 $ git checkout develop
