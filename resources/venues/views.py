@@ -1,11 +1,14 @@
 from django.shortcuts import render
 import requests, json, os
 from dayplanner.settings import YELP_API
+from .models import Venue
 
 # Create your views here.
 
-# def index(request):
-#     return render(request, 'venues/index.html')
+def index(request):
+    return render(request, 'venues/_index.html', {
+        'venues': Venue.objects.all()
+    })
 
 def detail(request):
     return render(request, 'venues/_detail.html')

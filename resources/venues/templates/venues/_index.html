@@ -1,0 +1,11 @@
+<p>
+    Venues in a list
+</p>
+
+<ul>
+    {% for venue in venues.iterator %}
+        <li>
+            Yelp ID: {{venue.yelp_id}}
+        </li>
+    {% endfor %}
+</ul>
