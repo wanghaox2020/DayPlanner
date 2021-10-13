@@ -25,7 +25,7 @@ def register_view(request):
             return HttpResponse('two password must align with eachother')
 
     user = User.objects.create_user(username=username,password=password1)
-    return HttpResponseRedirect('login')
+    return HttpResponseRedirect('index')
 
 # TODO: REMOVE this decorator.  We SHOULD use csrf
 @csrf_exempt

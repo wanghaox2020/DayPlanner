@@ -29,6 +29,15 @@
                 <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
                     Create
                 </a>
+                {% if  login_user.username %}
+
+                <span class="navbar-item">
+                    <button class="button is-warning is-dark has-text-centered"> 
+                        <a href="/authentication/logout">Logout</a>
+                    </button>
+                </span>
+                {% else %}
+
                 <span class="navbar-item">
                     <button class="button is-warning is-dark has-text-centered">
                         <a href="/authentication/login">Login</a>
@@ -39,16 +48,27 @@
                         <a href="/authentication/signup">Register</a>
                     </button>
                 </span>
+
+                {% endif %}
                 </div>
             </div>
             </div>
         </nav>
         </div>
+
+
+
+
+
     
         <div class="hero-body">
         <div class="container has-text-left">
             <p class="title is-size-1">
+            {% if  login_user.username %}
+            Hello, {{login_user}}!
+            {% else %}
             Welcome Back!
+            {% endif %}
             </p>
             <p class="subtitle is-size-4">
             Are you ready to continue exploring your city?
