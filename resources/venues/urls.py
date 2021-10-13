@@ -5,6 +5,7 @@ app_name = 'resources.venues'
 
 urlpatterns = [
     path('', views.detail, name='detail'),
+    path('/<str:yelp_id>', views.sampleYelpOutput, name='sampleYelpOutput'),
     # path('<string:yelp_id>/', views.detail, name='detail'),
 
     # path('', views.index, name='index'),
