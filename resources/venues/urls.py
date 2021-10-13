@@ -1,11 +1,11 @@
 from django.urls import path
 from . import views
 
-app_name = 'venues'
+app_name = 'resources.venues'
 
 urlpatterns = [
     path('', views.detail, name='detail'),
-    path('<string:yelp_id>/', views.detail, name='detail'),
+    # path('<string:yelp_id>/', views.detail, name='detail'),
 
     # path('', views.index, name='index'),
     # path('<int:question_id>/', views.detail, name='detail'),
