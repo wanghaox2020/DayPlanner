@@ -1,0 +1,82 @@
+{% extends "dayplanner/base.html" %}
+
+{% block title %} Welcome {% endblock %}
+
+{% block body %}
+
+    <section class="hero is-primary is-fullheight">
+        <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item is-size-3"> <!-- PLACEHOLDER FOR BUTTON TO DAYPLANNER ABOUT PAGE -->
+                    DAYPLANNER
+                </a>
+                <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+                </span>
+            </div>
+            <div id="navbarMenuHeroA" class="navbar-menu">
+                <div class="navbar-end">
+                <a class="navbar-item is-active"> <!-- PLACEHOLDER FOR BUTTON TO DAY CURATION AND RANKING -->
+                    Explore
+                </a>
+                <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO DAY CURATION AND RANKING -->
+                    Curate
+                </a>
+                <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
+                    Create
+                </a>
+                {% if  login_user.username %}
+
+                <span class="navbar-item">
+                    <button class="button is-warning is-dark has-text-centered"> 
+                        <a href="/authentication/logout">Logout</a>
+                    </button>
+                </span>
+                {% else %}
+
+                <span class="navbar-item">
+                    <button class="button is-warning is-dark has-text-centered">
+                        <a href="/authentication/login">Login</a>
+                    </button>
+                </span>
+                <span class="navbar-item">
+                    <button class="button is-warning is-dark has-text-centered"> 
+                        <a href="/authentication/signup">Register</a>
+                    </button>
+                </span>
+
+                {% endif %}
+                </div>
+            </div>
+            </div>
+        </nav>
+        </div>
+
+
+
+
+
+    
+        <div class="hero-body">
+        <div class="container has-text-left">
+            <p class="title is-size-1">
+            {% if  login_user.username %}
+            Hello, {{login_user}}!
+            {% else %}
+            Welcome Back!
+            {% endif %}
+            </p>
+            <p class="subtitle is-size-4">
+            Are you ready to continue exploring your city?
+            </p>
+        </div>
+        </div>
+    
+        <div class="hero-foot has-text-left">
+        </div>
+    </section>
+{% endblock %}
