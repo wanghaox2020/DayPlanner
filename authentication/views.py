@@ -4,14 +4,19 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
+# TODO: REMOVE this import.  We SHOULD use csrf
+from django.views.decorators.csrf import csrf_exempt
+
 
 from django.http import HttpResponse
 
 # Create your views here.
 
+# TODO: REMOVE this decorator.  We SHOULD use csrf
+@csrf_exempt
 def register_view(request):
     if request.method =='GET':
-        return render(request, 'user/SignUp.html')
+        return render(request, 'authentication/signup.html')
     elif request.method == 'POST':
         username = request.POST['username']
         password1 = request.POST['password1']
@@ -22,10 +27,12 @@ def register_view(request):
     user = User.objects.create_user(username=username,password=password1)
     return HttpResponseRedirect('login')
 
+# TODO: REMOVE this decorator.  We SHOULD use csrf
+@csrf_exempt
 def login_view(request):
     if request.method == 'GET':
         # if this is a get we return a Login page
-        return render(request, 'user/Login.html')
+        return render(request, 'authentication/login.html')
     elif request.method == 'POST':
         user = request.POST['username']
         pwd = request.POST['password']
@@ -46,6 +53,6 @@ def logout(request):
 
 def index_view(request):
     login_user = request.user
-    return render(request, "user/index.html",locals())
+    return render(request, "dayplanner/index.html", locals())
         
 
