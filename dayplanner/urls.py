@@ -20,6 +20,7 @@ from dayplanner import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('resources/venues/', include('resources.venues.urls'),
     path('authentication/',include('authentication.urls')),
     path('',views.index),
 ]

@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import django_heroku
+from dotenv import load_dotenv, find_dotenv
 
 from pathlib import Path
 import os
+
+load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-!74e-5!lwrwbm=z+4fsv5u)@n1%m6su5(l#d5krw6ft*)zpzy$'
+YELP_API = os.environ.get("YELP_API")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,6 +41,7 @@ ALLOWED_HOSTS = [
 ]
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
+    'resources.venues.apps.VenuesResourceConfig',
 ]
 
 MIDDLEWARE = [
@@ -129,9 +136,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 django_heroku.settings(locals())
