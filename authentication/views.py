@@ -44,6 +44,8 @@ def login_view(request):
             return HttpResponse('Login failed')
         else:
             login(request, user)
+            if request.user.is_superuser:
+                return HttpResponseRedirect('/admin')
             path = request.GET.get ("next") or ('index')
             return HttpResponseRedirect(path)
 
