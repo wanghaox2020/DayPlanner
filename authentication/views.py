@@ -25,7 +25,8 @@ def register_view(request):
             return HttpResponse('two password must align with eachother')
 
     user = User.objects.create_user(username=username,password=password1)
-    return HttpResponseRedirect('login')
+    login(request, user)
+    return HttpResponseRedirect('index')
 
 # TODO: REMOVE this decorator.  We SHOULD use csrf
 @csrf_exempt
@@ -43,6 +44,8 @@ def login_view(request):
             return HttpResponse('Login failed')
         else:
             login(request, user)
+            if request.user.is_superuser:
+                return HttpResponseRedirect('/admin')
             path = request.GET.get ("next") or ('index')
             return HttpResponseRedirect(path)
 
