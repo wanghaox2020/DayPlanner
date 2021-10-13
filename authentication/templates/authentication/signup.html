@@ -10,7 +10,7 @@
     <div class="hero-body">
     <div class="container has-text-centered">
         <p class="title is-size-1">
-            Login
+            Register
         </p>
         <p class="subtitle is-size-4">
             Continue to access your days
@@ -18,8 +18,8 @@
 
         <form action="/authentication/signup" method ="post">{% csrf_token %}
                 <p>Please fill in this form to create an account.</p><br>
-                <label for="email"><b>UserName</b></label><br>
-                <input type="text" placeholder="Enter Email" name="username" required><br><br>
+                <label for="email"><b>Username</b></label><br>
+                <input type="text" placeholder="Enter Username" name="username" required><br><br>
                 <label for="psw"><b>Password</b></label><br>
                 <input type="password" placeholder="Enter Password" name="password1" required><br><br>
                 <label for="psw-repeat"><b>Repeat Password</b></label><br>
