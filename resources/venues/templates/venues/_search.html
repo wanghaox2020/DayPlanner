@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Yelp_search</title>
+</head>
+<body>
+
+<form action="" method ="post">{% csrf_token %}
+                <p>Please fill out this form to perform a yelp search.</p><br>
+                <label for="Search"><b>Search Bar</b></label><br>
+                <input type="text"
+                       placeholder="Search Here"
+                       name="user_input"
+                       onsubmit="return validateForm()"
+                       required>
+
+                <button type="submit" class="button is-warning">Search</button>
+        </form>
+
+</body>
+</html>
+
+<script>
+  function validateForm() {
+  var x = document.forms["myForm"]["fname"].value;
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+</script>
