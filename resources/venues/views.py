@@ -13,8 +13,10 @@ def index(request):
         'venues': Venue.objects.all()
     })
 
-def detail(request):
-    return render(request, 'venues/_detail.html')
+def detail(request, yelp_id):
+    business_detail = yelp_client.fetch_by_id(yelp_id)
+
+    return render(request, 'venues/_detail.html', business_detail)
 
 def search_view(request):
 
@@ -28,11 +30,12 @@ def search_view(request):
 
         context['data'] = bussiness_data['businesses']
 
-        for bussness in bussiness_data['businesses']:
-            try:
-                Venue.objects.create(yelp_id=bussness["id"])
-            except:
-                continue
+        # Model creation
+        # for bussness in bussiness_data['businesses']:
+        #     try:
+        #         Venue.objects.create(yelp_id=bussness["id"])
+        #     except:
+        #         continue
 
 
         return render(request,"venues/_sample_yelp_output.html",context)

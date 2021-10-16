@@ -3,7 +3,7 @@ from dayplanner.settings import YELP_API
 
 key ='CL1ez7IjEGAsK5LINl-ehN8lTuQSaOqP8NncZD0e8JRLcOmmACCc3u87rtD7l1Bwpc9uzwQF8Oj2K6lo7f9cHo2P6xhlCFSI6Thph0MaRgRDcM4XA6iww7AX8QROYXYx'
 Search_endpoint = 'https://api.yelp.com/v3/businesses/search'
-Detail_endpoint = 'https://api.yelp.com/v3/businesses/{id}'
+Detail_endpoint = 'https://api.yelp.com/v3/businesses/%s'
 search_cache = {}
 Detail_cache = {}
 
@@ -11,7 +11,24 @@ Detail_cache = {}
 # input: yelp id
 # output will be a python dict
 def fetch_by_id(yelp_id):
-    pass
+    if yelp_id in Detail_cache:
+        print("Cache Hit!")
+        return Detail_cache[yelp_id]
+
+    print("Cache Miss!")
+
+    req = YelpRequest(
+        endpoint=Detail_endpoint % yelp_id,
+    )
+
+    response = req.execute()
+
+    Detail_cache[yelp_id] = response
+
+    return response
+
+
+
 # input: List of yelp ids
 # output: List of python dict
 def fetch_many(yelp_ids):
@@ -19,6 +36,7 @@ def fetch_many(yelp_ids):
 
 # example paramerters
 # parameters = {'term':'coffee', 'limit':5, 'radius': 10000,'location': location}
+
 def search(location):
 
     if location in search_cache:
@@ -40,10 +58,11 @@ def search(location):
 
 
 class YelpRequest:
-    def __init__(self,endpoint,params):
+    def __init__(self,endpoint,params={}):
         self.endpoint = endpoint
         self.params = params
         self.headers = {'Authorization': 'Bearer %s' % YELP_API}
+
     def execute(self):
         return requests.get(url=self.endpoint,
                      headers=self.headers,
