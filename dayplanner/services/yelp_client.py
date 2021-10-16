@@ -24,6 +24,7 @@ def search(location):
     if location in search_cache:
         print("Cache Hit")
         return search_cache[location]
+
     print("Cache Missed")
     req = YelpRequest(
         endpoint= Search_endpoint ,

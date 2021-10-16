@@ -1,10 +1,13 @@
+from django.db.models import Model
 from django.shortcuts import render
+from dayplanner.services import yelp_client
 import requests, json, os
-from dayplanner.settings import YELP_API,SECRET_KEY
+from dayplanner.settings import YELP_API
 from .models import Venue
 
 # Create your views here.
-key ='CL1ez7IjEGAsK5LINl-ehN8lTuQSaOqP8NncZD0e8JRLcOmmACCc3u87rtD7l1Bwpc9uzwQF8Oj2K6lo7f9cHo2P6xhlCFSI6Thph0MaRgRDcM4XA6iww7AX8QROYXYx'
+Sampe_ID =  "WavvLdfdP6g8aZTtbBQHTw"
+
 def index(request):
     return render(request, 'venues/_index.html', {
         'venues': Venue.objects.all()
@@ -18,22 +21,19 @@ def search_view(request):
     if request.method == 'GET':
         return render(request, 'venues/_search.html')
     elif request.method =='POST':
-        user_input = request.POST['user_input']
-
-        endpoint = 'https://api.yelp.com/v3/businesses/search'
-        x = YELP_API
-        y = SECRET_KEY
-        Headers = {'Authorization': 'Bearer %s' % key}
-        parameters = {'term':'coffee', 'limit':5, 'radius': 10000,'location': user_input}
         context = {}
+        user_input = request.POST['user_input']
+        bussiness_data = yelp_client.search(user_input)
 
-        # make a request to the yelp API
-        #resp = requests.request('GET',url=endpoint,params=parameters,headers=Headers)
-        resp = requests.get(url= endpoint, headers=Headers,params=parameters)
 
-        # convert the JSON string to a Dict
-        bussiness_data = resp.json()
         context['data'] = bussiness_data['businesses']
+
+        for bussness in bussiness_data['businesses']:
+            try:
+                Venue.objects.create(yelp_id=bussness["id"])
+            except:
+                continue
+
 
         return render(request,"venues/_sample_yelp_output.html",context)
 

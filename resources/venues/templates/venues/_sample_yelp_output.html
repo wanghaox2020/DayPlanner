@@ -16,7 +16,7 @@
             <td>{{ business.name }}</td>
             <td>{{ business.distance }}ft</td>
             <td>
-                <a href=""> Detail</a>
+                <a href="/resources/venues/detail/%s"%({{ business.id }})> Detail</a>
             </td>
             </tr>
         {% endfor %}
