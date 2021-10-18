@@ -1,11 +1,10 @@
 {% extends "dayplanner/base.html" %}
-
-{% block title %} Welcome {% endblock %}
+{% block title %} User Profile {% endblock %}
 
 {% block body %}
 
-    <section class="hero is-primary is-fullheight">
-        <div class="hero-head">
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
         <nav class="navbar">
             <div class="container">
             <div class="navbar-brand">
@@ -29,11 +28,10 @@
                 <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
                     Create
                 </a>
-                {% if login_user.username %}
+                {% if page_user.user %}
                 <span class="navbar-item">
-                        <a class="navbar-item" href="{% url 'show_profile_page' login_user.id %}">{{login_user}}</a>
+                        <a class="navbar-item" href="{% url 'show_profile_page' page_user.id %}">{{page_user.user}}</a>
                 </span>
-
                 <span class="navbar-item">
                     <button class="button is-warning is-dark has-text-centered"> 
                         <a href="/authentication/logout">Logout</a>
@@ -59,27 +57,25 @@
         </nav>
         </div>
 
+    <div class="hero-body">
+    <div class="container has-text-centered">
+        <p class="title is-size-1">
+            User Profile
+        </p>
+        {% if page_user.is_private %}
+        <p class="text-muted mb-0" style="font-size: 12px">It is a Private Page</p>
+        {% else %}
+        <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
+        <p>{{ page_user.user}}</p>
+        <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+        <p>{{ page_user.user.email}}</p>
+        <p class="text-muted mb-0" style="font-size: 12px">Bio:</p>
+        <p>{{ page_user.bio }}</p>
+        {% endif %}
+    </div>
+    </div>
 
-
-
-
-    
-        <div class="hero-body">
-        <div class="container has-text-left">
-            <p class="title is-size-1">
-            {% if  login_user.username %}
-            Hello, {{login_user}}!
-            {% else %}
-            Welcome Back!
-            {% endif %}
-            </p>
-            <p class="subtitle is-size-4">
-            Are you ready to continue exploring your city?
-            </p>
-        </div>
-        </div>
-    
-        <div class="hero-foot has-text-left">
-        </div>
-    </section>
+    <div class="hero-foot has-text-left">
+    </div>
+</section>
 {% endblock %}
