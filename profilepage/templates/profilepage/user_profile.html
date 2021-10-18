@@ -28,9 +28,9 @@
                 <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
                     Create
                 </a>
-                {% if page_user.user %}
+                {% if curr_user.user %}
                 <span class="navbar-item">
-                        <a class="navbar-item" href="{% url 'show_profile_page' page_user.id %}">{{page_user.user}}</a>
+                        <a class="navbar-item" href="{% url 'show_profile_page' curr_user.id %}">{{curr_user.user}}</a>
                 </span>
                 <span class="navbar-item">
                     <button class="button is-warning is-dark has-text-centered"> 
