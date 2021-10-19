@@ -56,24 +56,116 @@
             </div>
         </nav>
         </div>
+    
+            <div class="hero-body">
+              <div class="container">
+                <div class="columns is-centered">
+                    <div class="column">
 
-    <div class="hero-body">
-    <div class="container has-text-centered">
-        <p class="title is-size-1">
-            User Profile
-        </p>
-        {% if page_user.is_private %}
-        <p class="text-muted mb-0" style="font-size: 12px">It is a Private Page</p>
-        {% else %}
-        <p class="text-muted mb-0" style="font-size: 12px">Username:</p>
-        <p>{{ page_user.user}}</p>
-        <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
-        <p>{{ page_user.user.email}}</p>
-        <p class="text-muted mb-0" style="font-size: 12px">Bio:</p>
-        <p>{{ page_user.bio }}</p>
-        {% endif %}
-    </div>
-    </div>
+                        <div class="box">
+                            <div class="field">
+                                {% if page_user.is_private %}
+                                <label class="label">This is a Private Page</p>
+                                {% else %}
+                                <label class="label">Username</label>
+                                <p>{{ page_user.user}}</p>
+                            <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+                            <p>{{ page_user.user.email}}</p>
+                            <p class="text-muted mb-0" style="font-size: 12px">Bio:</p>
+                            <p>{{ page_user.bio }}</p>
+                            {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="column">
+
+                        <div class="box">
+                            <div class="field">
+                              <label for="" class="label">Days Created</label>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 1" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 2" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 3" class="input">
+                              </div>
+                              <br>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="column">
+
+                        <div class="box">
+                            <div class="field">
+                              <label for="" class="label">Days Reviewed Recently</label>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 1" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 2" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 3" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 4" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 5" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 6" class="input">
+                              </div>
+                              <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="column">
+
+                        <div class="box">
+                            <div class="field">
+                              <label for="" class="label">Days Completd Recently</label>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 1" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 2" class="input">
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 3" class="input">
+                              </div>
+                              <br>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="columns is-centered">
+                  <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                  </div>
+                </div>
+              </div>
+
+    
+    <!-- <div class="container has-text-centered">
+    </div> -->
 
     <div class="hero-foot has-text-left">
     </div>
