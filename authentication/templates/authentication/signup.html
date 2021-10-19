@@ -33,4 +33,49 @@
     <div class="hero-foot has-text-left">
     </div>
 </section>
+
+<section class="hero is-primary is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <p class="title is-size-1 has-text-centered">
+                Register
+            </p>
+            <p>Please fill in this form to create an account.</p><br>
+            <form action="/authentication/signup" method ="post" class="box">{% csrf_token %}
+              <div class="field">
+                <label for="email" class="label">Username</label>
+                <div class="control">
+                  <input type="text" placeholder="Enter username..." class="input" name="username" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="psw" class="label">Password</label>
+                <div class="control">
+                  <input type="password" placeholder="Enter a password..." class="input" name="password1" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="psw-repeat" class="label">Repeat Password</label>
+                <div class="control">
+                  <input type="password" placeholder="Enter password again..." class="input" name="password2" required>
+                </div>
+              </div>
+
+              <div class="field has-text-centered">
+                <button type="submit" class="button is-success">Login</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+  
+
+
 {% endblock %}
