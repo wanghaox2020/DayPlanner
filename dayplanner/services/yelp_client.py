@@ -37,22 +37,24 @@ def fetch_many(yelp_ids):
 # example paramerters
 # parameters = {'term':'coffee', 'limit':5, 'radius': 10000,'location': location}
 
-def search(location):
+def search(term, location):
 
-    if location in search_cache:
+    term_location = term + location
+
+    if term_location in search_cache:
         print("Cache Hit")
-        return search_cache[location]
+        return search_cache[term_location]
 
     print("Cache Missed")
     req = YelpRequest(
         endpoint= Search_endpoint ,
-        params= {'term':'coffee', 'limit':5, 'radius': 10000,'location': location},
+        params= {'term': term, 'limit':5, 'radius': 10000,'location': location},
     )
     # search Result is a python dict in the form of YELP JSON
     # Refer to https://www.yelp.com/developers/documentation/v3/business_search
     searchResult = req.execute()
 
-    search_cache[location] = searchResult
+    search_cache[term_location] = searchResult
 
     return searchResult
 

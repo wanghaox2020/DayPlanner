@@ -24,8 +24,9 @@ def search_view(request):
         return render(request, 'venues/_search.html')
     elif request.method =='POST':
         context = {}
-        user_input = request.POST['user_input']
-        bussiness_data = yelp_client.search(user_input)
+        user_input_param1 = request.POST["user_input_term"]
+        user_input_param2 = request.POST["user_input_location"]
+        bussiness_data = yelp_client.search(user_input_param1, user_input_param2)
 
 
         context['data'] = bussiness_data['businesses']
