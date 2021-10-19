@@ -39,7 +39,6 @@ def login_view(request):
         pwd = request.POST['password']
 
         user = authenticate(username=user, password= pwd)
-
         if not user:
             return HttpResponse('Login failed')
         else:
@@ -56,6 +55,7 @@ def logout(request):
 
 def index_view(request):
     login_user = request.user
+    print(locals())
     return render(request, "dayplanner/index.html", locals())
         
 
