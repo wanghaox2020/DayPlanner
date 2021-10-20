@@ -39,6 +39,7 @@ def fetch_many(yelp_ids):
 
 def search(term, location):
 
+
     term_location = term + location
 
     if term_location in search_cache:
@@ -46,14 +47,24 @@ def search(term, location):
         return search_cache[term_location]
 
     print("Cache Missed")
+    parameters = {'term': term, 'limit':5, 'radius': 10000}
+    if "Latitude:" in location and "Longitude:" in location:
+        args = location.split(' ')
+        lat = args[1]
+        long = args[3]
+        parameters['latitude'] = lat
+        parameters['longitude'] = long
+    else:
+        parameters['location'] = location
+
     req = YelpRequest(
         endpoint= Search_endpoint ,
-        params= {'term': term, 'limit':5, 'radius': 10000,'location': location},
+        params= parameters,
     )
+
     # search Result is a python dict in the form of YELP JSON
     # Refer to https://www.yelp.com/developers/documentation/v3/business_search
     searchResult = req.execute()
-
     search_cache[term_location] = searchResult
 
     return searchResult
