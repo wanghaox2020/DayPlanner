@@ -1,7 +1,6 @@
 import requests, json
 from dayplanner.settings import YELP_API
 
-key ='CL1ez7IjEGAsK5LINl-ehN8lTuQSaOqP8NncZD0e8JRLcOmmACCc3u87rtD7l1Bwpc9uzwQF8Oj2K6lo7f9cHo2P6xhlCFSI6Thph0MaRgRDcM4XA6iww7AX8QROYXYx'
 Search_endpoint = 'https://api.yelp.com/v3/businesses/search'
 Detail_endpoint = 'https://api.yelp.com/v3/businesses/%s'
 search_cache = {}
