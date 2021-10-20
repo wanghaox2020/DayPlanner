@@ -43,19 +43,6 @@ def search_view(request):
 
 
 
-
-
-
-
-
-
-def getYelp_id():
-    return None
-
-
-
-
-
 def sampleYelpOutput(request, yelp_id):
     headers = {'Authorization': 'Bearer %s' % YELP_API}
     url = 'https://api.yelp.com/v3/businesses/%s' % yelp_id
