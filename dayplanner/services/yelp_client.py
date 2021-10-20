@@ -2,28 +2,29 @@ import requests, json
 from dayplanner.settings import YELP_API
 
 key ='CL1ez7IjEGAsK5LINl-ehN8lTuQSaOqP8NncZD0e8JRLcOmmACCc3u87rtD7l1Bwpc9uzwQF8Oj2K6lo7f9cHo2P6xhlCFSI6Thph0MaRgRDcM4XA6iww7AX8QROYXYx'
-Search_endpoint = 'https://api.yelp.com/v3/businesses/search'
-Detail_endpoint = 'https://api.yelp.com/v3/businesses/%s'
+search_endpoint = 'https://api.yelp.com/v3/businesses/search'
+detail_endpoint = 'https://api.yelp.com/v3/businesses/%s'
+
 search_cache = {}
-Detail_cache = {}
+detail_cache = {}
 
 
 # input: yelp id
 # output will be a python dict
 def fetch_by_id(yelp_id):
-    if yelp_id in Detail_cache:
+    if yelp_id in detail_cache:
         print("Cache Hit!")
-        return Detail_cache[yelp_id]
+        return detail_cache[yelp_id]
 
     print("Cache Miss!")
 
     req = YelpRequest(
-        endpoint=Detail_endpoint % yelp_id,
+        endpoint=detail_endpoint % yelp_id,
     )
 
     response = req.execute()
 
-    Detail_cache[yelp_id] = response
+    detail_cache[yelp_id] = response
 
     return response
 
@@ -36,15 +37,15 @@ def fetch_many(yelp_ids):
     # A single conn can reuse the same TCP connection between requests
     with requests.Session() as conn:
         for yelp_id in yelp_ids:
-            if yelp_id in Detail_cache:
-                responses.append(Detail_cache[yelp_id])
+            if yelp_id in detail_cache:
+                responses.append(detail_cache[yelp_id])
             else:
                 req = YelpRequest(
-                    endpoint=Detail_endpoint % yelp_id,
+                    endpoint=detail_endpoint % yelp_id,
                     conn=conn
                 )
                 response = req.execute()
-                Detail_cache[yelp_id] = response
+                detail_cache[yelp_id] = response
                 responses.append(response)
     
     return responses
@@ -62,7 +63,7 @@ def search(location):
 
     print("Cache Missed")
     req = YelpRequest(
-        endpoint= Search_endpoint ,
+        endpoint= search_endpoint ,
         params= {'term':'coffee', 'limit':5, 'radius': 10000,'location': location},
     )
     # search Result is a python dict in the form of YELP JSON
