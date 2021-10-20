@@ -37,10 +37,8 @@ def fetch_many(yelp_ids):
     with requests.Session() as conn:
         for yelp_id in yelp_ids:
             if yelp_id in Detail_cache:
-                print("Cache Hit!")
                 responses.append(Detail_cache[yelp_id])
             else:
-                print("Cache Miss!")
                 req = YelpRequest(
                     endpoint=Detail_endpoint % yelp_id,
                     conn=conn
