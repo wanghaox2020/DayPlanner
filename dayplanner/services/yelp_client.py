@@ -82,6 +82,7 @@ class YelpRequest:
     def __init__(self,endpoint,params={},conn=None):
         self.endpoint = endpoint
         self.params = params
+        self.conn = conn
         self.headers = {'Authorization': 'Bearer %s' % YELP_API}
 
     def execute(self):
