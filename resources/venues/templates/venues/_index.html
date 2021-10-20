@@ -3,9 +3,30 @@
 </p>
 
 <ul>
-    {% for venue in venues.iterator %}
-        <li>
-            Yelp ID: {{venue.yelp_id}}
-        </li>
-    {% endfor %}
+
 </ul>
+
+<table>
+    <tr>
+      <th>ID</th>
+      <th>Yelp ID</th> 
+      <th>Name</th>
+      <th>Image</th>
+    </tr>
+    {% for venue in venues.iterator %}
+    <tr>
+        <td>
+            {{venue.id}}
+        </td>
+        <td>
+            {{venue.yelp_id}}
+        </td>
+        <td>
+            {{venue.yelp__name}}
+        </td>
+        <td>
+            <img src="{{venue.yelp__image_url}}" height="50">
+        </td>
+    </tr>
+    {% endfor %}
+  </table>

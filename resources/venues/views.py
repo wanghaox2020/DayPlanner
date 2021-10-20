@@ -1,5 +1,5 @@
 from django.db.models import Model
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from dayplanner.services import yelp_client
 import requests, json, os
 from dayplanner.settings import YELP_API
@@ -11,10 +11,13 @@ def index(request):
         'venues': Venue.objects.all()
     })
 
-def detail(request, yelp_id):
-    business_detail = yelp_client.fetch_by_id(yelp_id)
-
-    return render(request, 'venues/_detail.html', business_detail)
+def detail(request, venue_id):
+    venue = get_object_or_404(Venue, pk=venue_id)
+    context = {
+        'venue': venue,
+        'raw_yelp_data': venue.raw_yelp_data()
+    }
+    return render(request, 'venues/_detail.html', context)
 
 def search_view(request):
 
@@ -42,13 +45,9 @@ def search_view(request):
 
 
 
-
-def sampleYelpOutput(request, yelp_id):
-    headers = {'Authorization': 'Bearer %s' % YELP_API}
-    url = 'https://api.yelp.com/v3/businesses/%s' % yelp_id
-    response = requests.get(url, headers = headers)
-    business_date = response.json()
-    businessStr = json.dumps(business_date, indent = 3)
-    return render(request, 'venues/_sample_yelp_output.html', {
-        'data': businessStr
-    })
+def sample_yelp_single_output(request, yelp_id):
+    venue, is_created = Venue.objects.get_or_create(yelp_id=yelp_id)
+    context = {
+        'data': venue.raw_yelp_data()
+    }
+    return render(request, 'venues/_sample_yelp_single_output.html', context)
