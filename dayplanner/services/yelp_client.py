@@ -32,7 +32,26 @@ def fetch_by_id(yelp_id):
 # input: List of yelp ids
 # output: List of python dict
 def fetch_many(yelp_ids):
-    pass
+    responses = []
+    # A single connection can reuse the same TCP connection between requests
+    with requests.Session() as conn:
+        for yelp_id in yelp_ids:
+            if yelp_id in Detail_cache:
+                print("Cache Hit!")
+                responses.append(Detail_cache[yelp_id])
+            else:
+                print("Cache Miss!")
+                req = YelpRequest(
+                    endpoint=Detail_endpoint % yelp_id,
+                    conn=conn
+                )
+                response = req.execute()
+                Detail_cache[yelp_id] = response
+                responses.append(response)
+    
+    return responses
+
+
 
 # example paramerters
 # parameters = {'term':'coffee', 'limit':5, 'radius': 10000,'location': location}
@@ -56,15 +75,18 @@ def search(location):
 
     return searchResult
 
-
+# If initialized with a conn object, YelpRequest will use it 
+# to make HTTP requests. 
 class YelpRequest:
-    def __init__(self,endpoint,params={}):
+    # conn is a requests Session object
+    def __init__(self,endpoint,params={},conn=None):
         self.endpoint = endpoint
         self.params = params
         self.headers = {'Authorization': 'Bearer %s' % YELP_API}
 
     def execute(self):
-        return requests.get(url=self.endpoint,
+        conn = self.conn or requests
+        return conn.get(url=self.endpoint,
                      headers=self.headers,
                      params=self.params).json()
 
