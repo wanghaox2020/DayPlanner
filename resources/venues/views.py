@@ -6,8 +6,6 @@ from dayplanner.settings import YELP_API
 from .models import Venue
 
 # Create your views here.
-Sampe_ID =  "WavvLdfdP6g8aZTtbBQHTw"
-
 def index(request):
     return render(request, 'venues/_index.html', {
         'venues': Venue.objects.all()
