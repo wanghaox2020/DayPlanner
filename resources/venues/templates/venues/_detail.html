@@ -1,1 +1,17 @@
-detail page
+<p>
+    Venue ID: {{ venue.id }}
+</p>
+
+<p>
+    Yelp ID: {{ venue.yelp_id }}
+</p>
+
+Details from Yelp:
+
+<p>
+    <img src="{{raw_yelp_data.image_url }}" height="400">
+</p>
+
+<pre>
+    {{raw_yelp_data}}
+</pre>
