@@ -24,10 +24,12 @@
         <br>
 
         <div class="control is-medium">
-          <input type="text" 
-          placeholder="Near this location..." 
+          <input type="text"
+          placeholder="Near this location..."
           name="user_input_location"
-          class = "input is-normal is-hovered">
+          class = "input is-normal is-hovered", id="user_input_location"
+          onsubmit="return validateForm()"
+          required>
         </div>
         <br>
 
@@ -35,11 +37,11 @@
         class="button is-success">
         Search
         </button>
-
-        <button type="submit" 
-        class="button is-success">
-        Search Near Me
-        </button>
+{##}
+{#        <button type="submit"#}
+{#        class="button is-success">#}
+{#        Search Near Me#}
+{#        </button>#}
       </div>
 
     </form>
@@ -52,6 +54,8 @@
 </section>
 
 <script>
+
+
   function validateForm() {
   var x = document.forms["myForm"]["fname"].value;
   if (x == "") {
@@ -74,6 +78,7 @@
       status.textContent = '';
       mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
       mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+      document.getElementById("user_input_location").value = `Latitude: ${latitude} Longitude: ${longitude}`;
     }
 
     function error() {
