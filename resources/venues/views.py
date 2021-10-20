@@ -26,6 +26,7 @@ def search_view(request):
         context = {}
         user_input_param1 = request.POST["user_input_term"]
         user_input_param2 = request.POST["user_input_location"]
+
         bussiness_data = yelp_client.search(user_input_param1, user_input_param2)
 
 
