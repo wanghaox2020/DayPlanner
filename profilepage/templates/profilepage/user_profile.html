@@ -65,15 +65,42 @@
                         <div class="box">
                             <div class="field">
                                 {% if page_user.is_private %}
+
                                 <label class="label">This is a Private Page</p>
+
                                 {% else %}
-                                <label class="label">Username</label>
-                                <p>{{ page_user.user}}</p>
-                            <p class="text-muted mb-0" style="font-size: 12px">Email:</p>
-                            <p>{{ page_user.user.email}}</p>
-                            <p class="text-muted mb-0" style="font-size: 12px">Bio:</p>
-                            <p>{{ page_user.bio }}</p>
-                            {% endif %}
+
+                                <br>
+
+                                <div class="columns is-centered">
+                                  <figure class="image is-128x128">
+                                    <img src="https://www.seekpng.com/png/full/41-410093_circled-user-icon-user-profile-icon-png.png">
+                                  </figure>
+                                </div>
+
+                                <br>
+
+                                <label class="label is-medium">Username:</label>
+                                <label class="label has-text-weight-normal">{{ page_user.user}}</label>
+
+                                <br>
+
+                                
+                                <label class="label is-medium">Email:</label>
+                                <label class="label">{{ page_user.user.email}}</label>
+
+                                <br>
+
+                                
+                                <label class="label is-medium">Neighborhood:</label>
+                                <label class="label">{{ page_user.user.bio}}</label>
+
+                                <br>
+
+                                
+                                <label class="label is-medium">Bio:</label>
+                                <label class="label"></label>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -85,15 +112,15 @@
                               <label for="" class="label">Days Created</label>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 1" class="input">
+                                <input placeholder="Day 1" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 2" class="input">
+                                <input placeholder="Day 2" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 3" class="input">
+                                <input placeholder="Day 3" class="input is-primary" disabled>
                               </div>
                               <br>
                             </div>
@@ -107,27 +134,27 @@
                               <label for="" class="label">Days Reviewed Recently</label>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 1" class="input">
+                                <input placeholder="Day 1" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 2" class="input">
+                                <input placeholder="Day 2" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 3" class="input">
+                                <input placeholder="Day 3" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 4" class="input">
+                                <input placeholder="Day 4" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 5" class="input">
+                                <input placeholder="Day 5" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 6" class="input">
+                                <input placeholder="Day 6" class="input is-primary" disabled>
                               </div>
                               <br>
                             </div>
@@ -139,18 +166,22 @@
 
                         <div class="box">
                             <div class="field">
-                              <label for="" class="label">Days Completd Recently</label>
+                              <label for="" class="label">Days Completed Recently</label>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 1" class="input">
+                                <input placeholder="Day 1" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 2" class="input">
+                                <input placeholder="Day 2" class="input is-primary" disabled>
                               </div>
                               <br>
                               <div class="control">
-                                <input placeholder="Day 3" class="input">
+                                <input placeholder="Day 3" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 4" class="input is-primary" disabled>
                               </div>
                               <br>
                         </div>
