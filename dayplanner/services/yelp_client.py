@@ -1,7 +1,6 @@
 import requests, json
 from dayplanner.settings import YELP_API
 
-key ='CL1ez7IjEGAsK5LINl-ehN8lTuQSaOqP8NncZD0e8JRLcOmmACCc3u87rtD7l1Bwpc9uzwQF8Oj2K6lo7f9cHo2P6xhlCFSI6Thph0MaRgRDcM4XA6iww7AX8QROYXYx'
 search_endpoint = 'https://api.yelp.com/v3/businesses/search'
 detail_endpoint = 'https://api.yelp.com/v3/businesses/%s'
 
@@ -47,7 +46,7 @@ def fetch_many(yelp_ids):
                 response = req.execute()
                 detail_cache[yelp_id] = response
                 responses.append(response)
-    
+
     return responses
 
 
@@ -55,27 +54,40 @@ def fetch_many(yelp_ids):
 # example paramerters
 # parameters = {'term':'coffee', 'limit':5, 'radius': 10000,'location': location}
 
-def search(location):
+def search(term, location):
 
-    if location in search_cache:
+
+    term_location = term + location
+
+    if term_location in search_cache:
         print("Cache Hit")
-        return search_cache[location]
+        return search_cache[term_location]
 
     print("Cache Missed")
+    parameters = {'term': term, 'limit':5, 'radius': 10000}
+    if "Latitude:" in location and "Longitude:" in location:
+        args = location.split(' ')
+        lat = args[1]
+        long = args[3]
+        parameters['latitude'] = lat
+        parameters['longitude'] = long
+    else:
+        parameters['location'] = location
+
     req = YelpRequest(
         endpoint= search_endpoint ,
-        params= {'term':'coffee', 'limit':5, 'radius': 10000,'location': location},
+        params= parameters,
     )
+
     # search Result is a python dict in the form of YELP JSON
     # Refer to https://www.yelp.com/developers/documentation/v3/business_search
     searchResult = req.execute()
-
-    search_cache[location] = searchResult
+    search_cache[term_location] = searchResult
 
     return searchResult
 
-# If initialized with a conn object, YelpRequest will use it 
-# to make HTTP requests. 
+# If initialized with a conn object, YelpRequest will use it
+# to make HTTP requests.
 class YelpRequest:
     # conn is a requests Session object
     def __init__(self,endpoint,params={},conn=None):

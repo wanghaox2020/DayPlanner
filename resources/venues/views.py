@@ -6,8 +6,6 @@ from dayplanner.settings import YELP_API
 from .models import Venue
 
 # Create your views here.
-Sampe_ID =  "WavvLdfdP6g8aZTtbBQHTw"
-
 def index(request):
     return render(request, 'venues/_index.html', {
         'venues': Venue.objects.all()
@@ -27,8 +25,10 @@ def search_view(request):
         return render(request, 'venues/_search.html')
     elif request.method =='POST':
         context = {}
-        user_input = request.POST['user_input']
-        bussiness_data = yelp_client.search(user_input)
+        user_input_param1 = request.POST["user_input_term"]
+        user_input_param2 = request.POST["user_input_location"]
+
+        bussiness_data = yelp_client.search(user_input_param1, user_input_param2)
 
 
         context['data'] = bussiness_data['businesses']

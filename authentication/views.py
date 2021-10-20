@@ -39,7 +39,6 @@ def login_view(request):
         pwd = request.POST['password']
 
         user = authenticate(username=user, password= pwd)
-
         if not user:
             return HttpResponse('Login failed')
         else:
