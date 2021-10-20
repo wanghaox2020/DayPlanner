@@ -56,5 +56,3 @@ def logout(request):
 def index_view(request):
     login_user = request.user
     return render(request, "dayplanner/index.html", locals())
-        
-

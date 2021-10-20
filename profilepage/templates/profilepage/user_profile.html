@@ -1,0 +1,203 @@
+{% extends "dayplanner/base.html" %}
+{% block title %} User Profile {% endblock %}
+
+{% block body %}
+
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        <nav class="navbar">
+            <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item is-size-3"> <!-- PLACEHOLDER FOR BUTTON TO DAYPLANNER ABOUT PAGE -->
+                    DAYPLANNER
+                </a>
+                <span class="navbar-burger" data-target="navbarMenuHeroA">
+                <span></span>
+                <span></span>
+                <span></span>
+                </span>
+            </div>
+            <div id="navbarMenuHeroA" class="navbar-menu">
+                <div class="navbar-end">
+                <a class="navbar-item is-active"> <!-- PLACEHOLDER FOR BUTTON TO DAY CURATION AND RANKING -->
+                    Explore
+                </a>
+                <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO DAY CURATION AND RANKING -->
+                    Curate
+                </a>
+                <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
+                    Create
+                </a>
+                {% if curr_user.user %}
+                <span class="navbar-item">
+                        <a class="navbar-item" href="{% url 'show_profile_page' curr_user.id %}">{{curr_user.user}}</a>
+                </span>
+                <span class="navbar-item">
+                    <button class="button is-warning is-dark has-text-centered"> 
+                        <a href="/authentication/logout">Logout</a>
+                    </button>
+                </span>
+                {% else %}
+
+                <span class="navbar-item">
+                    <button class="button is-warning is-dark has-text-centered">
+                        <a href="/authentication/login">Login</a>
+                    </button>
+                </span>
+                <span class="navbar-item">
+                    <button class="button is-warning is-dark has-text-centered"> 
+                        <a href="/authentication/signup">Register</a>
+                    </button>
+                </span>
+
+                {% endif %}
+                </div>
+            </div>
+            </div>
+        </nav>
+        </div>
+    
+            <div class="hero-body">
+              <div class="container">
+                <div class="columns is-centered">
+                    <div class="column">
+
+                        <div class="box">
+                            <div class="field">
+                                {% if page_user.is_private %}
+
+                                <label class="label">This is a Private Page</p>
+
+                                {% else %}
+
+                                <br>
+
+                                <div class="columns is-centered">
+                                  <figure class="image is-128x128">
+                                    <img src="https://www.seekpng.com/png/full/41-410093_circled-user-icon-user-profile-icon-png.png">
+                                  </figure>
+                                </div>
+
+                                <br>
+
+                                <label class="label is-medium">Username:</label>
+                                <label class="label has-text-weight-normal">{{ page_user.user}}</label>
+
+                                <br>
+
+                                
+                                <label class="label is-medium">Email:</label>
+                                <label class="label">{{ page_user.user.email}}</label>
+
+                                <br>
+
+                                
+                                <label class="label is-medium">Neighborhood:</label>
+                                <label class="label"></label>
+
+                                <br>
+
+                                
+                                <label class="label is-medium">Bio:</label>
+                                <label class="label">{{ page_user.bio}}</label>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="column">
+
+                        <div class="box">
+                            <div class="field">
+                              <label for="" class="label">Days Created</label>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 1" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 2" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 3" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="column">
+
+                        <div class="box">
+                            <div class="field">
+                              <label for="" class="label">Days Reviewed Recently</label>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 1" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 2" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 3" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 4" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 5" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 6" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="column">
+
+                        <div class="box">
+                            <div class="field">
+                              <label for="" class="label">Days Completed Recently</label>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 1" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 2" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 3" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                              <div class="control">
+                                <input placeholder="Day 4" class="input is-primary" disabled>
+                              </div>
+                              <br>
+                        </div>
+
+                    </div>
+                <div class="columns is-centered">
+                  <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                  </div>
+                </div>
+              </div>
+
+    
+    <!-- <div class="container has-text-centered">
+    </div> -->
+
+    <div class="hero-foot has-text-left">
+    </div>
+</section>
+{% endblock %}

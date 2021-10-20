@@ -29,7 +29,10 @@
                 <a href="/resources/venues/search" class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
                     Create
                 </a>
-                {% if  login_user.username %}
+                {% if login_user.username %}
+                <span class="navbar-item">
+                        <a class="navbar-item" href="{% url 'show_profile_page' login_user.id %}">{{login_user}}</a>
+                </span>
 
                 <span class="navbar-item">
                     <button class="button is-warning is-dark has-text-centered"> 
