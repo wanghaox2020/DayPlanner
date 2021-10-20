@@ -2,6 +2,27 @@
     Sample Yelp Output
 </p>
 
-<pre>
-    {{data}}
-</pre>
+<p>
+
+    {% if data %}
+        <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Distance</th>
+        </tr>
+
+        {% for business in data %}
+            <tr>
+            <td>{{ business.name }}</td>
+            <td>{{ business.distance }}ft</td>
+            <td>
+                <a href="/resources/venues/detail/{{ business.id }}"> Detail</a>
+            </td>
+            </tr>
+        {% endfor %}
+                {% else %}
+        <h2>Sorry data not found, please try again</h2>
+    {% endif %}
+
+
+</p>
