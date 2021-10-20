@@ -33,7 +33,7 @@ def fetch_by_id(yelp_id):
 # output: List of python dict
 def fetch_many(yelp_ids):
     responses = []
-    # A single connection can reuse the same TCP connection between requests
+    # A single conn can reuse the same TCP connection between requests
     with requests.Session() as conn:
         for yelp_id in yelp_ids:
             if yelp_id in Detail_cache:
