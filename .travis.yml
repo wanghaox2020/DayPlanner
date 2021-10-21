@@ -1,5 +1,7 @@
 language: python
 
+env:
+  - DOCKER_COMPOSE_VERSION=3.9
 before-install:
   - pip install -r requirements.txt
   - pip install black
