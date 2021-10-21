@@ -44,7 +44,6 @@ def search_view(request):
         return render(request,"venues/_sample_yelp_output.html",context)
 
 
-
 def sample_yelp_single_output(request, yelp_id):
     venue, is_created = Venue.objects.get_or_create(yelp_id=yelp_id)
     context = {
