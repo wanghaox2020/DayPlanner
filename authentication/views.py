@@ -18,14 +18,18 @@ def register_view(request):
     if request.method =='GET':
         return render(request, 'authentication/signup.html')
     elif request.method == 'POST':
+        email = request.POST['email']
         username = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         if password1 != password2:
             return HttpResponse('two password must align with eachother')
+        try:
+            user = User.objects.create_user(email=email,username=username,password=password1)
+            login(request, user)
+        except Exception as e:
+            return HttpResponse('Error Code: %s'%e)
 
-    user = User.objects.create_user(username=username,password=password1)
-    login(request, user)
     return HttpResponseRedirect('index')
 
 # TODO: REMOVE this decorator.  We SHOULD use csrf
