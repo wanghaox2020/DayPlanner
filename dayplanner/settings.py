@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'authentication',
     'profilepage',
     'resources.venues.apps.VenuesResourceConfig',
+    'resources.days.apps.DaysConfig'
 ]
 
 MIDDLEWARE = [
