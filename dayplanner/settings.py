@@ -51,9 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'resources.venues.apps.VenuesResourceConfig',
     'authentication',
     'profilepage',
-    'resources.venues.apps.VenuesResourceConfig',
+    'creation',
 ]
 
 MIDDLEWARE = [
