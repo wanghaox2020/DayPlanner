@@ -11,7 +11,6 @@ class DayDetailView(DetailView):
         context = super(DayDetailView, self).get_context_data( *args, **kwargs)
         detail = get_object_or_404(Day, id=self.kwargs['pk'])
         context['detail'] = detail
-        print(locals())
         return context
 
 class DayListView(ListView):
@@ -20,7 +19,6 @@ class DayListView(ListView):
     context_object_name = 'day_list'
     def get_queryset(self):
         queryset = super(DayListView, self).get_queryset()
-        print(locals())
         return queryset.filter(creator__username=self.kwargs['username'])
 
 class AllDaysView(ListView):
@@ -29,6 +27,5 @@ class AllDaysView(ListView):
     context_object_name = 'all_days'
     def get_queryset(self):
         queryset = super(AllDaysView, self).get_queryset()
-        print(locals())
         return queryset
 
