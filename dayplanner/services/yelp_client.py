@@ -12,9 +12,10 @@ business_cache = caches['yelp_businesses']
 # input: yelp id
 # output will be a python dict
 def fetch_by_id(yelp_id):
-    if yelp_id in business_cache:
+    cache_hit = business_cache.get(yelp_id)
+    if cache_hit:
         print("Cache Hit!")
-        return business_cache[yelp_id]
+        return cache_hit
 
     print("Cache Miss!")
 
@@ -24,7 +25,7 @@ def fetch_by_id(yelp_id):
 
     response = req.execute()
 
-    business_cache[yelp_id] = response
+    business_cache.set(yelp_id, response)
 
     return response
 
@@ -34,19 +35,25 @@ def fetch_by_id(yelp_id):
 # output: List of python dict
 def fetch_many(yelp_ids):
     responses = []
+    responses_to_cache = {}
+
+    cache_hits = business_cache.get_many(yelp_ids)
+    cache_miss_ids = yelp_ids - cache_hits.keys()
+
+    responses.extend(cache_hits.values())
+
     # A single conn can reuse the same TCP connection between requests
     with requests.Session() as conn:
-        for yelp_id in yelp_ids:
-            if yelp_id in business_cache:
-                responses.append(business_cache[yelp_id])
-            else:
-                req = YelpRequest(
-                    endpoint=detail_endpoint % yelp_id,
-                    conn=conn
-                )
-                response = req.execute()
-                business_cache[yelp_id] = response
-                responses.append(response)
+        for yelp_id in cache_miss_ids:
+            req = YelpRequest(
+                endpoint=detail_endpoint % yelp_id,
+                conn=conn
+            )
+            response = req.execute()
+            responses_to_cache[yelp_id] = response
+            responses.append(response)
+
+    business_cache.set_many(responses_to_cache)
 
     return responses
 
@@ -60,9 +67,10 @@ def search(term, location):
 
     term_location = term + location
 
-    if term_location in search_cache:
+    cache_hit = search_cache.get(term_location)
+    if  cache_hit:
         print("Cache Hit")
-        return search_cache[term_location]
+        return cache_hit
 
     print("Cache Missed")
     parameters = {'term': term, 'limit':5, 'radius': 10000}
@@ -83,7 +91,7 @@ def search(term, location):
     # search Result is a python dict in the form of YELP JSON
     # Refer to https://www.yelp.com/developers/documentation/v3/business_search
     searchResult = req.execute()
-    search_cache[term_location] = searchResult
+    search_cache.set(term_location, searchResult)
 
     return searchResult
 

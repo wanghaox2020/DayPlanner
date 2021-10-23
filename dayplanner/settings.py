@@ -105,10 +105,12 @@ CACHES = {
     'yelp_search': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': os.path.join(BASE_DIR,'temp/caches'),
+        'TIMEOUT': 60 * 60 * 24,
     },
     'yelp_businesses': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': os.path.join(BASE_DIR,'temp/caches'),
+        'TIMEOUT': 60 * 60 * 24,
     }
 }
 
