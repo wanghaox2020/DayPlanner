@@ -1,0 +1,50 @@
+<nav class="navbar">
+    <div class="container">
+    <div class="navbar-brand">
+        <a class="navbar-item is-size-3"> <!-- PLACEHOLDER FOR BUTTON TO DAYPLANNER ABOUT PAGE -->
+            DAYPLANNER
+        </a>
+        <span class="navbar-burger" data-target="navbarMenuHeroA">
+        <span></span>
+        <span></span>
+        <span></span>
+        </span>
+    </div>
+    <div id="navbarMenuHeroA" class="navbar-menu">
+        <div class="navbar-end">
+        <a class="navbar-item is-active"> <!-- PLACEHOLDER FOR BUTTON TO DAY CURATION AND RANKING -->
+            Explore
+        </a>
+        <a class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO DAY CURATION AND RANKING -->
+            Curate
+        </a>
+        <a href="/resources/venues/search" class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
+            Create
+        </a>
+        {% if user.is_authenticated %}
+        <span class="navbar-item">
+                <a class="navbar-item" href="{% url 'show_profile_page' user.id %}">{{user.get_username}}</a>
+        </span>
+        <span class="navbar-item">
+            <button class="button is-warning is-dark has-text-centered">
+                <a href="/authentication/logout">Logout</a>
+            </button>
+        </span>
+        {% else %}
+
+        <span class="navbar-item">
+            <button class="button is-warning is-dark has-text-centered">
+                <a href="/authentication/login">Login</a>
+            </button>
+        </span>
+        <span class="navbar-item">
+            <button class="button is-warning is-dark has-text-centered">
+                <a href="/authentication/signup">Register</a>
+            </button>
+        </span>
+
+        {% endif %}
+        </div>
+    </div>
+    </div>
+</nav>
