@@ -3,30 +3,27 @@
 {% block title %} Welcome {% endblock %}
 
 {% block body %}
-
-    <section class="hero is-primary is-fullheight">
-        <div class="hero-head">
-
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
         {% include 'dayplanner/_navbar.html' %}
+    </div>
 
-        </div>
-
-        <div class="hero-body">
+    <div class="hero-body">
         <div class="container has-text-left">
             <p class="title is-size-1">
             {% if  login_user.username %}
-            Hello, {{login_user}}!
+                Hello, {{login_user}}!
             {% else %}
-            Welcome Back!
+                Welcome Back!
             {% endif %}
             </p>
             <p class="subtitle is-size-4">
-            Are you ready to continue exploring your city?
+                Are you ready to continue exploring your city?
             </p>
         </div>
-        </div>
+    </div>
 
-        <div class="hero-foot has-text-left">
-        </div>
-    </section>
+    <div class="hero-foot has-text-left">
+    </div>
+</section>
 {% endblock %}
