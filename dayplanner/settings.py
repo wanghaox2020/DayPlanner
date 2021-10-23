@@ -98,6 +98,20 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    },
+    'yelp_search': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR,'temp/caches'),
+    },
+    'yelp_businesses': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR,'temp/caches'),
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

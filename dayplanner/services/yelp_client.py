@@ -1,19 +1,20 @@
-import requests, json
+from django.core.cache import caches
 from dayplanner.settings import YELP_API
+import requests, json
 
 search_endpoint = 'https://api.yelp.com/v3/businesses/search'
 detail_endpoint = 'https://api.yelp.com/v3/businesses/%s'
 
-search_cache = {}
-detail_cache = {}
+search_cache = caches['yelp_search']
+business_cache = caches['yelp_businesses']
 
 
 # input: yelp id
 # output will be a python dict
 def fetch_by_id(yelp_id):
-    if yelp_id in detail_cache:
+    if yelp_id in business_cache:
         print("Cache Hit!")
-        return detail_cache[yelp_id]
+        return business_cache[yelp_id]
 
     print("Cache Miss!")
 
@@ -23,7 +24,7 @@ def fetch_by_id(yelp_id):
 
     response = req.execute()
 
-    detail_cache[yelp_id] = response
+    business_cache[yelp_id] = response
 
     return response
 
@@ -36,15 +37,15 @@ def fetch_many(yelp_ids):
     # A single conn can reuse the same TCP connection between requests
     with requests.Session() as conn:
         for yelp_id in yelp_ids:
-            if yelp_id in detail_cache:
-                responses.append(detail_cache[yelp_id])
+            if yelp_id in business_cache:
+                responses.append(business_cache[yelp_id])
             else:
                 req = YelpRequest(
                     endpoint=detail_endpoint % yelp_id,
                     conn=conn
                 )
                 response = req.execute()
-                detail_cache[yelp_id] = response
+                business_cache[yelp_id] = response
                 responses.append(response)
 
     return responses
