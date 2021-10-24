@@ -1,0 +1,23 @@
+language: python
+
+env:
+  - DOCKER_COMPOSE_VERSION=3.3
+before-install:
+  - pip install -r requirements.txt
+  - pip install black
+  - pip install flake8
+  - pip install coverage
+  - pip install coveralls
+
+script:
+  - black --check .
+  - flake8
+  - coverage run --source='.' manage.py test
+  - docker compose run web python manage.py check
+  - docker compose run web python manage.py migrate
+  - docker compose up
+  - docker compose down
+
+
+after_success:
+  - coveralls
