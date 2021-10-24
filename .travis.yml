@@ -5,6 +5,7 @@ env:
 before-install:
   - pip install -r requirements.txt
   - pip install black
+  - pip install flake8
   - pip install coverage
   - pip install coveralls
 
