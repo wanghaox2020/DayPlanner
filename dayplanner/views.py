@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from .settings import BASE_DIR
+from django.shortcuts import render, reverse
 
 
 def index(request):

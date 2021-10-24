@@ -1,7 +1,7 @@
 language: python
 
 env:
-  - DOCKER_COMPOSE_VERSION=3.9
+  - DOCKER_COMPOSE_VERSION=3.3
 before-install:
   - pip install -r requirements.txt
   - pip install black
@@ -10,6 +10,7 @@ before-install:
 
 script:
   - black --check .
+  - flake8 .
   - coverage run --source='.' manage.py test
   - docker-compose run web python manage.py check
   - docker-compose run web python manage.py migrate

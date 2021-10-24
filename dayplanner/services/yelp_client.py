@@ -1,4 +1,4 @@
-import requests, json
+import requests
 from dayplanner.settings import YELP_API
 
 search_endpoint = "https://api.yelp.com/v3/businesses/search"

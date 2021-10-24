@@ -1,8 +1,5 @@
-from django.db.models import Model
 from django.shortcuts import render, get_object_or_404
 from dayplanner.services import yelp_client
-import requests, json, os
-from dayplanner.settings import YELP_API
 from .models import Venue
 
 # Create your views here.
