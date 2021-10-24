@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class DaysConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'resources.days'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "resources.days"
