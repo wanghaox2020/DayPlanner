@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse
+from django.shortcuts import render
 
 
 def index(request):
