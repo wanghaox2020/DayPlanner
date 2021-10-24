@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from dayplanner.services import yelp_client
 from .models import Venue
 
+
 # Create your views here.
 def index(request):
     return render(request, "venues/_index.html", {"venues": Venue.objects.all()})
@@ -14,7 +15,6 @@ def detail(request, venue_id):
 
 
 def search_view(request):
-
     if request.method == "GET":
         return render(request, "venues/_search.html")
     elif request.method == "POST":

@@ -2,15 +2,12 @@ from django.contrib import auth
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 
 # TODO: REMOVE this import.  We SHOULD use csrf
 from django.views.decorators.csrf import csrf_exempt
 
-
-from django.http import HttpResponse
-
-# Create your views here.
 
 # TODO: REMOVE this decorator.  We SHOULD use csrf
 @csrf_exempt

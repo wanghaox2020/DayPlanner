@@ -1,6 +1,7 @@
 from django.db import models
 from dayplanner.services import yelp_client
 
+
 # Create your models here.
 class Venue(models.Model):
     yelp_id = models.CharField(max_length=100, unique=True, null=False)
