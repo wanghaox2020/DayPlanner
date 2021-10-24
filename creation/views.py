@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from dayplanner.services import yelp_client
 
-from resources.venues.models import Venue
-
 
 def search(request):
     if request.method == "GET":
