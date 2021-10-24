@@ -1,8 +1,8 @@
-import requests, json
+import requests
 from dayplanner.settings import YELP_API
 
-search_endpoint = 'https://api.yelp.com/v3/businesses/search'
-detail_endpoint = 'https://api.yelp.com/v3/businesses/%s'
+search_endpoint = "https://api.yelp.com/v3/businesses/search"
+detail_endpoint = "https://api.yelp.com/v3/businesses/%s"
 
 search_cache = {}
 detail_cache = {}
@@ -28,7 +28,6 @@ def fetch_by_id(yelp_id):
     return response
 
 
-
 # input: List of yelp ids
 # output: List of python dict
 def fetch_many(yelp_ids):
@@ -39,10 +38,7 @@ def fetch_many(yelp_ids):
             if yelp_id in detail_cache:
                 responses.append(detail_cache[yelp_id])
             else:
-                req = YelpRequest(
-                    endpoint=detail_endpoint % yelp_id,
-                    conn=conn
-                )
+                req = YelpRequest(endpoint=detail_endpoint % yelp_id, conn=conn)
                 response = req.execute()
                 detail_cache[yelp_id] = response
                 responses.append(response)
@@ -50,12 +46,11 @@ def fetch_many(yelp_ids):
     return responses
 
 
-
 # example paramerters
 # parameters = {'term':'coffee', 'limit':5, 'radius': 10000,'location': location}
 
-def search(term, location):
 
+def search(term, location):
 
     term_location = term + location
 
@@ -64,19 +59,19 @@ def search(term, location):
         return search_cache[term_location]
 
     print("Cache Missed")
-    parameters = {'term': term, 'limit':5, 'radius': 10000}
+    parameters = {"term": term, "limit": 5, "radius": 10000}
     if "Latitude:" in location and "Longitude:" in location:
-        args = location.split(' ')
+        args = location.split(" ")
         lat = args[1]
         long = args[3]
-        parameters['latitude'] = lat
-        parameters['longitude'] = long
+        parameters["latitude"] = lat
+        parameters["longitude"] = long
     else:
-        parameters['location'] = location
+        parameters["location"] = location
 
     req = YelpRequest(
-        endpoint= search_endpoint ,
-        params= parameters,
+        endpoint=search_endpoint,
+        params=parameters,
     )
 
     # search Result is a python dict in the form of YELP JSON
@@ -86,19 +81,19 @@ def search(term, location):
 
     return searchResult
 
+
 # If initialized with a conn object, YelpRequest will use it
 # to make HTTP requests.
 class YelpRequest:
     # conn is a requests Session object
-    def __init__(self,endpoint,params={},conn=None):
+    def __init__(self, endpoint, params={}, conn=None):
         self.endpoint = endpoint
         self.params = params
         self.conn = conn
-        self.headers = {'Authorization': 'Bearer %s' % YELP_API}
+        self.headers = {"Authorization": "Bearer %s" % YELP_API}
 
     def execute(self):
         conn = self.conn or requests
-        return conn.get(url=self.endpoint,
-                     headers=self.headers,
-                     params=self.params).json()
-
+        return conn.get(
+            url=self.endpoint, headers=self.headers, params=self.params
+        ).json()
