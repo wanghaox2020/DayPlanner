@@ -10,7 +10,7 @@ before-install:
 
 script:
   - black --check .
-  - flake8 .
+  - flake8
   - coverage run --source='.' manage.py test
   - docker-compose run web python manage.py check
   - docker-compose run web python manage.py migrate
