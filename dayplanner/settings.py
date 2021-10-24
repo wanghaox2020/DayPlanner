@@ -44,16 +44,16 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'resources.venues.apps.VenuesResourceConfig',
-    'authentication',
-    'profilepage',
-    'creation',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "resources.venues.apps.VenuesResourceConfig",
+    "authentication",
+    "profilepage",
+    "creation",
 ]
 
 MIDDLEWARE = [
@@ -98,19 +98,19 @@ DATABASES = {
 }
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
     },
-    'yelp_search': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'temp/caches'),
-        'TIMEOUT': 60 * 60 * 24,
+    "yelp_search": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "temp/caches"),
+        "TIMEOUT": 60 * 60 * 24,
     },
-    'yelp_businesses': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'temp/caches'),
-        'TIMEOUT': 60 * 60 * 24,
-    }
+    "yelp_businesses": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "temp/caches"),
+        "TIMEOUT": 60 * 60 * 24,
+    },
 }
 
 
