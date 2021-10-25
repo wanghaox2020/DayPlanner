@@ -25,9 +25,57 @@ def createFooUse():
     )
 
 
+class SignUpTest(TestCase):
+    def setUp(self):
+        self.username = "test1"
+        self.email = "test1@example.com"
+        self.password = "test1"
+
+    def test_signup_page_url(self):
+        response = self.client.get("/authentication/signup")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "authentication/signup.html")
+
+    def test_signup_page_view_name(self):
+        response = self.client.get("/authentication/signup")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "authentication/signup.html")
+
+    def test_wrong_signup(self):
+        response = self.client.post(
+            "/authentication/signup",
+            data={
+                "email": self.email,
+                "username": self.username,
+                "password1": self.password,
+                "password2": "not_woring",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        users = get_user_model().objects.all()
+        self.assertEqual(users.count(), 0)
+
+    def test_signup(self):
+        response = self.client.post(
+            "/authentication/signup",
+            data={
+                "email": self.email,
+                "username": self.username,
+                "password1": self.password,
+                "password2": self.password,
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        users = get_user_model().objects.all()
+        self.assertEqual(users.count(), 1)
+
+
 class LoginTest(TestCase):
     def setUp(self):
         createFooUse()
+        self.username = "test1"
+        self.email = "test1@example.com"
+        self.password = "test1"
 
     def test_user(self):
         fooUser = authenticate(
@@ -67,8 +115,3 @@ class LoginTest(TestCase):
             password=foo_user["password"] + foo_user["password"],
         )
         self.assertFalse(can_login)
-
-    # def test_anonymoususer_access_user_profile(self):
-    #     client = Client()
-    #     response = client.get("/candidate_login/success/")
-    #     self.assertEqual(response.status_code, 404)
