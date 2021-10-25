@@ -1,5 +1,4 @@
-from django.test import TestCase, Client
-from django.contrib.auth import authenticate
+from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 login_url = "/authentication/login"
@@ -77,41 +76,63 @@ class LoginTest(TestCase):
         self.email = "test1@example.com"
         self.password = "test1"
 
-    def test_user(self):
-        fooUser = authenticate(
-            username=foo_user["username"], password=foo_user["password"]
+    def test_login(self):
+        response = self.client.post(
+            "/authentication/login",
+            data={
+                "username": self.username,
+                "password": self.password,
+            },
+            follow=True,
         )
-        self.assertIsNotNone(fooUser)
+        self.assertTrue(response.context["user"].is_active)
 
-    def test_user_authenticate_wrong_password(self):
-        fooUser = authenticate(
-            email=foo_user["email"],
-            password=foo_user["password"] + foo_user["password"],
+    def test_wrong_login(self):
+        response = self.client.post(
+            "/authentication/login",
+            data={
+                "username": self.username,
+                "password": self.password + self.password,
+            },
+            follow=True,
         )
-        self.assertIsNone(fooUser)
-
-    def test_user_authenticate_invalid_user(self):
-        fooUser = authenticate(
-            email=foo_user["first_name"], password=foo_user["password"]
-        )
-        self.assertIsNone(fooUser)
-
-    def test_login_get_page(self):
-        client = Client()
-        response = client.get(login_url)
         self.assertEqual(response.status_code, 200)
 
-    def test_login_with_correct_credentials(self):
-        client = Client()
-        can_login = client.login(
-            username=foo_user["username"], password=foo_user["password"]
-        )
-        self.assertTrue(can_login)
+    # def test_user(self):
+    #     fooUser = authenticate(
+    #         username=foo_user["username"], password=foo_user["password"]
+    #     )
+    #     self.assertIsNotNone(fooUser)
 
-    def test_login_with_incorrect_credentials(self):
-        client = Client()
-        can_login = client.login(
-            username=foo_user["username"],
-            password=foo_user["password"] + foo_user["password"],
-        )
-        self.assertFalse(can_login)
+    # def test_user_authenticate_wrong_password(self):
+    #     fooUser = authenticate(
+    #         email=foo_user["email"],
+    #         password=foo_user["password"] + foo_user["password"],
+    #     )
+    #     self.assertIsNone(fooUser)
+
+    # def test_user_authenticate_invalid_user(self):
+    #     fooUser = authenticate(
+    #         email=foo_user["first_name"], password=foo_user["password"]
+    #     )
+    #     self.assertIsNone(fooUser)
+
+    # def test_login_get_page(self):
+    #     client = Client()
+    #     response = client.get(login_url)
+    #     self.assertEqual(response.status_code, 200)
+
+    # def test_login_with_correct_credentials(self):
+    #     client = Client()
+    #     can_login = client.login(
+    #         username=foo_user["username"], password=foo_user["password"]
+    #     )
+    #     self.assertTrue(can_login)
+
+    # def test_login_with_incorrect_credentials(self):
+    #     client = Client()
+    #     can_login = client.login(
+    #         username=foo_user["username"],
+    #         password=foo_user["password"] + foo_user["password"],
+    #     )
+    #     self.assertFalse(can_login)
