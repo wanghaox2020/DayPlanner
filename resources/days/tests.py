@@ -65,10 +65,19 @@ class AllDaysViewTest(TestCase):
         self.assertEqual(len(response.context["all_days"]), 3)
 
 
-# class DetailViewTest(TestCase):
-#     def test_set_in_context(self):
-#         request = RequestFactory().get("/1")
-#         view = DayDetailView()
-#         view.setup(request)
-#         context = view.get_context_data()
-#         self.assertIn("detail", context)
+class DetailViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        user1 = User.objects.create_user(
+            username=foo_user1["username"],
+            email=foo_user1["email"],
+            password=foo_user1["password"],
+            first_name=foo_user1["first_name"],
+            last_name=foo_user1["last_name"],
+        )
+        Day.objects.create(creator=user1, name="test1 DayPlan")
+        Day.objects.create(creator=user1, name="test1 DayPlan2")
+
+    def test_set_in_context(self):
+        response = self.client.get("/resources/days/1/")
+        self.assertEqual(response.context["detail"].name, "test1 DayPlan")
