@@ -98,6 +98,22 @@ class LoginTest(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+
+class LogoutTest(TestCase):
+    def setUp(self):
+        createFooUse()
+        self.username = "test1"
+        self.email = "test1@example.com"
+        self.password = "test1"
+
+    def test_logout(self):
+        self.client.login(username="test1", password="test1")
+        response = self.client.get("/authentication/login")
+        self.client.logout()
+        self.assertEquals(response.status_code, 200)
+        response = self.client.get("/authentication/logout")
+        self.assertEquals(response.status_code, 302)
+
     # def test_user(self):
     #     fooUser = authenticate(
     #         username=foo_user["username"], password=foo_user["password"]
