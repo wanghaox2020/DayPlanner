@@ -13,7 +13,7 @@ foo_user = {
 }
 
 
-def createFooUse():
+def createFooUser():
     User = get_user_model()
     User.objects.create_user(
         username=foo_user["username"],
@@ -31,11 +31,6 @@ class SignUpTest(TestCase):
         self.password = "test1"
 
     def test_signup_page_url(self):
-        response = self.client.get("/authentication/signup")
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "authentication/signup.html")
-
-    def test_signup_page_view_name(self):
         response = self.client.get("/authentication/signup")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "authentication/signup.html")
@@ -71,7 +66,7 @@ class SignUpTest(TestCase):
 
 class LoginTest(TestCase):
     def setUp(self):
-        createFooUse()
+        createFooUser()
         self.username = "test1"
         self.email = "test1@example.com"
         self.password = "test1"
@@ -85,7 +80,7 @@ class LoginTest(TestCase):
             },
             follow=True,
         )
-        self.assertTrue(response.context["user"].is_active)
+        self.assertTrue(response.context["user"].is_authenticated)
 
     def test_wrong_login(self):
         response = self.client.post(
@@ -96,12 +91,12 @@ class LoginTest(TestCase):
             },
             follow=True,
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertIsNone(response.context)
 
 
 class LogoutTest(TestCase):
     def setUp(self):
-        createFooUse()
+        createFooUser()
         self.username = "test1"
         self.email = "test1@example.com"
         self.password = "test1"
