@@ -4,6 +4,9 @@
 {% block body %}
 
 <section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
@@ -26,7 +29,7 @@
                   <input type="password" placeholder="Enter password..." class="input" name="password" required>
                 </div>
               </div>
-              
+
               <div class="field">
                 <label for="" class="checkbox">
                   <input type="checkbox">
@@ -44,5 +47,5 @@
       </div>
     </div>
   </section>
-  
+
 {% endblock %}

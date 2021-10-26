@@ -24,5 +24,6 @@ urlpatterns = [
     path("resources/days/", include("resources.days.urls")),
     path("authentication/", include("authentication.urls")),
     path("profilepage/", include("profilepage.urls")),
+    path("creation/", include("creation.urls")),
     path("", views.index),
 ]

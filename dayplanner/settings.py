@@ -50,9 +50,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "authentication",
-    "profilepage",
     "resources.venues.apps.VenuesResourceConfig",
     "resources.days.apps.DaysConfig",
+    "profilepage",
+    "creation",
 ]
 
 MIDDLEWARE = [
@@ -94,6 +95,22 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": str(BASE_DIR / "db.sqlite3"),
     }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    },
+    "yelp_search": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "temp/caches"),
+        "TIMEOUT": 60 * 60 * 24,
+    },
+    "yelp_businesses": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, "temp/caches"),
+        "TIMEOUT": 60 * 60 * 24,
+    },
 }
 
 
