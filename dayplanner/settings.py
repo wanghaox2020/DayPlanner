@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import django_heroku
 from dotenv import load_dotenv, find_dotenv
 
 from pathlib import Path
@@ -50,8 +49,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "resources.venues.apps.VenuesResourceConfig",
     "authentication",
+    "resources.venues.apps.VenuesResourceConfig",
+    "resources.days.apps.DaysConfig",
     "profilepage",
     "creation",
 ]
@@ -159,4 +159,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-django_heroku.settings(locals())
+if "/app" in os.environ["HOME"]:
+    import django_heroku
+
+    django_heroku.settings(locals())
