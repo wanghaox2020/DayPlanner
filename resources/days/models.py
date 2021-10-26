@@ -10,6 +10,9 @@ class Day(models.Model):
     name = models.CharField(max_length=100, null=False)
 
 class DayVenue(models.Model):
+    class Meta:
+        ordering = ['pos']
+
     day = models.ForeignKey(Day,on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue,on_delete=models.CASCADE)
     pos = models.IntegerField()
