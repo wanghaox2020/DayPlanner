@@ -38,8 +38,12 @@ def edit(request, day_id):
 
     if request.method == "POST":
         yelp_id  = request.POST["yelp_id"]
-        venue = Venue.objects.get_or_create(yelp_id=yelp_id)
-        DayVenue.objects.create(day=day, venue=venue)
+        venue, created = Venue.objects.get_or_create(yelp_id=yelp_id)
+        DayVenue.objects.create(
+            day=day, 
+            venue=venue, 
+            pos=day.dayvenue_set.count() + 1
+        )
 
     context = {
         'day': day
