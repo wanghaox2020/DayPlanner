@@ -40,5 +40,9 @@ def edit(request, day_id):
         yelp_id  = request.POST["yelp_id"]
         venue = Venue.objects.get_or_create(yelp_id=yelp_id)
         DayVenue.objects.create(day=day, venue=venue)
-    
-    return render(request, "days/_edit.html", {'day': day})
+
+    context = {
+        'day': day
+    }
+
+    return render(request, "days/_edit.html", context)
