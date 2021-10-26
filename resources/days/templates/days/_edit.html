@@ -1,0 +1,9 @@
+<div>
+    <p>Day Name: {{day.name}}</p>
+
+    {% for day_venue in day.dayvenue_set.all %}
+        <p>
+            {{ day_venue.venue.yelp__name }}
+        </p>
+    {% endfor %}
+</div>
