@@ -14,8 +14,11 @@ from dotenv import load_dotenv, find_dotenv
 
 from pathlib import Path
 import os
+import sys
 
 load_dotenv(find_dotenv())
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -97,18 +100,24 @@ DATABASES = {
     }
 }
 
+
+if TESTING:
+    yelp_cache_backend = "django.core.cache.backends.dummy.DummyCache"
+else:
+    yelp_cache_backend = "django.core.cache.backends.filebased.FileBasedCache"
+
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
     },
     "yelp_search": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": os.path.join(BASE_DIR, "temp/caches"),
+        "BACKEND": yelp_cache_backend,
+        "LOCATION": os.path.join(BASE_DIR, "tmp/caches"),
         "TIMEOUT": 60 * 60 * 24,
     },
     "yelp_businesses": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": os.path.join(BASE_DIR, "temp/caches"),
+        "BACKEND": yelp_cache_backend,
+        "LOCATION": os.path.join(BASE_DIR, "tmp/caches"),
         "TIMEOUT": 60 * 60 * 24,
     },
 }
