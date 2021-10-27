@@ -96,15 +96,23 @@ class EditViewTest(TestCase):
             first_name=foo_user1["first_name"],
             last_name=foo_user1["last_name"],
         )
-        self.day = Day.objects.create(creator=user1, name="test1 Day")
+        self.day1 = Day.objects.create(creator=user1, name="test1 Day")
+        self.day2 = Day.objects.create(creator=user1, name="test2 Day")
 
-    def test_set_in_context(self):
-        self.assertEqual(len(self.day.dayvenue_set.all()), 0)
+    def test_get(self):
+        self.assertEqual(len(self.day1.dayvenue_set.all()), 0)
+
+        self.client.get("/resources/days/%i/edit" % self.day1.id)
+
+        self.assertEqual(len(self.day1.dayvenue_set.all()), 0)
+
+    def test_post_new_venue(self):
+        self.assertEqual(len(self.day2.dayvenue_set.all()), 0)
 
         yelp_data = {"yelp_id": "test_id", "name": "foo", "image_url": "bar"}
 
         with patch.object(YelpRequest, "execute", return_value=yelp_data):
             self.client.post(
-                "/resources/days/%i/edit" % self.day.id, {"yelp_id": "test_id"}
+                "/resources/days/%i/edit" % self.day2.id, {"yelp_id": "test_id"}
             )
-            self.assertEqual(len(self.day.dayvenue_set.all()), 1)
+            self.assertEqual(len(self.day2.dayvenue_set.all()), 1)
