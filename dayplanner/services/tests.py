@@ -4,9 +4,6 @@ from .yelp_client import YelpRequest, fetch_many, fetch_by_id, search
 
 
 class YelpClientTestCase(TestCase):
-    def setUp(self):
-        pass
-
     def test_fetch_by_id(self):
         yelp_response = {
             "id": "WavvLdfdP6g8aZTtbBQHTw",
