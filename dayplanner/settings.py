@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from dotenv import load_dotenv, find_dotenv
-import django_heroku
 
 from pathlib import Path
 import os
@@ -171,4 +170,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-django_heroku.settings(locals(), test_runner=False)
+if "CI" in os.environ:
+    import django_heroku
+
+    django_heroku.settings(locals(), test_runner=False)
