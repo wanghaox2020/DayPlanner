@@ -1,6 +1,9 @@
+from unittest.mock import patch
 from django.test import TestCase
 from .models import Day, User
 from django.test import Client
+
+from dayplanner.services.yelp_client import YelpRequest
 
 
 foo_user1 = {
@@ -81,3 +84,35 @@ class DetailViewTest(TestCase):
     def test_set_in_context(self):
         response = self.client.get("/resources/days/1/")
         self.assertEqual(response.context["detail"].name, "test1 DayPlan")
+
+
+class EditViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        user1 = User.objects.create_user(
+            username=foo_user1["username"],
+            email=foo_user1["email"],
+            password=foo_user1["password"],
+            first_name=foo_user1["first_name"],
+            last_name=foo_user1["last_name"],
+        )
+        self.day1 = Day.objects.create(creator=user1, name="test1 Day")
+        self.day2 = Day.objects.create(creator=user1, name="test2 Day")
+
+    def test_get(self):
+        self.assertEqual(len(self.day1.dayvenue_set.all()), 0)
+
+        self.client.get("/resources/days/%i/edit" % self.day1.id)
+
+        self.assertEqual(len(self.day1.dayvenue_set.all()), 0)
+
+    def test_post_new_venue(self):
+        self.assertEqual(len(self.day2.dayvenue_set.all()), 0)
+
+        yelp_data = {"yelp_id": "test_id", "name": "foo", "image_url": "bar"}
+
+        with patch.object(YelpRequest, "execute", return_value=yelp_data):
+            self.client.post(
+                "/resources/days/%i/edit" % self.day2.id, {"yelp_id": "test_id"}
+            )
+            self.assertEqual(len(self.day2.dayvenue_set.all()), 1)

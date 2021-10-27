@@ -1,0 +1,42 @@
+<div>
+    <p>Day Name: {{day.name}}</p>
+
+    <form action="" method ="post">{% csrf_token %}
+        <div>
+          <input type="text"
+          placeholder="Enter Yelp ID"
+          name="yelp_id"
+          required>
+        </div>
+        <br>
+
+        <button type="submit">
+            Add
+        </button>
+    </form>
+
+    <table>
+        <tr>
+        <th>ID</th>
+        <th>Yelp ID</th> 
+        <th>Name</th>
+        <th>Image</th>
+        </tr>
+        {% for dv in day.dayvenue_set.all %}
+        <tr>
+            <td>
+                {{dv.venue.id}}
+            </td>
+            <td>
+                {{dv.venue.yelp_id}}
+            </td>
+            <td>
+                {{dv.venue.yelp__name}}
+            </td>
+            <td>
+                <img src="{{dv.venue.yelp__image_url}}" height="50">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
