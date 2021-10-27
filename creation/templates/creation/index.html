@@ -14,8 +14,8 @@
 
         <br>
         <div class="control is-medium">
-          <input type="text" 
-          placeholder="Coffee shops, sushi, dive bar..." 
+          <input type="text"
+          placeholder="Coffee shops, sushi, dive bar..."
           name="user_input_term"
           onsubmit="return validateForm()"
           required
@@ -33,7 +33,7 @@
         </div>
         <br>
 
-        <button type="submit" 
+        <button type="submit"
         class="button is-success">
         Search
         </button>
@@ -49,8 +49,13 @@
 
   <br><br>
   <button id = "find-me">Show my location</button><br/>
+
   <p id = "status"></p>
   <a id = "map-link" target="_blank"></a>
+
+{% if search_results %}
+  {% include 'creation/_search_results.html' with data=search_results only %}
+{% endif %}
 </section>
 
 <script>

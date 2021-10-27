@@ -19,9 +19,11 @@ from django.urls.conf import include
 from dayplanner import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('resources/venues/', include('resources.venues.urls')),
-    path('authentication/', include('authentication.urls')),
-    path('profilepage/', include('profilepage.urls')),
-    path('', views.index),
+    path("admin/", admin.site.urls),
+    path("resources/venues/", include("resources.venues.urls")),
+    path("resources/days/", include("resources.days.urls")),
+    path("authentication/", include("authentication.urls")),
+    path("profilepage/", include("profilepage.urls")),
+    path("creation/", include("creation.urls")),
+    path("", views.index),
 ]

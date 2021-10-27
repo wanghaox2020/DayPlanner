@@ -4,6 +4,9 @@
 {% block body %}
 
 <section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
     <div class="hero-body">
       <div class="container">
         <div class="columns is-centered">
@@ -13,8 +16,15 @@
             </p>
             <p>Please fill in this form to create an account.</p><br>
             <form action="/authentication/signup" method ="post" class="box">{% csrf_token %}
+                <div class="field">
+                <label for="email" class="label">Email</label>
+                <div class="control">
+                  <input type="text" placeholder="Enter Email..." class="input" name="email" required>
+                </div>
+              </div>
+
               <div class="field">
-                <label for="email" class="label">Username</label>
+                <label for="username" class="label">Username</label>
                 <div class="control">
                   <input type="text" placeholder="Enter username..." class="input" name="username" required>
                 </div>
@@ -44,7 +54,7 @@
       </div>
     </div>
 </section>
-  
+
 
 
 {% endblock %}
