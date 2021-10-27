@@ -1,8 +1,9 @@
 .DS_Store
 
-temp
+tmp
 .env
 .idea
 */**/__pycache__
 db.sqlite3
 .vscode
+.coverage

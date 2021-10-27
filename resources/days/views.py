@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from .models import Day
+from .models import Day, DayVenue
+from resources.venues.models import Venue
 
 
 class DayDetailView(DetailView):
@@ -30,6 +31,15 @@ class AllDaysView(ListView):
     template_name = "days/_all_days.html"
     context_object_name = "all_days"
 
-    def get_queryset(self):
-        queryset = super(AllDaysView, self).get_queryset()
-        return queryset
+
+def edit(request, day_id):
+    day = Day.objects.get(pk=day_id)
+
+    if request.method == "POST":
+        yelp_id = request.POST["yelp_id"]
+        venue, created = Venue.objects.get_or_create(yelp_id=yelp_id)
+        DayVenue.objects.create(day=day, venue=venue, pos=day.dayvenue_set.count() + 1)
+
+    context = {"day": day}
+
+    return render(request, "days/_edit.html", context)
