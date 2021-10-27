@@ -1,6 +1,6 @@
 .DS_Store
 
-temp
+tmp
 .env
 .idea
 */**/__pycache__
