@@ -15,6 +15,7 @@
         <td>{{ business.distance }}ft</td>
         <td>
             <a href="/resources/venues/for_yelp_id/{{ business.id }}"> Detail</a>
+            <a href="/creation/editday?day_id={{ day.id }}&yelp_id={{ business.id }}">add</a>
         </td>
         </tr>
     {% endfor %}
