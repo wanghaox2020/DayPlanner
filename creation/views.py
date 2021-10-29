@@ -21,7 +21,7 @@ class DayvenueListView(ListView):
         queryset = super(DayvenueListView, self).get_queryset()
         return queryset.filter(day__id=self.kwargs["pk"])
 
-def editday(request, day_id):
+def searchPage(request, day_id):
     # Initializing the context dict
     context = {}
     # Given day_id try to access the day object
@@ -36,7 +36,7 @@ def editday(request, day_id):
             # The function addVenue Defined at line 32
             # Add Venue into current selected day and refresh the page
             return addVenue(request, day)
-        return render(request, "creation/_edit.html", context)
+        return render(request, "creation/_search.html", context)
 
     elif request.method == "POST":
         if request.GET.get("search"):
@@ -60,7 +60,7 @@ def search(request, context):
     bussiness_data = yelp_client.search(user_input_param1, user_input_param2)
     context["search_results"] = bussiness_data["businesses"]
 
-    return render(request, "creation/_edit.html", context)
+    return render(request, "creation/_search.html", context)
 
 
 def deleteday(request):

@@ -6,7 +6,7 @@ app_name = "creation"
 
 urlpatterns = [
     path("", views.daylist),
-    path("editday/<int:day_id>", views.editday),
+    path("edit/<int:day_id>/search", views.searchPage),
     path("edit/<int:pk>", DayvenueListView.as_view(), name="editpage"),
     path("delete_day", views.deleteday),
 ]

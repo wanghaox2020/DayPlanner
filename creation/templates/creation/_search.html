@@ -13,7 +13,7 @@ Hello {{ day.creator }}
   <h1 class="title">Locations</h1>
   <div class="container">
     <p>Please perform your location searches here to start populating your day.</p>
-    <form action="/creation/editday/{{ day.id }}?search=True" method ="post">{% csrf_token %}
+    <form action="/creation/edit/{{ day.id }}/search?search=True" method ="post">{% csrf_token %}
       <div class="field">
 
         <br>
