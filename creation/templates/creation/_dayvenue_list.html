@@ -1,0 +1,33 @@
+<table>
+    
+    <p>Day Name: {{dayVenue.name}}</p>
+    <th>ID</th>
+    <th>Yelp ID</th>
+    <th>Name</th>
+    <th>Image</th>
+    <th> 
+
+        <button style = "background-color: whtie;" type = button;> 
+            <a href="/creation/editday/{{dayVenue.id}}">
+                Add a Venue
+            </a>
+        </button>
+    </th>
+    </tr>
+    {% for dv in dayvenue_list %}
+    <tr>
+        <td>
+            {{dv.venue.id}}
+        </td>
+        <td>
+            {{dv.venue.yelp_id}}
+        </td>
+        <td>
+            {{dv.venue.yelp__name}}
+        </td>
+        <td>
+            <img src="{{dv.venue.yelp__image_url}}" height="50">
+        </td>
+    </tr>
+    {% endfor %}
+</table>
