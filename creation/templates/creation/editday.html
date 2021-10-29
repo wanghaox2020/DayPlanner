@@ -7,13 +7,13 @@
 
 {% block body %}
 
-This is the Edit Page
+Hello {{ day.creator }}
 <h1 class="title">You are editing {{ day.name }}</h1>
 <section class="section is-medium">
   <h1 class="title">Locations</h1>
   <div class="container">
     <p>Please perform your location searches here to start populating your day.</p>
-    <form action="/creation/editday?day_id={{ day.id }}&search=True" method ="post">{% csrf_token %}
+    <form action="/creation/editday/{{ day.id }}?search=True" method ="post">{% csrf_token %}
       <div class="field">
 
         <br>

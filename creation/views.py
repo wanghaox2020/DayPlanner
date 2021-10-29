@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from dayplanner.services import yelp_client
 from django.contrib.auth.models import User
@@ -6,20 +7,21 @@ from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
 
 
-def editday(request):
+def editday(request, day_id):
+    # Initializing the context dict
     context = {}
-    day_id = request.GET.get("day_id")
-
-    try:
-        day = Day.objects.get(id=day_id)
-        context["day"] = day
-
-    except Exception:
-        return HttpResponse("--The day is not existed")
+    # Given day_id try to access the day object
+    day = get_object_or_404(Day, pk=day_id)
+    context["day"] = day
 
     if request.method == "GET":
+        # Case the the user send a GET URL with a query String Yelp_id:<id>
+        # For example: /creation/editday/1?yelp_id=x86
+        # Is User want to added x86 into day 1
         if request.GET.get("yelp_id"):
-            addVenue(request, day)
+            # The function addVenue Defined at line 32
+            # Add Venue into current selected day and refresh the page
+            return addVenue(request, day)
 
         return render(request, "creation/editday.html", context)
     elif request.method == "POST":
@@ -31,7 +33,9 @@ def addVenue(request, day):
     yelp_id = request.GET.get("yelp_id")
     venue, created = Venue.objects.get_or_create(yelp_id=yelp_id)
     DayVenue.objects.create(day=day, venue=venue, pos=day.dayvenue_set.count() + 1)
-    return HttpResponseRedirect(request.path_info)
+    rootpath = request.path.split("?")[0]
+
+    return HttpResponseRedirect(rootpath)
 
 
 def search(request, context):
@@ -67,10 +71,9 @@ def daylist(request):
         dayname = request.POST["day_name"]
         Day.objects.create(creator=request.user, name=dayname)
 
-    userName = "admin"
-    userObject = User.objects.get(username="admin")
+    userObject = request.user
     context = {
         "userDayList": userObject.day_set.all().filter(is_active=True),
-        "username": userName,
+        "username": userObject.username,
     }
     return render(request, "creation/day_list.html", context)

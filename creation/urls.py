@@ -5,6 +5,6 @@ app_name = "creation"
 
 urlpatterns = [
     path("", views.daylist),
-    path("editday", views.editday),
+    path("editday/<int:day_id>", views.editday),
     path("delete_day", views.deleteday),
 ]
