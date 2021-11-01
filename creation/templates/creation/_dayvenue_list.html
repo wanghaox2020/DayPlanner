@@ -1,36 +1,45 @@
-<table>
-    
-    <p>Day Name: {{dayVenue.name}}</p>
-    <th>ID</th>
-    <th>Yelp ID</th>
-    <th>Name</th>
-    <th>Image</th>
-
+{% extends "dayplanner/base.html" %}
+{% load static %}
+{%block links%}
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+{% endblock %}
+{% block title %} Day Venue List {% endblock %}
+<body>
+{% block body %}
+    <p>Day Name: {{dayVenue.name}}</p> 
     <div>
-        <button style = "background-color: whtie;" type = button;> 
+        <button style = "background-color: whtie" type = "button"> 
             <a href="/creation/edit/{{dayVenue.id}}/search">
                 Add a Venue
             </a>
         </button>
     </div>
-    {% for dv in dayvenue_list %}
-    <tr>
-        <td>
-            {{dv.venue.id}}
-        </td>
-        <td>
-            {{dv.venue.yelp_id}}
-        </td>
-        <td>
-            {{dv.venue.yelp__name}}
-        </td>
-        <td>
-            <img src="{{dv.venue.yelp__image_url}}" height="50">
-        </td>
-    </tr>
-    {% endfor %}
-
-    <div>
-        <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-74.14295196533205%2C40.6306300839918%2C-73.8545608520508%2C40.79639769657359&amp;layer=mapnik&amp;marker=40.7137138930557%2C-73.9988100528717" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=40.7137&amp;mlon=-73.9988#map=12/40.7136/-73.9988">View Larger Map</a></small>
+    <table>
+        <th>ID</th>
+        <th>Yelp ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        {% for dv in dayvenue_list %}
+        <tr>
+            <td>
+                {{dv.venue.id}}
+            </td>
+            <td>
+                {{dv.venue.yelp_id}}
+            </td>
+            <td>
+                {{dv.venue.yelp__name}}
+            </td>
+            <td>
+                <img src="{{dv.venue.yelp__image_url}}" height="50">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div id="map">
+        
     </div>
-</table>
+    <script src="{% static 'map.js' %}"></script>
+{% endblock %}
