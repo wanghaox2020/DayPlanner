@@ -1,23 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% extends "dayplanner/base.html" %}
+{% load static %}
+{%block links%}
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+{% endblock %}
+{% block title %} Day Venue List {% endblock %}
 <body>
-
-{% if coordinates %}
-{% for coordinate in coordinates %}
-    <td>
-        {{coordinate.latitude}}
+{% block body %}
+    <p>Day Name: {{dayVenue.name}}</p> 
+    <div>
+        <button style = "background-color: whtie" type = "button"> 
+            <a href="/creation/edit/{{dayVenue.id}}/search">
+                Add a Venue
+            </a>
+        </button>
+    </div>
+    <table>
+        <th>ID</th>
+        <th>Yelp ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        {% for dv in dayvenue_list %}
+        <tr>
+            <td>
+                {{dv.venue.id}}
             </td>
             <td>
-                {{coordinate.longitude}}
+                {{dv.venue.yelp_id}}
             </td>
-    <br>
-{% endfor %}
-{% endif %}
+            <td>
+                {{dv.venue.yelp__name}}
+            </td>
+            <td>
+                <img src="{{dv.venue.yelp__image_url}}" height="50">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% if coordinates %}
+    {% for coordinate in coordinates %}
+        <td>
+            {{coordinate.latitude}}
+                </td>
+                <td>
+                    {{coordinate.longitude}}
+                </td>
+        <br>
+    {% endfor %}
+    {% endif %}
 
+    <div id="map">    
+    </div>
+    
+    <script src="{% static 'map.js' %}"></script>
+{% endblock %}
 <div id="map">
         
 </div>
