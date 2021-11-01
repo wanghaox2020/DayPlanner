@@ -1,0 +1,23 @@
+
+
+{% if data %}
+    <table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Distance</th>
+    </tr>
+
+    {% for business in data %}
+        <tr>
+        <td>{{ business.name }}</td>
+        <td>{{ business.distance }}ft</td>
+        <td>
+            <a href="/resources/venues/for_yelp_id/{{ business.id }}"> Detail</a>
+            <a href="/creation/editday/{{ day.id }}?yelp_id={{ business.id }}">add</a>
+        </td>
+        </tr>
+    {% endfor %}
+            {% else %}
+    <h2>Sorry data not found, please try again</h2>
+{% endif %}
+
