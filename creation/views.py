@@ -38,10 +38,11 @@ def viewMap(request, day_id):
 
     responses = yelp_client.fetch_many(fetch_list)
     coordinates = []
-    # [{"latitude":<lat_val>,"longitude":<long_val>}]
+    # [{"latitude":<lat_val>,"longitude":<long_val>,"name":<name>}]
     for resp in responses:
-        print(resp["coordinates"])
-        coordinates.append(resp["coordinates"])
+        data = resp["coordinates"]
+        data["name"] = resp["name"]
+        coordinates.append(data)
 
     context["coordinates"] = coordinates
     return render(request, "creation/mappage.html",context)
