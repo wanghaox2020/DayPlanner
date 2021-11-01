@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% if coordinates %}
+{% for coordinate in coordinates %}
+    <td>
+        {{coordinate.latitude}}
+            </td>
+            <td>
+                {{coordinate.longitude}}
+            </td>
+    <br>
+{% endfor %}
+{% endif %}
+
+
+</body>
+</html>
