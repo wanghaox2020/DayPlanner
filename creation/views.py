@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from dayplanner.services import yelp_client
-from django.contrib.auth.models import User
 from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
 
@@ -27,6 +26,25 @@ def editday(request, day_id):
     elif request.method == "POST":
         if request.GET.get("search"):
             return search(request, context)
+
+
+def viewMap(request, day_id):
+    day = get_object_or_404(Day, pk=day_id)
+    context = {}
+    DayVenues = day.dayvenue_set.all()
+    fetch_list = []
+    for dv in DayVenues:
+        fetch_list.append(dv.venue.yelp_id)
+
+    responses = yelp_client.fetch_many(fetch_list)
+    coordinates = []
+    # [{"latitude":<lat_val>,"longitude":<long_val>}]
+    for resp in responses:
+        print(resp["coordinates"])
+        coordinates.append(resp["coordinates"])
+
+    context["coordinates"] = coordinates
+    return render(request, "creation/mappage.html",context)
 
 
 def addVenue(request, day):
