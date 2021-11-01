@@ -1,25 +1,24 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-from django.views.generic.list import ListView
 from dayplanner.services import yelp_client
 from django.contrib.auth.models import User
 from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
 
-class DayvenueListView(ListView):
-    model = DayVenue
-    template_name = "creation/_dayvenue_list.html"
-    context_object_name = "dayvenue_list"
+# class DayvenueListView(ListView):
+#     model = DayVenue
+#     template_name = "creation/_dayvenue_list.html"
+#     context_object_name = "dayvenue_list"
 
-    def get_context_data(self, **kwargs):
-        context = super(DayvenueListView, self).get_context_data(**kwargs)
-        context["dayVenue"] = get_object_or_404(Day, id=self.kwargs["pk"])
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super(DayvenueListView, self).get_context_data(**kwargs)
+#         context["dayVenue"] = get_object_or_404(Day, id=self.kwargs["pk"])
+#         return context
 
-    def get_queryset(self):
-        queryset = super(DayvenueListView, self).get_queryset()
-        return queryset.filter(day__id=self.kwargs["pk"])
+#     def get_queryset(self):
+#         queryset = super(DayvenueListView, self).get_queryset()
+#         return queryset.filter(day__id=self.kwargs["pk"])
 
 def viewMap(request, day_id):
     day = get_object_or_404(Day, pk=day_id)
