@@ -13,7 +13,7 @@ Hello {{ day.creator }}
   <h1 class="title">Locations</h1>
   <div class="container">
     <p>Please perform your location searches here to start populating your day.</p>
-    <form action="/creation/editday/{{ day.id }}?search=True" method ="post">{% csrf_token %}
+    <form action="/creation/edit/{{ day.id }}/searchpage?search=True" method ="post">{% csrf_token %}
       <div class="field">
 
         <br>
@@ -56,7 +56,7 @@ Hello {{ day.creator }}
 
   <p id = "status"></p>
   <a id = "map-link" target="_blank"></a>
-    <a href="creation/editday/{{ day.id }}/viewmap">
+    <a href="creation/edit/{{ day.id }}/viewmap">
 
 {% if search_results %}
   {% include 'creation/_search_results.html' with data=search_results day=day %}

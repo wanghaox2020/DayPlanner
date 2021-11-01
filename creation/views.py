@@ -6,9 +6,11 @@ from django.contrib.auth.models import User
 from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
 
+
 def viewMap(request, day_id):
     day = get_object_or_404(Day, pk=day_id)
     context = {}
+    context["day"] = day
     DayVenues = day.dayvenue_set.all()
     fetch_list = []
     for dv in DayVenues:
@@ -23,7 +25,8 @@ def viewMap(request, day_id):
         coordinates.append(data)
 
     context["coordinates"] = coordinates
-    return render(request, "creation/mappage.html",context)
+    return render(request, "creation/mappage.html", context)
+
 
 def deleteday(request):
     day_id = request.GET.get("day_id")
@@ -37,6 +40,47 @@ def deleteday(request):
         print("-- deletion error %s") % (e)
 
     return HttpResponseRedirect("/creation")
+
+
+def searchpage(request, day_id):
+    # Initializing the context dict
+    context = {}
+    # Given day_id try to access the day object
+    day = get_object_or_404(Day, pk=day_id)
+    context["day"] = day
+
+    if request.method == "GET":
+        # Case the the user send a GET URL with a query String Yelp_id:<id>
+        # For example: /creation/editday/1?yelp_id=x86
+        # Is User want to added x86 into day 1
+        if request.GET.get("yelp_id"):
+            # The function addVenue Defined at line 32
+            # Add Venue into current selected day and refresh the page
+            return addVenue(request, day)
+
+        return render(request, "creation/_serach_page.html", context)
+    elif request.method == "POST":
+        if request.GET.get("search"):
+            return search(request, context)
+
+
+def addVenue(request, day):
+    yelp_id = request.GET.get("yelp_id")
+    venue, created = Venue.objects.get_or_create(yelp_id=yelp_id)
+    DayVenue.objects.create(day=day, venue=venue, pos=day.dayvenue_set.count() + 1)
+    rootpath = request.path.split("/searchpage")[0]
+    return HttpResponseRedirect(rootpath)
+
+
+def search(request, context):
+    # handle Search action in creation/editday?<day_id>
+    user_input_param1 = request.POST["user_input_term"]
+    user_input_param2 = request.POST["user_input_location"]
+
+    bussiness_data = yelp_client.search(user_input_param1, user_input_param2)
+    context["search_results"] = bussiness_data["businesses"]
+
+    return render(request, "creation/_serach_page.html", context)
 
 
 def daylist(request):
@@ -54,5 +98,3 @@ def daylist(request):
     }
     return render(request, "creation/_day_list.html", context)  
 
-
- 

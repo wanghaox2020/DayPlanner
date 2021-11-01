@@ -10,47 +10,19 @@
 {% block body %}
     {{ coordinates|json_script:"coordinates" }}
 
-    <p>Day Name: {{dayVenue.name}}</p> 
+    <p>Day Name: {{day.name}}</p>
+    <p> Author: {{ day.creator.username }}</p>
     <div>
         <button style = "background-color: whtie" type = "button"> 
-            <a href="/creation/edit/{{dayVenue.id}}/search">
+            <a href="/creation/edit/{{day.id}}/searchpage">
                 Add a Venue
             </a>
         </button>
     </div>
-    <table>
-        <th>ID</th>
-        <th>Yelp ID</th>
-        <th>Name</th>
-        <th>Image</th>
-        {% for dv in dayvenue_list %}
-        <tr>
-            <td>
-                {{dv.venue.id}}
-            </td>
-            <td>
-                {{dv.venue.yelp_id}}
-            </td>
-            <td>
-                {{dv.venue.yelp__name}}
-            </td>
-            <td>
-                <img src="{{dv.venue.yelp__image_url}}" height="50">
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% if coordinates %}
-    {% for coordinate in coordinates %}
-        <td>
-            {{coordinate.latitude}}
-                </td>
-                <td>
-                    {{coordinate.longitude}}
-                </td>
-        <br>
-    {% endfor %}
-    {% endif %}
+
+{% if day %}
+    {% include 'creation/dayVenueList.html' with day=day %}
+{% endif %}
 
     <div id="map">    
     </div>
