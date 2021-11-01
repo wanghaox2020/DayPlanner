@@ -8,6 +8,8 @@
 {% block title %} Day Venue List {% endblock %}
 <body>
 {% block body %}
+    {{ coordinates|json_script:"coordinates" }}
+
     <p>Day Name: {{dayVenue.name}}</p> 
     <div>
         <button style = "background-color: whtie" type = "button"> 
@@ -38,9 +40,24 @@
         </tr>
         {% endfor %}
     </table>
+    {% if coordinates %}
+    {% for coordinate in coordinates %}
+        <td>
+            {{coordinate.latitude}}
+                </td>
+                <td>
+                    {{coordinate.longitude}}
+                </td>
+        <br>
+    {% endfor %}
+    {% endif %}
 
     <div id="map">    
     </div>
     
     <script src="{% static 'map.js' %}"></script>
 {% endblock %}
+
+
+</body>
+</html>
