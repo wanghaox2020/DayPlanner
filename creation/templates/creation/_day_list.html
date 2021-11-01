@@ -1,41 +1,56 @@
-<form action="" method ="post">{% csrf_token %}
-    <div>
-      <input type="text"
-      placeholder="Name your Day"
-      name="day_name"
-      required>
-    </div>
-    <br>
+{% extends "dayplanner/base.html" %}
 
-    <button type="submit">
-        New Day
-    </button>
-</form>
+{% block title %} Yelp Search {% endblock %}
 
-Welcome {{ username }}
+{% block body %}
 
-<table>
-    <tr>
-    <th>Pk</th>
-    <th>Name</th>
-        <th>Creator</th>
-    </tr>
-    {% for day in userDayList %}
-    <tr>
-        <td>
-            {{day.id}}
-        </td>
-        <td>
-            {{day.name}}
-        </td>
-        <td>
-            {{day.creator}}
-        </td>
-        <td>
-            <a href="/creation/edit/{{ day.id }}"> Edit</a>
-            <a href="/creation/delete_day?day_id={{ day.id }}"> Delete</a>
+<div class="box">
+    Welcome to DayPlanner, {{ username }}! 
 
+    <form action="" method ="post">{% csrf_token %}
+        <div>
+        <input type="text"
+        placeholder="Name your Day"
+        name="day_name"
+        required>
+        </div>
+        <br>
 
-    </tr>
-    {% endfor %}
-</table>
+        <button type="submit">
+            New Day
+        </button>
+    </form>
+</div>
+
+<div class="box">
+    <table class="table">
+        <tr>
+            <th>Pk</th>
+            <th>Name</th>
+            <th>Creator</th>
+            <th>Modify</th>
+            <th>Delete</th>
+        </tr>
+        {% for day in userDayList %}
+        <tr>
+            <td>
+                {{day.id}}
+            </td>
+            <td>
+                {{day.name}}
+            </td>
+            <td>
+                {{day.creator}}
+            </td>
+            <td>
+                <a href="/creation/edit/{{ day.id }}" class="button is-primary"> Edit</a>
+            </td>
+            <td>
+                <a href="/creation/delete_day?day_id={{ day.id }}" class="button is-danger"> Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
