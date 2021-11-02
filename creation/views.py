@@ -58,7 +58,7 @@ def searchpage(request, day_id):
             # Add Venue into current selected day and refresh the page
             return addVenue(request, day)
 
-        return render(request, "creation/_serach_page.html", context)
+        return render(request, "creation/_search_page.html", context)
     elif request.method == "POST":
         if request.GET.get("search"):
             return search(request, context)
@@ -80,7 +80,7 @@ def search(request, context):
     bussiness_data = yelp_client.search(user_input_param1, user_input_param2)
     context["search_results"] = bussiness_data["businesses"]
 
-    return render(request, "creation/_serach_page.html", context)
+    return render(request, "creation/_search_page.html", context)
 
 
 @login_required(login_url="/authentication/login")
