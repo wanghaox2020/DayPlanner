@@ -29,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-!74e-5!lwrwbm=z+4fsv5u)@n1%m6su5(l#d5krw6ft*)zpzy$"
-YELP_API = "wC-BxMsYiw-hf0UX54YAKeEDvxVHXxgtnNX6MQeuoPufnL65LTjQsoR0CtHR7qayDMgAAPVSR213bEA_yJQrlNhKeI9uZ-AhpcWlZL-2aKK9Njs6CIdxB2r-Db5hYXYx"
+YELP_API = os.environ.get("YELP_API")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
