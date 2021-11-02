@@ -56,7 +56,6 @@ Hello {{ day.creator }}
 
   <p id = "status"></p>
   <a id = "map-link" target="_blank"></a>
-    <a href="creation/edit/{{ day.id }}/viewmap">
 
 {% if search_results %}
   {% include 'creation/_search_results.html' with data=search_results day=day %}
