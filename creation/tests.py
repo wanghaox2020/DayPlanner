@@ -5,7 +5,6 @@ creation_url = "/creation/"
 
 
 class CreationTest(TestCase):
-    def test_creation_page_url(self):
+    def test_creation_page_url_nouser(self):
         response = self.client.get(creation_url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "creation/index.html")
+        self.assertEqual(response.status_code, 302)

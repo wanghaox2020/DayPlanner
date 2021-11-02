@@ -9,4 +9,3 @@
 #     default_lon: -73.935242
 #     default_lat: 40.730610
 #     default_zoom: 12
-    

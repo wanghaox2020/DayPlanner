@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -83,6 +84,7 @@ def search(request, context):
     return render(request, "creation/_serach_page.html", context)
 
 
+@login_required(login_url="/authentication/login")
 def daylist(request):
     # userName is in string
     # Example: login as Admin the userName == "admin"
@@ -96,5 +98,4 @@ def daylist(request):
         "userDayList": userObject.day_set.all().filter(is_active=True),
         "username": userObject.username,
     }
-    return render(request, "creation/_day_list.html", context)  
-
+    return render(request, "creation/_day_list.html", context)
