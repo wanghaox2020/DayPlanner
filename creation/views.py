@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from dayplanner.services import yelp_client
-from django.contrib.auth.models import User
 from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
 
