@@ -8,6 +8,7 @@ before-install:
 
 
 script:
+  - pip install coverage==4.5.4
   - black --check .
   - flake8
   - coverage run --source='.' manage.py test
