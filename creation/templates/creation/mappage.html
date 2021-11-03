@@ -1,9 +1,10 @@
 {% extends "dayplanner/base.html" %}
 {% load static %}
-{%block links%}
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+{%block head%}
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+    <script src="{% static 'map.js' %}"></script>
 {% endblock %}
 {% block title %} Day Venue List {% endblock %}
 <body>
@@ -13,7 +14,7 @@
     <p>Day Name: {{day.name}}</p>
     <p> Author: {{ day.creator.username }}</p>
     <div>
-        <button style = "background-color: white" type = "button"> 
+        <button style = "background-color: white" type = "button">
             <a href="/creation/edit/{{day.id}}/searchpage">
                 Add a Venue
             </a>
@@ -24,10 +25,8 @@
     {% include 'creation/dayVenueList.html' with day=day %}
 {% endif %}
 
-    <div id="map">    
+    <div id="map">
     </div>
-    
-    <script src="{% static 'map.js' %}"></script>
 {% endblock %}
 
 
