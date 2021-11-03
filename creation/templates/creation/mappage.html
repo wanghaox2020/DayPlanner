@@ -1,35 +1,70 @@
 {% extends "dayplanner/base.html" %}
+
 {% load static %}
+
 {%block links%}
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
 {% endblock %}
+
 {% block title %} Day Venue List {% endblock %}
-<body>
+
 {% block body %}
-    {{ coordinates|json_script:"coordinates" }}
 
-    <p>Day Name: {{day.name}}</p>
-    <p> Author: {{ day.creator.username }}</p>
-    <div>
-        <button style = "background-color: white" type = "button"> 
-            <a href="/creation/edit/{{day.id}}/searchpage">
-                Add a Venue
-            </a>
-        </button>
-    </div>
 
-{% if day %}
-    {% include 'creation/dayVenueList.html' with day=day %}
-{% endif %}
-
-    <div id="map">    
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
     </div>
     
-    <script src="{% static 'map.js' %}"></script>
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+
+          <div class="column is-3 is-vcentered">
+                <div class="box">
+
+                    
+                    <label class="label is-medium has-text-centered">
+                        {{day.name}}
+                        <br>
+                        by {{ day.creator.username }}
+                    </label>
+
+                    {% if day %}
+                        {% include 'creation/dayVenueList.html' with day=day %}
+                    {% endif %}
+
+                    {{ coordinates|json_script:"coordinates" }}
+
+                    <div>
+                        <button style = "background-color: white" type = "button"> 
+                            <a href="/creation/edit/{{day.id}}/searchpage">
+                                Add a Venue
+                            </a>
+                        </button>
+                    </div>
+                
+                </div>
+          </div>
+
+          <div class="column is-7">
+                <div class="box">
+                    <figure class="image is-128by128">
+                        <div id="map" style="height: 384px; width:100%"></div>
+                    </figure>
+                    
+                </div>
+          </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+
+<script src="{% static 'map.js' %}"></script>
+
 {% endblock %}
-
-
-</body>
-</html>
