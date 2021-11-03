@@ -23,9 +23,9 @@
                       by {{ day.creator.username }} -->
                   </label>
 
-                  <label class="label is-medium has-text-left has-text-weight-normal">
+                  <!-- <label class="label is-medium has-text-left has-text-weight-normal">
                     Current Venues:
-                  </label>
+                  </label> -->
 
                   {% if day %}
                       {% include 'creation/dayVenueList.html' with day=day %}
@@ -33,8 +33,8 @@
 
                   {{ coordinates|json_script:"coordinates" }}
                   
-                  <a href="/creation/edit/{{day.id}}/searchpage" class="button is-primary is-centered">
-                      Add a Venue
+                  <a href="/creation/edit/{{day.id}}" class="button is-primary is-centered">
+                      To Map...
                   </a>
               
               </div>
@@ -43,8 +43,8 @@
         <div class="column is-6">
               <div class="box has-text-centered">
 
-                <h1 class="title">Locations</h1>
                 <div class="container">
+                  <label class="label is-medium">Locations</label>
                   <p>Please perform your location searches here to start populating your day.</p>
                   <form action="/creation/edit/{{ day.id }}/searchpage?search=True" method ="post">{% csrf_token %}
                     <div class="field">
@@ -98,7 +98,8 @@
               
               {% if search_results %}
                 {% include 'creation/_search_results.html' with data=search_results day=day %}
-              {% endif %}                  
+              {% endif %}        
+
               </div>
         </div>
 
