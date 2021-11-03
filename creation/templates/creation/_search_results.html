@@ -1,20 +1,27 @@
-<p>
-    Sample Yelp Output
-</p>
+{% extends "dayplanner/base.html" %}
+
+{% block title %} Day List {% endblock %}
+
+{% block body %}
 
 {% if data %}
-    <table border="1">
+    <table class="table has-text-left is-fullwidth">
     <tr>
         <th>Name</th>
-        <th>Distance</th>
+        <!-- <th>Distance</th> -->
+        <th class="has-text-centered">Details</th>
+        <th class="has-text-centered">Add</th>
     </tr>
 
     {% for business in data %}
         <tr>
         <td>{{ business.name }}</td>
-        <td>{{ business.distance }}ft</td>
+        <!-- <td>{{ business.distance }}ft</td> -->
         <td>
-            <a href="/resources/venues/for_yelp_id/{{ business.id }}"> Detail</a>
+            <a href="/resources/venues/for_yelp_id/{{ business.id }}" class="button is-primary is-light is-outlined"> To Venue... </a>
+        </td>
+        <td>
+            <a href="/creation/edit/{{ day.id }}/searchpage?yelp_id={{ business.id }}" class="button is-success is-light is-outlined"> Add to Day! </a>
         </td>
         </tr>
     {% endfor %}
@@ -22,3 +29,4 @@
     <h2>Sorry data not found, please try again</h2>
 {% endif %}
 
+{% endblock %}

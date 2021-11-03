@@ -23,7 +23,9 @@
         </a>
         {% if user.is_authenticated %}
         <span class="navbar-item">
-                <a class="navbar-item" href="{% url 'show_profile_page' user.id %}">{{user.get_username}}</a>
+            <button class="button is-warning is-dark has-text-centered">
+                <a href="{% url 'show_profile_page' user.id %}">Profile</a>
+            </button>
         </span>
         <span class="navbar-item">
             <button class="button is-warning is-dark has-text-centered">
