@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('days', '0003_alter_dayvenue_options'),
+        ("days", "0003_alter_dayvenue_options"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='day',
-            name='is_active',
-            field=models.BooleanField(default=True, verbose_name='is_active'),
+            model_name="day",
+            name="is_active",
+            field=models.BooleanField(default=True, verbose_name="is_active"),
         ),
     ]
