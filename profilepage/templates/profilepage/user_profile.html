@@ -1,4 +1,5 @@
 {% extends "dayplanner/base.html" %}
+
 {% block title %} User Profile {% endblock %}
 
 {% block body %}
@@ -11,6 +12,7 @@
             <div class="hero-body">
               <div class="container">
                 <div class="columns is-centered">
+
                     <div class="column">
 
                         <div class="box">
@@ -56,28 +58,24 @@
                         </div>
 
                     </div>
+
                     <div class="column">
-
-                        <div class="box">
-                            <div class="field">
-                              <label for="" class="label">Days Created</label>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 1" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 2" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 3" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                            </div>
-                        </div>
-
+                      <div class="box">
+                        <table class="table">
+                            <tr class="has-text-centered">
+                                <th>Days Created</th>
+                            </tr>
+                            {% for day in userDayList %}
+                            <tr class="has-text-centered">
+                                <td>
+                                  <a href="/creation/edit/{{ day.id }}" class="button is-primary is-fullwidth is-light is-outlined">{{day.name}}</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                      </div>
                     </div>
+
                     <div class="column">
 
                         <div class="box">
@@ -136,13 +134,11 @@
                               </div>
                               <br>
                         </div>
+                      </div>
 
                     </div>
-                <div class="columns is-centered">
-                  <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                  </div>
+
                 </div>
-              </div>
 
 
     <!-- <div class="container has-text-centered">
@@ -150,5 +146,6 @@
 
     <div class="hero-foot has-text-left">
     </div>
+    
 </section>
 {% endblock %}
