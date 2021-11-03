@@ -94,17 +94,20 @@
                 <br><br>
               
                 <p id = "status"></p>
-                <a id = "map-link" target="_blank"></a>
-              
-              {% if search_results %}
-                {% include 'creation/_search_results.html' with data=search_results day=day %}
-              {% endif %}        
+                <a id = "map-link" target="_blank"></a>     
 
               </div>
         </div>
 
       </div>
 
+      <div class="columns">
+        {% if search_results %}
+        {% include 'creation/_search_results.html' with data=search_results day=day %}
+        {% endif %}   
+      </div>
+  
+    </div>
   </div>
 
 </section>
