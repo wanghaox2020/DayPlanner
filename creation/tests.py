@@ -5,19 +5,20 @@ from resources.days.models import Day
 # Create your tests here.
 creation_url = "/creation/"
 
+
 class CreationTest(TestCase):
     def setUp(self):
         self.client = Client()
 
         User = get_user_model()
-        self.test_username = 'test'
-        self.test_password = 'test'
+        self.test_username = "test"
+        self.test_password = "test"
         self.test_user = User.objects.create_user(
             username=self.test_username,
-            email='test2@test.test',
+            email="test2@test.test",
             password=self.test_password,
-            first_name='test',
-            last_name='test',
+            first_name="test",
+            last_name="test",
         )
 
     def test_creation_page_url_nouser(self):
@@ -35,4 +36,3 @@ class CreationTest(TestCase):
         self.client.login(username=self.test_username, password=self.test_password)
         response = self.client.get(creation_url)
         self.assertTrue(response.context["userDayList"].count() > 0)
-        
