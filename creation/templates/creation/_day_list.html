@@ -1,56 +1,94 @@
 {% extends "dayplanner/base.html" %}
 
-{% block title %} Yelp Search {% endblock %}
+{% block title %} Day List {% endblock %}
 
 {% block body %}
 
-<div class="box">
-    Welcome to DayPlanner, {{ username }}! 
 
-    <form action="" method ="post">{% csrf_token %}
-        <div>
-        <input type="text"
-        placeholder="Name your Day"
-        name="day_name"
-        required>
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
+    
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-3">
+            <div class="box">
+
+                <label class="label is-medium has-text-centered">
+                    Welcome to DayPlanner, {{ username }}!
+                </label>
+                
+                <label class="label has-text-weight-normal has-text-left">
+                    Access the days you created, or create a new day below!
+                </label>
+
+                <form action="" method ="post" class="">{% csrf_token %}
+
+                    <div class="control is-primary">
+
+                        <input type="text"
+                        placeholder="Name your new Day..."
+                        name="day_name"
+                        required
+                        class="input is-success">  
+
+                    </div>    
+                    
+                    <br>
+
+                    <div class="field has-text-centered">
+
+                        <button type="submit" class="button is-success">
+                            New Day
+                        </button>
+
+                    </div>
+
+                </form>
+                
+            </div>
+          </div>
+
+
+          <div class="column is-7 is-vcentered">
+            <div class="box">
+                <table class="table">
+                    <tr class="has-text-centered">
+                        <th>Pk</th>
+                        <th>Name</th>
+                        <th>Creator</th>
+                        <th>Modify</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for day in userDayList %}
+                    <tr class="has-text-centered">
+                        <td>
+                            {{day.id}}
+                        </td>
+                        <td>
+                            {{day.name}}
+                        </td>
+                        <td>
+                            {{day.creator}}
+                        </td>
+                        <td>
+                            <a href="/creation/edit/{{ day.id }}" class="button is-primary"> Go to Day...</a>
+                        </td>
+                        <td>
+                            <a href="/creation/delete_day?day_id={{ day.id }}" class="button is-danger"> To the Void!</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+          </div>
+          </div>
+
         </div>
-        <br>
 
-        <button type="submit">
-            New Day
-        </button>
-    </form>
-</div>
+    </div>
+</section>
 
-<div class="box">
-    <table class="table">
-        <tr>
-            <th>Pk</th>
-            <th>Name</th>
-            <th>Creator</th>
-            <th>Modify</th>
-            <th>Delete</th>
-        </tr>
-        {% for day in userDayList %}
-        <tr>
-            <td>
-                {{day.id}}
-            </td>
-            <td>
-                {{day.name}}
-            </td>
-            <td>
-                {{day.creator}}
-            </td>
-            <td>
-                <a href="/creation/edit/{{ day.id }}" class="button is-primary"> Edit</a>
-            </td>
-            <td>
-                <a href="/creation/delete_day?day_id={{ day.id }}" class="button is-danger"> Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
 
 {% endblock %}
