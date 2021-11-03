@@ -22,14 +22,14 @@
       <div class="container">
         <div class="columns is-centered">
 
-          <div class="column is-3 is-vcentered">
+          <div class="column is-4 is-centered">
                 <div class="box">
 
                     
                     <label class="label is-medium has-text-centered">
                         {{day.name}}
-                        <br>
-                        by {{ day.creator.username }}
+                        <!-- <br>
+                        by {{ day.creator.username }} -->
                     </label>
 
                     {% if day %}
@@ -37,19 +37,15 @@
                     {% endif %}
 
                     {{ coordinates|json_script:"coordinates" }}
-
-                    <div>
-                        <button style = "background-color: white" type = "button"> 
-                            <a href="/creation/edit/{{day.id}}/searchpage">
-                                Add a Venue
-                            </a>
-                        </button>
-                    </div>
+                    
+                    <a href="/creation/edit/{{day.id}}/searchpage" class="button is-primary">
+                        Add a Venue
+                    </a>
                 
                 </div>
           </div>
 
-          <div class="column is-7">
+          <div class="column is-6">
                 <div class="box">
                     <figure class="image is-128by128">
                         <div id="map" style="height: 384px; width:100%"></div>
