@@ -1,9 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from .models import Profile
-from django.contrib.auth.models import User
-from resources.days.models import Day, DayVenue
-from resources.venues.models import Venue
 
 # Create your views here.
 
