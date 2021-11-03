@@ -1,0 +1,64 @@
+{% extends "dayplanner/base.html" %}
+
+{% load static %}
+{%block head%}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+    {% load static %}
+    <script src="{% static 'map.js' %}"></script>
+{% endblock %}
+
+{% block title %} Day Venue List {% endblock %}
+
+{% block body %}
+
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
+    
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+
+          <div class="column is-4 is-centered">
+                <div class="box has-text-centered">
+
+                    
+                    <label class="label is-medium has-text-centered">
+                        {{day.name}}
+                        <!-- <br>
+                        by {{ day.creator.username }} -->
+                    </label>
+
+                    {% if day %}
+                        {% include 'creation/dayVenueList.html' with day=day %}
+                    {% endif %}
+
+                    {{ coordinates|json_script:"coordinates" }}
+                    
+                    <a href="/creation/edit/{{day.id}}/searchpage" class="button is-primary is-centered">
+                        Add a Venue
+                    </a>
+                
+                </div>
+          </div>
+
+          <div class="column is-6">
+                <div class="box">
+                    <figure class="image is-128by128">
+                        <div id="map" style="height: 384px; width:100%"></div>
+                    </figure>
+                    
+                </div>
+          </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

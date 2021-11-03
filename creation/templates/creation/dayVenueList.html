@@ -1,0 +1,36 @@
+{% extends "dayplanner/base.html" %}
+
+{% block title %} Day List {% endblock %}
+
+{% block body %}
+
+<table class="table has-text-left is-fullwidth">
+        <tr>
+            <th>Pk</th>
+            <!-- <th>Yelp ID</th> -->
+            <th>Venue Name</th>
+            <!-- <th>Image</th> -->
+        </tr>
+
+        {% for dv in day.dayvenue_set.all %}
+
+            <tr>
+                <td>
+                    {{dv.venue.id}}
+                </td>
+                <!-- <td>
+                    {{dv.venue.yelp_id}}
+                </td> -->
+                <td>
+                    {{dv.venue.yelp__name}}
+                </td>
+                <!-- <td>
+                    {#<img src="{{dv.venue.yelp__image_url}}" height="50px">#}
+                </td> -->
+            </tr>
+
+        {% endfor %}
+
+    </table>
+
+{% endblock %}
