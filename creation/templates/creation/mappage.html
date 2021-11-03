@@ -23,7 +23,7 @@
         <div class="columns is-centered">
 
           <div class="column is-4 is-centered">
-                <div class="box">
+                <div class="box has-text-centered">
 
                     
                     <label class="label is-medium has-text-centered">
@@ -38,7 +38,7 @@
 
                     {{ coordinates|json_script:"coordinates" }}
                     
-                    <a href="/creation/edit/{{day.id}}/searchpage" class="button is-primary">
+                    <a href="/creation/edit/{{day.id}}/searchpage" class="button is-primary is-centered">
                         Add a Venue
                     </a>
                 
@@ -54,12 +54,11 @@
                 </div>
           </div>
 
-
         </div>
 
     </div>
-</section>
 
+</section>
 
 <script src="{% static 'map.js' %}"></script>
 
