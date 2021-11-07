@@ -1,36 +1,143 @@
 {% extends "dayplanner/base.html" %}
 
+{%block head%}
+<script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js'></script>
+{% endblock %}
+
 {% block title %} Day List {% endblock %}
 
 {% block body %}
 
-<table class="table has-text-left is-fullwidth">
-        <tr>
-            <th>Pk</th>
-            <!-- <th>Yelp ID</th> -->
-            <th>Venue Name</th>
-            <!-- <th>Image</th> -->
-        </tr>
-
-        {% for dv in day.dayvenue_set.all %}
-
-            <tr>
-                <td>
-                    {{dv.venue.id}}
-                </td>
-                <!-- <td>
-                    {{dv.venue.yelp_id}}
-                </td> -->
-                <td>
+{% for dv in day.dayvenue_set.all %}
+<div class="card is-horizontal columns">
+    <div class="card-image column is-one-third">
+        <figure class="image is-square">
+            <img src="{{dv.venue.yelp__image_url}}" alt="Image">
+        </figure>
+    </div>
+    <div class="card-content column is-two-thrid">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4" style="color: black">
                     {{dv.venue.yelp__name}}
-                </td>
-                <!-- <td>
-                    {#<img src="{{dv.venue.yelp__image_url}}" height="50px">#}
-                </td> -->
-            </tr>
+                </p>
+                <p class="subtitle is-6" style="color: goldenrod">
+                    {% if dv.venue.yelp__rating == 5%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 4.5%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star-half-alt"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 4%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 3.5%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star-half-alt"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 3%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 2.5%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star-half-alt"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 2%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 1.5%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fas fa-star-half-alt"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 1%}
+                    <span class="icon">
+                        <i class="fas fa-star"></i>
+                    </span>
+                    {%elif dv.venue.yelp__rating == 0.5%}
+                    <span class="icon">
+                        <i class="fas fa-star-half-alt"></i>
+                    </span>
+                    {%endif%}
+                </p>
+            </div>
+        </div>
+        <div>
 
-        {% endfor %}
+        </div>
+        <div class="content">
 
-    </table>
+        </div>
+    </div>
+</div>
+<br>
+{% endfor %}
+
+
+
 
 {% endblock %}

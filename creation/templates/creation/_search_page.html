@@ -6,106 +6,98 @@
 
 <section class="hero is-primary is-fullheight">
   <div class="hero-head">
-      {% include 'dayplanner/_navbar.html' %}
+    {% include 'dayplanner/_navbar.html' %}
   </div>
-  
+
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
 
         <div class="column is-4 is-centered">
-              <div class="box has-text-centered">
+          <div class="box has-text-centered">
 
-                  
-                  <label class="label is-medium has-text-centered">
-                      {{day.name}}
-                      <!-- <br>
+
+            <label class="label is-medium has-text-centered">
+              {{day.name}}
+              <!-- <br>
                       by {{ day.creator.username }} -->
-                  </label>
+            </label>
 
-                  <!-- <label class="label is-medium has-text-left has-text-weight-normal">
+            <!-- <label class="label is-medium has-text-left has-text-weight-normal">
                     Current Venues:
                   </label> -->
 
-                  {% if day %}
-                      {% include 'creation/dayVenueList.html' with day=day %}
-                  {% endif %}
+            {% if day %}
+            {% include 'creation/dayVenueList.html' with day=day %}
+            {% endif %}
 
-                  {{ coordinates|json_script:"coordinates" }}
-                  
-                  <a href="/creation/edit/{{day.id}}" class="button is-primary is-centered">
-                      To Map...
-                  </a>
-              
-              </div>
+            {{ coordinates|json_script:"coordinates" }}
+
+            <a href="/creation/{{day.id}}/detail" class="button is-primary is-centered">
+              To Map...
+            </a>
+
+          </div>
         </div>
 
         <div class="column is-6">
-              <div class="box has-text-centered">
+          <div class="box has-text-centered">
 
-                <div class="container">
-                  <label class="label is-medium">Locations</label>
-                  <p>Please perform your location searches here to start populating your day.</p>
-                  <form action="/creation/edit/{{ day.id }}/searchpage?search=True" method ="post">{% csrf_token %}
-                    <div class="field">
-              
-                      <br>
-                      <div class="control is-medium">
-                        <input type="text"
-                        placeholder="Coffee shops, sushi, dive bar..."
-                        name="user_input_term"
-                        onsubmit="return validateForm()"
-                        required
-                        class = "input is-normal is-hovered">
-                      </div>
-                      <br>
-              
-                      <div class="control is-medium">
-                        <input type="text"
-                        placeholder="Near this location..."
-                        name="user_input_location"
-                        class = "input is-normal is-hovered", id="user_input_location"
-                        onsubmit="return validateForm()"
-                        required>
-                      </div>
-                      <br>
-              
-                      <button type="submit" class="button is-success has-text-centered">
-                        Search
-                      </button>
-                      <br>
-                      <br>
-                      
-                      {#        <button type="submit"#}
-                      {#        class="button is-success">#}
-                      {#        Search Near Me#}
-                      {#        </button>#}
+            <div class="container">
+              <label class="label is-medium">Locations</label>
+              <p>Please perform your location searches here to start populating your day.</p>
+              <form action="/creation/edit/{{ day.id }}/searchpage?search=True" method="post">{% csrf_token %}
+                <div class="field">
 
-                      <button id = "find-me" class="button is-warning has-text-centered">
-                        Search Near Me
-                      </button>
-                      
-                    </div>
-              
-                  </form>
-              
+                  <br>
+                  <div class="control is-medium">
+                    <input type="text" placeholder="Coffee shops, sushi, dive bar..." name="user_input_term"
+                      onsubmit="return validateForm()" required class="input is-normal is-hovered">
+                  </div>
+                  <br>
+
+                  <div class="control is-medium">
+                    <input type="text" placeholder="Near this location..." name="user_input_location"
+                      class="input is-normal is-hovered" , id="user_input_location" onsubmit="return validateForm()"
+                      required>
+                  </div>
+                  <br>
+
+                  <button type="submit" class="button is-success has-text-centered">
+                    Search
+                  </button>
+                  <br>
+                  <br>
+
+                  {# <button type="submit" #} {# class="button is-success">#}
+                    {# Search Near Me#}
+                    {# </button>#}
+
+                  <button id="find-me" class="button is-warning has-text-centered">
+                    Search Near Me
+                  </button>
+
                 </div>
-              
-                <br><br>
-              
-                <p id = "status"></p>
-                <a id = "map-link" target="_blank"></a>
-              
-              {% if search_results %}
-                {% include 'creation/_search_results.html' with data=search_results day=day %}
-              {% endif %}        
 
-              </div>
+              </form>
+
+            </div>
+
+            <br><br>
+
+            <p id="status"></p>
+            <a id="map-link" target="_blank"></a>
+
+            {% if search_results %}
+            {% include 'creation/_search_results.html' with data=search_results day=day %}
+            {% endif %}
+
+          </div>
         </div>
 
       </div>
 
-  </div>
+    </div>
 
 </section>
 
@@ -114,11 +106,11 @@
 
 
   function validateForm() {
-  var x = document.forms["myForm"]["fname"].value;
-  if (x == "") {
-    alert("Name must be filled out");
-    return false;
-  }
+    var x = document.forms["myForm"]["fname"].value;
+    if (x == "") {
+      alert("Name must be filled out");
+      return false;
+    }
   }
 
   function geoFindMe() {
@@ -129,7 +121,7 @@
     mapLink.textContent = '';
 
     function success(position) {
-      const latitude  = position.coords.latitude;
+      const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
 
       status.textContent = '';
@@ -142,16 +134,16 @@
       status.textContent = 'Unable to retrieve your location';
     }
 
-    if(!navigator.geolocation) {
+    if (!navigator.geolocation) {
       status.textContent = 'Geolocation is not supported by your browser';
     } else {
       status.textContent = 'Locating…';
       navigator.geolocation.getCurrentPosition(success, error);
     }
-    }
+  }
 
 
-    document.querySelector('#find-me').addEventListener('click', geoFindMe);
+  document.querySelector('#find-me').addEventListener('click', geoFindMe);
 
 
 </script>
@@ -159,4 +151,5 @@
 {% endblock %}
 
 </body>
+
 </html>

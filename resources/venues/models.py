@@ -14,3 +14,6 @@ class Venue(models.Model):
 
     def yelp__image_url(self):
         return self.raw_yelp_data()["image_url"]
+
+    def yelp__rating(self):
+        return self.raw_yelp_data()["rating"]
