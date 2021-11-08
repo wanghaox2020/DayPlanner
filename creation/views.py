@@ -60,7 +60,7 @@ def editPage(request, day_id):
             currDay.save()
         except Exception as e:
             return HttpResponse("Error Code: %s" % e)
-        day = get_object_or_404(Day, pk=day_id)
+        day.refresh_from_db()
         context = {}
         context["day"] = day
     return HttpResponseRedirect("/creation/%s/detail" % day.id)
