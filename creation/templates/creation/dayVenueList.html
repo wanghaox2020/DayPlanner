@@ -1,6 +1,6 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js'></script>
 {% for dv in day.dayvenue_set.all %}
-<div class="card is-horizontal columns">
+<div class="card is-horizontal columns" style="margin-top: 1px;">
     <div class="card-image column is-one-third">
         <figure class="image is-square">
             <img src="{{dv.venue.yelp__image_url}}" alt="Image">
