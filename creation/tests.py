@@ -41,7 +41,7 @@ class CreationIndex(TestCase):
 class CreationEdit(TestCase):
     def setUp(self):
         self.client = Client()
-        self.creation_url = "/creation/edit"
+        self.creation_url = "/creation"
 
         User = get_user_model()
         self.test_username = "test"
@@ -60,5 +60,7 @@ class CreationEdit(TestCase):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
 
         self.client.login(username=self.test_username, password=self.test_password)
-        response = self.client.get("%s/%d" % (self.creation_url, self.test_day.id))
+        response = self.client.get(
+            "%s/%d/detail" % (self.creation_url, self.test_day.id)
+        )
         self.assertTrue(response.context["day"].name == "test")
