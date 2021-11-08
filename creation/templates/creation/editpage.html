@@ -32,7 +32,7 @@
                 </div>
                 <div class="column is-5">
                     <div class="box">
-                        <form action="/creation/edit/{{day.id}}" method="post" class="box">{% csrf_token %}
+                        <form action="/creation/{{day.id}}/edit" method="post" class="box">{% csrf_token %}
                             <div class="field">
                                 <label for="day_name" class="label">Day Name</label>
                                 <div class="control">
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="field has-text-centered">
-                                <button type="submit" class="button is-success">Submit</button>
+                                <button type="submit" class="button is-success">Save</button>
                             </div>
                         </form>
                         <figure class="image is-256by256">
@@ -55,7 +55,7 @@
                         </figure>
                         <br>
                         <div class="is-centered columns">
-                            <a href="/creation/edit/{{day.id}}/searchpage" class="button is-primary is-centered">
+                            <a href="/creation/{{day.id}}/edit/searchpage" class="button is-primary is-centered">
                                 New Venue
                             </a>
                         </div>

@@ -46,7 +46,7 @@
             <div class="container">
               <label class="label is-medium">Locations</label>
               <p>Please perform your location searches here to start populating your day.</p>
-              <form action="/creation/edit/{{ day.id }}/searchpage?search=True" method="post">{% csrf_token %}
+              <form action="/creation/{{ day.id }}/edit/searchpage?search=True" method="post">{% csrf_token %}
                 <div class="field">
 
                   <br>
