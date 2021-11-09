@@ -60,9 +60,6 @@ def editPage(request, day_id):
             currDay.save()
         except Exception as e:
             return HttpResponse("Error Code: %s" % e)
-        day.refresh_from_db()
-        context = {}
-        context["day"] = day
     return HttpResponseRedirect("/creation/%s/detail" % day.id)
 
 
