@@ -28,51 +28,14 @@ def viewMap(request, day_id):
     context["coordinates"] = coordinates
     return render(request, "creation/mappage.html", context)
 
-def day_venue_up(request, day_id, dv_id):
-    day = get_object_or_404(Day, pk=day_id)
-    DayVenues = day.dayvenue_set.all()
-    curr = DayVenue.objects.get(pk=dv_id)
-    Next = DayVenues.get(pos=curr.pos-1)
-
-    try:
-        with transaction.atomic():
-            tmp = curr.pos
-            curr.pos = Next.pos
-            Next.pos = tmp
-            curr.save()
-            Next.save()
-    except Exception as e:
-        return HttpResponse("Error Code: %s" % e)
-    return editPage(request, day_id)
-
-
-def day_venue_down(request, day_id, dv_id):
-    day = get_object_or_404(Day, pk=day_id)
-    DayVenues = day.dayvenue_set.all()
-    curr = DayVenue.objects.get(pk=dv_id)
-    Next = DayVenues.get(pos=curr.pos+1)
-
-    try:
-        with transaction.atomic():
-            tmp = curr.pos
-            curr.pos = Next.pos
-            Next.pos = tmp
-            curr.save()
-            Next.save()
-    except Exception as e:
-        return HttpResponse("Error Code: %s" % e)
-    return editPage(request, day_id)
-
 
 def editPage(request, day_id):
     day = get_object_or_404(Day, pk=day_id)
     context = {}
     context["day"] = day
     DayVenues = day.dayvenue_set.all()
-    dv_list = []
     fetch_list = []
     for dv in DayVenues:
-        dv_list.append(dv)
         fetch_list.append(dv.venue.yelp_id)
 
     responses = yelp_client.fetch_many(fetch_list)
@@ -94,13 +57,6 @@ def editPage(request, day_id):
         dv_pos_list = request.POST.getlist("dv_pos")
         print(dv_pos_list)
         try:
-            with transaction.atomic():
-                for i in range(len(dv_pos_list)):
-                    if dv_pos_list[i] > dv_pos_list.length:
-                        raise Exception
-                    else:
-                        dv_list[i].pos = dv_pos_list[i]
-                        dv_list[i].save()
             currDay = Day.objects.get(id=day_id)
             currDay.name = day_name
             currDay.description = day_description
@@ -108,6 +64,40 @@ def editPage(request, day_id):
         except Exception as e:
             return HttpResponse("Error Code: %s" % e)
     return HttpResponseRedirect("/creation/%s/detail" % day.id)
+
+
+def day_venue_up(request, day_id, dv_id):
+    day = get_object_or_404(Day, pk=day_id)
+    DayVenues = day.dayvenue_set.all()
+    curr = DayVenue.objects.get(pk=dv_id)
+    try:
+        with transaction.atomic():
+            Next = DayVenues.get(pos=curr.pos - 1)
+            tmp = curr.pos
+            curr.pos = Next.pos
+            Next.pos = tmp
+            curr.save()
+            Next.save()
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+    return HttpResponseRedirect("/creation/%s/edit" % day.id)
+
+
+def day_venue_down(request, day_id, dv_id):
+    day = get_object_or_404(Day, pk=day_id)
+    DayVenues = day.dayvenue_set.all()
+    curr = DayVenue.objects.get(pk=dv_id)
+    try:
+        with transaction.atomic():
+            Next = DayVenues.get(pos=curr.pos + 1)
+            tmp = curr.pos
+            curr.pos = Next.pos
+            Next.pos = tmp
+            curr.save()
+            Next.save()
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+    return HttpResponseRedirect("/creation/%s/edit" % day.id)
 
 
 def deleteday(request):
