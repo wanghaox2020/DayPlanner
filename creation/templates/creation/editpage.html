@@ -24,7 +24,7 @@
             <div class="columns is-centered">
                 <div class="column is-5 is-centered">
                     {% if day %}
-                    {% include 'creation/dayVenueList.html' with day=day %}
+                    {% include 'creation/edit_day_venue_list.html' with day=day %}
                     {% endif %}
 
                     {{ coordinates|json_script:"coordinates" }}
