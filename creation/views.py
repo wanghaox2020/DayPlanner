@@ -5,6 +5,7 @@ from django.shortcuts import render
 from dayplanner.services import yelp_client
 from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
+from django.db import transaction
 
 
 def viewMap(request, day_id):
@@ -33,8 +34,10 @@ def editPage(request, day_id):
     context = {}
     context["day"] = day
     DayVenues = day.dayvenue_set.all()
+    dv_list = []
     fetch_list = []
     for dv in DayVenues:
+        dv_list.append(dv)
         fetch_list.append(dv.venue.yelp_id)
 
     responses = yelp_client.fetch_many(fetch_list)
@@ -53,7 +56,16 @@ def editPage(request, day_id):
     elif request.method == "POST":
         day_name = request.POST["day_name"]
         day_description = request.POST["day_description"]
+        dv_pos_list = request.POST.getlist("dv_pos")
+        print(dv_pos_list)
         try:
+            with transaction.atomic():
+                for i in range(len(dv_pos_list)):
+                    if dv_pos_list[i] > dv_pos_list.length:
+                        raise Exception
+                    else:
+                        dv_list[i].pos = dv_pos_list[i]
+                        dv_list[i].save()
             currDay = Day.objects.get(id=day_id)
             currDay.name = day_name
             currDay.description = day_description
