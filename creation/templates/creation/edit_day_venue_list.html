@@ -118,13 +118,21 @@
             </div>
         </div>
         <div>
-
+            <span>
+                {% if dv.pos > 1 %}
+                <a href="/creation/{{ day.id }}/edit/{{ dv.id }}/up"><i class="fas fa-arrow-up"></i></a>
+                {% endif %}
+            </span>
+            {% if dv.pos < day.dayvenue_set.all|length %}
+                <a href="/creation/{{ day.id }}/edit/{{ dv.id }}/down"><i class="fas fa-arrow-down"></i></a>
+            {% endif %}
         </div>
         <div class="content">
 
         </div>
     </div>
 </div>
+
 <div class="is-horizontal columns">
     Position:<span><input class="input is-primary is-small" type="text" value="{{dv.pos}}" name="dv_pos">
     </span>

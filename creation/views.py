@@ -28,6 +28,41 @@ def viewMap(request, day_id):
     context["coordinates"] = coordinates
     return render(request, "creation/mappage.html", context)
 
+def day_venue_up(request, day_id, dv_id):
+    day = get_object_or_404(Day, pk=day_id)
+    DayVenues = day.dayvenue_set.all()
+    curr = DayVenue.objects.get(pk=dv_id)
+    Next = DayVenues.get(pos=curr.pos-1)
+
+    try:
+        with transaction.atomic():
+            tmp = curr.pos
+            curr.pos = Next.pos
+            Next.pos = tmp
+            curr.save()
+            Next.save()
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+    return editPage(request, day_id)
+
+
+def day_venue_down(request, day_id, dv_id):
+    day = get_object_or_404(Day, pk=day_id)
+    DayVenues = day.dayvenue_set.all()
+    curr = DayVenue.objects.get(pk=dv_id)
+    Next = DayVenues.get(pos=curr.pos+1)
+
+    try:
+        with transaction.atomic():
+            tmp = curr.pos
+            curr.pos = Next.pos
+            Next.pos = tmp
+            curr.save()
+            Next.save()
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+    return editPage(request, day_id)
+
 
 def editPage(request, day_id):
     day = get_object_or_404(Day, pk=day_id)
@@ -72,9 +107,6 @@ def editPage(request, day_id):
             currDay.save()
         except Exception as e:
             return HttpResponse("Error Code: %s" % e)
-        day.refresh_from_db()
-        context = {}
-        context["day"] = day
     return HttpResponseRedirect("/creation/%s/detail" % day.id)
 
 
