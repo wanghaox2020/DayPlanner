@@ -28,7 +28,7 @@
                   </label> -->
 
             {% if day %}
-            {% include 'creation/_dayVenueList.html' with day=day %}
+            {% include 'creation/_edit_day_venue_list.html' with day=day %}
             {% endif %}
 
             {{ coordinates|json_script:"coordinates" }}
