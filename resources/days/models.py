@@ -1,6 +1,7 @@
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth.models import User
 from resources.venues.models import Venue
+from django.http import HttpResponse
 
 
 class Day(models.Model):
@@ -9,6 +10,34 @@ class Day(models.Model):
     name = models.CharField(max_length=100, null=False)
     description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField("is_active", default=True)
+
+    def day_venue_up(request, day_venues, dv_id):
+        with transaction.atomic():
+            curr = DayVenue.objects.get(pk=dv_id)
+            try:
+                # if there's no such next, it will raise an error
+                next = day_venues.get(pos=curr.pos - 1)
+            except Exception as e:
+                return HttpResponse("Error Code: %s" % e)
+            tmp = curr.pos
+            curr.pos = next.pos
+            next.pos = tmp
+            curr.save()
+            next.save()
+
+    def day_venue_down(request, day_venues, dv_id):
+        with transaction.atomic():
+            curr = DayVenue.objects.get(pk=dv_id)
+            try:
+                # if there's no such next, it will raise an error
+                next = day_venues.get(pos=curr.pos - 1)
+            except Exception as e:
+                return HttpResponse("Error Code: %s" % e)
+            tmp = curr.pos
+            curr.pos = next.pos
+            next.pos = tmp
+            curr.save()
+            next.save()
 
 
 class DayVenue(models.Model):

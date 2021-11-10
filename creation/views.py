@@ -5,7 +5,6 @@ from django.shortcuts import render
 from dayplanner.services import yelp_client
 from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
-from django.db import transaction
 
 
 def viewMap(request, day_id):
@@ -67,15 +66,8 @@ def editPage(request, day_id):
 def day_venue_up(request, day_id, dv_id):
     day = get_object_or_404(Day, pk=day_id)
     day_venues = day.dayvenue_set.all()
-    curr = DayVenue.objects.get(pk=dv_id)
     try:
-        with transaction.atomic():
-            next = day_venues.get(pos=curr.pos - 1)
-            tmp = curr.pos
-            curr.pos = next.pos
-            next.pos = tmp
-            curr.save()
-            next.save()
+        day.day_venue_up(day_venues, dv_id)
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
     return HttpResponseRedirect("/creation/%s/edit" % day.id)
@@ -84,15 +76,8 @@ def day_venue_up(request, day_id, dv_id):
 def day_venue_down(request, day_id, dv_id):
     day = get_object_or_404(Day, pk=day_id)
     day_venues = day.dayvenue_set.all()
-    curr = DayVenue.objects.get(pk=dv_id)
     try:
-        with transaction.atomic():
-            next = day_venues.get(pos=curr.pos + 1)
-            tmp = curr.pos
-            curr.pos = next.pos
-            next.pos = tmp
-            curr.save()
-            next.save()
+        day.day_venue_down(day_venues, dv_id)
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
     return HttpResponseRedirect("/creation/%s/edit" % day.id)
