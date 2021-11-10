@@ -126,9 +126,7 @@ class CreationEdit(TestCase):
 
         self.client.login(username=self.test_username, password=self.test_password)
         self.client.get(
-        "%s/%d/edit/searchpage?yelp_id=test_yelp_id"
-        % (self.creation_url, self.test_day.id)
+            "%s/%d/edit/searchpage?yelp_id=test_yelp_id"
+            % (self.creation_url, self.test_day.id)
         )
         self.assertTrue(self.test_day.dayvenue_set.count() == 3)
-
-
