@@ -86,7 +86,7 @@ class CreationEdit(TestCase):
     def test_creation_page_move_up_dayvenue(self):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
         self.test_venue = Venue.objects.create(yelp_id="test_yelp_id")
-        self.test_dayvenue = DayVenue.objects.create(
+        self.test_dayvenue1 = DayVenue.objects.create(
             day=self.test_day, venue=self.test_venue, pos=1
         )
         self.test_dayvenue2 = DayVenue.objects.create(
@@ -101,7 +101,7 @@ class CreationEdit(TestCase):
     def test_creation_page_move_down_dayvenue(self):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
         self.test_venue = Venue.objects.create(yelp_id="test_yelp_id")
-        self.test_dayvenue = DayVenue.objects.create(
+        self.test_dayvenue1 = DayVenue.objects.create(
             day=self.test_day, venue=self.test_venue, pos=1
         )
         self.test_dayvenue2 = DayVenue.objects.create(
@@ -111,4 +111,4 @@ class CreationEdit(TestCase):
         self.client.login(username=self.test_username, password=self.test_password)
         self.client.get("/creation/2/edit/1/down")
 
-        self.assertFalse(self.test_dayvenue2 == 2)
+        self.assertFalse(self.test_dayvenue1 == 1)
