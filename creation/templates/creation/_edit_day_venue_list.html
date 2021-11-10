@@ -1,0 +1,71 @@
+<script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js'></script>
+
+{% for dv in day.dayvenue_set.all %}
+<div class="card">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-128x128 is-square">
+                    <img src="{{dv.venue.yelp__image_url}}" alt="Image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-4 has-text-black">
+                    {{dv.venue.yelp__name}}
+                </p>
+                <p class="subtitle is-6" style="color: goldenrod">
+                    {% if dv.venue.yelp__rating >= 1 %}
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                    {%endif%}
+                    {% if dv.venue.yelp__rating >= 2 %}
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                    {%endif%}
+                    {% if dv.venue.yelp__rating >= 3 %}
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                    {%endif%}
+                    {% if dv.venue.yelp__rating >= 4 %}
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                    {%endif%}
+                    {% if dv.venue.yelp__rating >= 5 %}
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                    {%endif%}
+
+                    {% if dv.venue.yelp__rating|stringformat:"s" in '0.5 1.5 2.5 3.5 4.5'  %}
+                        <span class="icon"><i class="fas fa-star-half-alt"></i></span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <div class="card-footer-item">
+            {% if dv.pos > 1 %}
+            <a href="/creation/{{ day.id }}/edit/{{ dv.id }}/up">
+                <i class="fas fa-arrow-up"></i>
+            </a>
+            {% else %}
+            <i class="fas fa-arrow-up" style="color: lightgray;"></i>
+            {% endif%}
+
+            <span class="px-5">Move</span>
+            {% if dv.pos < day.dayvenue_set.all|length %} <a href="/creation/{{ day.id }}/edit/{{ dv.id }}/down">
+                <i class="fas fa-arrow-down"></i>
+                </a>
+                {% else %}
+                <i class="fas fa-arrow-down" style="color: lightgray;"></i>
+                {% endif %}
+        </div>
+        <div class="card-footer-item">
+            <button class="button is-danger is-inverted is-small">
+                <a href="/creation/{{ day.id }}/edit/delete_dayvenue/{{ dv.id }}">
+                    <span>Delete</span>
+                    <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </a>
+            </button>
+        </div>
+    </footer>
+</div>
+<br>
+{% endfor %}
