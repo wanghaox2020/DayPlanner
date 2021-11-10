@@ -1,1 +1,1 @@
-web: gunicorn dayplanner.wsgi
+web: gunicorn dayplanner.wsgi --log-level debug
