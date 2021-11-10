@@ -18,7 +18,7 @@ class Day(models.Model):
             deleted_pos = deleted_dv.pos
             deleted_dv.delete()
             # The `order_by("pos")` may not be needed here, because of the Meta class
-            # that automaticaly orders DayVenues.  It is left here for clarity
+            # that automatically orders DayVenues.  It is left here for clarity
             for dv in self.dayvenue_set.filter(pos__gt=deleted_pos).order_by("pos"):
                 dv.pos = dv.pos - 1
                 dv.save()
