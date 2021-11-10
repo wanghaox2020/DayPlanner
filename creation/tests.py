@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from resources.days.models import Day
+from resources.days.models import Day, DayVenue
+from resources.venues.models import Venue
 
 # Create your tests here.
 
@@ -64,3 +65,20 @@ class CreationEdit(TestCase):
             "%s/%d/detail" % (self.creation_url, self.test_day.id)
         )
         self.assertTrue(response.context["day"].name == "test")
+
+    def test_creation_page_delete_dayvenue(self):
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+        self.test_venue = Venue.objects.create(yelp_id="test_yelp_id")
+        self.test_dayvenue = DayVenue.objects.create(
+            day=self.test_day, venue=self.test_venue, pos=1
+        )
+
+        self.assertTrue(self.test_day.dayvenue_set.count() == 1)
+
+        self.client.login(username=self.test_username, password=self.test_password)
+        self.client.get(
+            "%s/%d/edit/delete_dayvenue/%d"
+            % (self.creation_url, self.test_day.id, self.test_dayvenue.id)
+        )
+
+        self.assertTrue(self.test_day.dayvenue_set.count() == 0)
