@@ -170,7 +170,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if "CI" in os.environ:
+if "HEROKU" in os.environ:
+    import django_heroku
+
+    django_heroku.settings(locals())
+elif "CI" in os.environ:
     import django_heroku
 
     django_heroku.settings(locals(), test_runner=False)
