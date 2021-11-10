@@ -118,8 +118,8 @@ class CreationEdit(TestCase):
             % (self.creation_url, self.test_day.id, self.test_dayvenue1.id)
         )
         self.assertTrue(DayVenue.objects.get(pk=self.test_dayvenue1.id).pos == 2)
-       
-     def test_creation_page_addVenue(self):
+
+    def test_creation_page_addVenue(self):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
         self.test_venue = Venue.objects.create(yelp_id="test_yelp_id")
         self.test_dayvenue1 = DayVenue.objects.create(
