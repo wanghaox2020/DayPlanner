@@ -177,3 +177,7 @@ if "HEROKU" in os.environ:
     import django_heroku
 
     django_heroku.settings(locals())
+elif "CI" in os.environ:
+    import django_heroku
+
+    django_heroku.settings(locals(), test_runner=False)
