@@ -54,8 +54,6 @@ def editPage(request, day_id):
     elif request.method == "POST":
         day_name = request.POST["day_name"]
         day_description = request.POST["day_description"]
-        dv_pos_list = request.POST.getlist("dv_pos")
-        print(dv_pos_list)
         try:
             currDay = Day.objects.get(id=day_id)
             currDay.name = day_name
@@ -68,16 +66,16 @@ def editPage(request, day_id):
 
 def day_venue_up(request, day_id, dv_id):
     day = get_object_or_404(Day, pk=day_id)
-    DayVenues = day.dayvenue_set.all()
+    day_venues = day.dayvenue_set.all()
     curr = DayVenue.objects.get(pk=dv_id)
     try:
         with transaction.atomic():
-            Next = DayVenues.get(pos=curr.pos - 1)
+            next = day_venues.get(pos=curr.pos - 1)
             tmp = curr.pos
-            curr.pos = Next.pos
-            Next.pos = tmp
+            curr.pos = next.pos
+            next.pos = tmp
             curr.save()
-            Next.save()
+            next.save()
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
     return HttpResponseRedirect("/creation/%s/edit" % day.id)
@@ -85,16 +83,16 @@ def day_venue_up(request, day_id, dv_id):
 
 def day_venue_down(request, day_id, dv_id):
     day = get_object_or_404(Day, pk=day_id)
-    DayVenues = day.dayvenue_set.all()
+    day_venues = day.dayvenue_set.all()
     curr = DayVenue.objects.get(pk=dv_id)
     try:
         with transaction.atomic():
-            Next = DayVenues.get(pos=curr.pos + 1)
+            next = day_venues.get(pos=curr.pos + 1)
             tmp = curr.pos
-            curr.pos = Next.pos
-            Next.pos = tmp
+            curr.pos = next.pos
+            next.pos = tmp
             curr.save()
-            Next.save()
+            next.save()
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
     return HttpResponseRedirect("/creation/%s/edit" % day.id)
