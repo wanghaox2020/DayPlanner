@@ -105,10 +105,7 @@ DATABASES = {
 if TESTING:
     yelp_cache_backend = "django.core.cache.backends.dummy.DummyCache"
 else:
-    # NOTE: file system caching may have been causing issues, so we temporarily switch
-    # to in memory caching
-    # yelp_cache_backend = "django.core.cache.backends.filebased.FileBasedCache"
-    yelp_cache_backend = "django.core.cache.backends.locmem.LocMemCache"
+    yelp_cache_backend = "django.core.cache.backends.filebased.FileBasedCache"
 
 CACHES = {
     "default": {
@@ -173,7 +170,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-if "CI" in os.environ:
+if "HEROKU" in os.environ:
+    import django_heroku
+
+    django_heroku.settings(locals())
+elif "CI" in os.environ:
     import django_heroku
 
     django_heroku.settings(locals(), test_runner=False)
