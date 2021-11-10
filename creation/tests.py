@@ -111,4 +111,4 @@ class CreationEdit(TestCase):
         self.client.login(username=self.test_username, password=self.test_password)
         self.client.get("/creation/2/edit/1/down")
 
-        self.assertFalse(self.test_dayvenue2 == 1)
+        self.assertFalse(self.test_dayvenue2 == 2)
