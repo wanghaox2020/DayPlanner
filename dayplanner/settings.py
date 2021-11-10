@@ -105,7 +105,8 @@ DATABASES = {
 if TESTING:
     yelp_cache_backend = "django.core.cache.backends.dummy.DummyCache"
 else:
-    # NOTE: file system caching may have been causing issues, so we temporarily switch to in memory caching
+    # NOTE: file system caching may have been causing issues, so we temporarily switch
+    # to in memory caching
     # yelp_cache_backend = "django.core.cache.backends.filebased.FileBasedCache"
     yelp_cache_backend = "django.core.cache.backends.locmem.LocMemCache"
 
