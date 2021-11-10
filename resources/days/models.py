@@ -30,7 +30,7 @@ class Day(models.Model):
             curr = DayVenue.objects.get(pk=dv_id)
             try:
                 # if there's no such next, it will raise an error
-                next = day_venues.get(pos=curr.pos - 1)
+                next = day_venues.get(pos=curr.pos + 1)
             except Exception as e:
                 return HttpResponse("Error Code: %s" % e)
             tmp = curr.pos
