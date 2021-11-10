@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth.models import User
 from resources.venues.models import Venue
 
@@ -9,6 +9,19 @@ class Day(models.Model):
     name = models.CharField(max_length=100, null=False)
     description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField("is_active", default=True)
+
+    # For reference on django transactions,
+    # see: https://docs.djangoproject.com/en/3.2/topics/db/transactions/#django.db.transaction.atomic # noqa: E501
+    def delete_dayvenue(self, pk):
+        with transaction.atomic():
+            deleted_dv = DayVenue.objects.get(pk=pk)
+            deleted_pos = deleted_dv.pos
+            deleted_dv.delete()
+            # The `order_by("pos")` may not be needed here, because of the Meta class
+            # that automatically orders DayVenues.  It is left here for clarity
+            for dv in self.dayvenue_set.filter(pos__gt=deleted_pos).order_by("pos"):
+                dv.pos = dv.pos - 1
+                dv.save()
 
 
 class DayVenue(models.Model):

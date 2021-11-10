@@ -77,6 +77,16 @@ def deleteday(request):
     return HttpResponseRedirect("/creation")
 
 
+def delete_dayvenue(request, day_id, dayvenue_id):
+    day = get_object_or_404(Day, pk=day_id)
+    try:
+        day.delete_dayvenue(pk=dayvenue_id)
+    except Exception as e:
+        print("-- deletion error %s") % (e)
+
+    return HttpResponseRedirect("/creation/%i/edit" % day_id)
+
+
 def searchpage(request, day_id):
     # Initializing the context dict
     context = {}

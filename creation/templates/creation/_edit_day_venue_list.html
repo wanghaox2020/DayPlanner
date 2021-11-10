@@ -5,7 +5,7 @@
     <div class="card-content">
         <div class="media">
             <div class="media-left">
-                <figure class="image is-48x48">
+                <figure class="image is-128x128 is-square">
                     <img src="{{dv.venue.yelp__image_url}}" alt="Image">
                 </figure>
             </div>
@@ -51,10 +51,12 @@
         </div>
         <div class="card-footer-item">
             <button class="button is-danger is-inverted is-small">
-                <span>Delete</span>
-                <span class="icon is-small">
-                    <i class="fas fa-times"></i>
-                </span>
+                <a href="/creation/{{ day.id }}/edit/delete_dayvenue/{{ dv.id }}">
+                    <span>Delete</span>
+                    <span class="icon is-small">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </a>
             </button>
         </div>
     </footer>
