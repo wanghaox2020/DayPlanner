@@ -112,3 +112,23 @@ class CreationEdit(TestCase):
         self.client.get("/creation/2/edit/1/down")
 
         self.assertFalse(self.test_dayvenue1 == 1)
+
+    def test_creation_page_addVenue(self):
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+        self.test_venue = Venue.objects.create(yelp_id="test_yelp_id")
+        self.test_dayvenue1 = DayVenue.objects.create(
+            day=self.test_day, venue=self.test_venue, pos=1
+        )
+        self.test_dayvenue2 = DayVenue.objects.create(
+            day=self.test_day, venue=self.test_venue, pos=2
+        )
+        self.assertTrue(self.test_day.dayvenue_set.count() == 2)
+
+        self.client.login(username=self.test_username, password=self.test_password)
+        self.client.get(
+        "%s/%d/edit/searchpage?yelp_id=test_yelp_id"
+        % (self.creation_url, self.test_day.id)
+        )
+        self.assertTrue(self.test_day.dayvenue_set.count() == 3)
+
+
