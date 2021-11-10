@@ -1,0 +1,68 @@
+{% extends "dayplanner/base.html" %}
+
+{% load static %}
+{%block head%}
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+{% load static %}
+<script src="{% static 'map.js' %}"></script>
+{% endblock %}
+
+{% block title %} Day Venue List {% endblock %}
+
+{% block body %}
+
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
+
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-5 is-centered">
+                    {% if day %}
+                    {% include 'creation/_edit_day_venue_list.html' with day=day %}
+                    {% endif %}
+
+                    {{ coordinates|json_script:"coordinates" }}
+
+                </div>
+                <div class="column is-5">
+                    <div class="box">
+                        <form action="/creation/{{day.id}}/edit" method="post" class="box">{% csrf_token %}
+                            <div class="field">
+                                <label for="day_name" class="label">Day Name</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="day_name" value="{{day.name}}" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="day_description" class="label">Description</label>
+                                <div class="control">
+                                    <textarea class="textarea" placeholder="Please Enter Some Description"
+                                        name="day_description">{{day.description}}</textarea>
+                                </div>
+                            </div>
+                            <div class="field has-text-centered">
+                                <button type="submit" class="button is-success">Save</button>
+                            </div>
+                        </form>
+                        <figure class="image is-256by256">
+                            <div id="map" style="height: 384px; width:100%"></div>
+                        </figure>
+                        <br>
+                        <div class="is-centered columns">
+                            <a href="/creation/{{day.id}}/edit/searchpage" class="button is-primary is-centered">
+                                New Venue
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{% endblock %}

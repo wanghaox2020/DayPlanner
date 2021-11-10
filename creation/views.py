@@ -28,6 +28,41 @@ def viewMap(request, day_id):
     return render(request, "creation/mappage.html", context)
 
 
+def editPage(request, day_id):
+    day = get_object_or_404(Day, pk=day_id)
+    context = {}
+    context["day"] = day
+    DayVenues = day.dayvenue_set.all()
+    fetch_list = []
+    for dv in DayVenues:
+        fetch_list.append(dv.venue.yelp_id)
+
+    responses = yelp_client.fetch_many(fetch_list)
+    coordinates = []
+    # [{"latitude":<lat_val>,"longitude":<long_val>,"name":<name>}]
+    for resp in responses:
+        data = resp["coordinates"]
+        data["name"] = resp["name"]
+        coordinates.append(data)
+
+    context["coordinates"] = coordinates
+
+    if request.method == "GET":
+        return render(request, "creation/editpage.html", context)
+
+    elif request.method == "POST":
+        day_name = request.POST["day_name"]
+        day_description = request.POST["day_description"]
+        try:
+            currDay = Day.objects.get(id=day_id)
+            currDay.name = day_name
+            currDay.description = day_description
+            currDay.save()
+        except Exception as e:
+            return HttpResponse("Error Code: %s" % e)
+    return HttpResponseRedirect("/creation/%s/detail" % day.id)
+
+
 def deleteday(request):
     day_id = request.GET.get("day_id")
     if not day_id:
