@@ -37,6 +37,33 @@
             </div>
         </div>
     </div>
+    <footer class="card-footer">
+        <div class="card-footer-item">
+            {% if dv.pos > 1 %}
+            <a href="/creation/{{ day.id }}/edit/{{ dv.id }}/up">
+                <i class="fas fa-arrow-up"></i>
+            </a>
+            {% else %}
+            <i class="fas fa-arrow-up" style="color: lightgray;"></i>
+            {% endif%}
+
+            <span class="px-5">Move</span>
+            {% if dv.pos < day.dayvenue_set.all|length %} <a href="/creation/{{ day.id }}/edit/{{ dv.id }}/down">
+                <i class="fas fa-arrow-down"></i>
+                </a>
+                {% else %}
+                <i class="fas fa-arrow-down" style="color: lightgray;"></i>
+                {% endif %}
+        </div>
+        <div class="card-footer-item">
+            <button class="button is-danger is-inverted is-small">
+                <span>Delete</span>
+                <span class="icon is-small">
+                    <i class="fas fa-times"></i>
+                </span>
+            </button>
+        </div>
+    </footer>
 </div>
 <br>
 {% endfor %}
