@@ -63,6 +63,26 @@ def editPage(request, day_id):
     return HttpResponseRedirect("/creation/%s/detail" % day.id)
 
 
+def day_venue_up(request, day_id, dv_id):
+    day = get_object_or_404(Day, pk=day_id)
+    day_venues = day.dayvenue_set.all()
+    try:
+        day.day_venue_up(day_venues, dv_id)
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+    return HttpResponseRedirect("/creation/%s/edit" % day.id)
+
+
+def day_venue_down(request, day_id, dv_id):
+    day = get_object_or_404(Day, pk=day_id)
+    day_venues = day.dayvenue_set.all()
+    try:
+        day.day_venue_down(day_venues, dv_id)
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+    return HttpResponseRedirect("/creation/%s/edit" % day.id)
+
+
 def deleteday(request):
     day_id = request.GET.get("day_id")
     if not day_id:
