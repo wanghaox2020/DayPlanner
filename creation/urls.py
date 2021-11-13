@@ -12,5 +12,6 @@ urlpatterns = [
     path("delete_day", views.deleteday),
     path("<int:day_id>/edit/<int:dv_id>/up", views.day_venue_up),
     path("<int:day_id>/edit/<int:dv_id>/down", views.day_venue_down),
-    path(" <int:day_id>/edit/categories", views.edit_categories_page),
+    path("<int:day_id>/edit/categories", views.edit_categories_page),
+    path("<int:day_id>/edit/categories/add/<int:daycat_id>", views.add_category),
 ]

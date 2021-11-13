@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from dayplanner.services import yelp_client
-from resources.days.models import Day, DayVenue
+from resources.days.models import Day, DayVenue, Category, DayCategory
 from resources.venues.models import Venue
 
 
@@ -148,7 +148,6 @@ def search(request, context):
     return render(request, "creation/_search_page.html", context)
 
 
-
 @login_required(login_url="/authentication/login")
 def daylist(request):
     # userName is in string
@@ -165,8 +164,22 @@ def daylist(request):
     }
     return render(request, "creation/_day_list.html", context)
 
-def edit_categories_page(request,day_id):
+
+def edit_categories_page(request, day_id):
     day = get_object_or_404(Day, pk=day_id)
-    curr_categories = day.category_set.all()
-    all_categories = Category.objects.all()
-    
+    context = {
+        "curr_categories": day.daycategory_set.all(),
+        "all_categories": Category.objects.filter(),
+        "day": day,
+    }
+    return render(request, "creation/edit_category_page.html", context)
+
+
+def add_category(request, day_id, daycat_id):
+    day = get_object_or_404(Day, pk=day_id)
+    daycat = get_object_or_404(Category, pk=daycat_id)
+    try:
+        DayCategory.objects.create(day=day, cat=daycat)
+    except Exception as e:
+        print("-- deletion error %s") % (e)
+    return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
