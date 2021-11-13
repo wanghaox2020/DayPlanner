@@ -7,23 +7,49 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('days', '0006_alter_day_description'),
+        ("days", "0006_alter_day_description"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cat', models.CharField(max_length=20, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("cat", models.CharField(max_length=20, unique=True)),
             ],
         ),
         migrations.CreateModel(
-            name='DayCategory',
+            name="DayCategory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cat', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='days.category')),
-                ('day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='days.day')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "cat",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="days.category"
+                    ),
+                ),
+                (
+                    "day",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="days.day"
+                    ),
+                ),
             ],
         ),
     ]
