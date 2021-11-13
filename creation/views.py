@@ -163,3 +163,6 @@ def daylist(request):
         "username": userObject.username,
     }
     return render(request, "creation/_day_list.html", context)
+
+def edit_categories(request,day_id):
+    pass 
