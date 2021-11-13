@@ -148,6 +148,7 @@ def search(request, context):
     return render(request, "creation/_search_page.html", context)
 
 
+
 @login_required(login_url="/authentication/login")
 def daylist(request):
     # userName is in string
@@ -164,5 +165,8 @@ def daylist(request):
     }
     return render(request, "creation/_day_list.html", context)
 
-def edit_categories(request,day_id):
-    pass 
+def edit_categories_page(request,day_id):
+    day = get_object_or_404(Day, pk=day_id)
+    curr_categories = day.category_set.all()
+    all_categories = Category.objects.all()
+    
