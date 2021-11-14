@@ -54,14 +54,12 @@ class Day(models.Model):
 
     def fork(self, creator):
         with transaction.atomic():
-            new_day = Day.objects.create()
-
-            new_day.creator = creator
-            new_day.name = self.name
-            new_day.description = self.description
+            new_day = Day.objects.create(
+                creator=creator, name=self.name, description=self.description
+            )
 
             for dv in self.dayvenue_set.all():
-                DayVenue.objects.create(day=dv.day, venue=dv.venue, pos=dv.pos)
+                DayVenue.objects.create(day=new_day, venue=dv.venue, pos=dv.pos)
 
 
 class DayVenue(models.Model):
