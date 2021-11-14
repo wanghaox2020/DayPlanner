@@ -9,8 +9,39 @@
             {% include 'dayplanner/_navbar.html' %}
         </div>
 
-
-    </section>
-
+    <div class="column is-7 is-vcentered">
+        <div class="box">
+            <table class="table">
+                <tr class="has-text-centered">
+                    <th>Pk</th>
+                    <th>Name</th>
+                    <th>Creator</th>
+                    <th>Modify</th>
+                    <th>Delete</th>
+                </tr>
+                {% for day in days %}
+                    <tr class="has-text-centered">
+                        <td>
+                            {{day.id}}
+                        </td>
+                        <td>
+                            {{day.name}}
+                        </td>
+                        <td>
+                            {{day.creator}}
+                        </td>
+                        <td>
+                            <a class="button is-primary"> Go to Day...</a>
+                        </td>
+                        <td>
+                            <a  class="button is-danger"> To the
+                                Void!</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 
 {% endblock %}
+</section>
