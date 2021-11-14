@@ -4,5 +4,5 @@ app_name = "explore"
 
 
 urlpatterns = [
-    path("",views.explore),
+    path("", views.explore),
 ]
