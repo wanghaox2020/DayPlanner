@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "resources.days.apps.DaysConfig",
     "profilepage",
     "creation",
+    "explore",
 ]
 
 MIDDLEWARE = [
