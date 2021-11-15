@@ -23,44 +23,42 @@
         <div class="container">
             <div class="columns is-centered">
                 <div class="column is-5 is-centered">
-                    <div class="box has-background-success-light">
-                        {% if day %}
-                        {% include 'creation/_edit_day_venue_list.html' with day=day %}
-                        {% endif %}
-    
-                        {{ coordinates|json_script:"coordinates" }}
-                    </div>
+                    {% if day %}
+                    {% include 'creation/_edit_day_venue_list.html' with day=day %}
+                        {% else %}
+                    <div class="title is-6 has-text-black"> Day Currently Empty. Please add venues! </div>
+                    {% endif %}
+
+                    {{ coordinates|json_script:"coordinates" }}
                 </div>
                 <div class="column is-5">
-                    <div class="box has-background-success-light">
-                        <form action="/creation/{{day.id}}/edit" method="post" class="box">{% csrf_token %}
-                            <div class="field">
-                                <label for="day_name" class="label">Day Name</label>
-                                <div class="control">
-                                    <input type="text" class="input" name="day_name" value="{{day.name}}" required>
-                                </div>
+                    <form action="/creation/{{day.id}}/edit" method="post" class="box">{% csrf_token %}
+                        <div class="field">
+                            <label for="day_name" class="label">Day Name</label>
+                            <div class="control">
+                                <input type="text" class="input" name="day_name" value="{{day.name}}" required>
                             </div>
-                            <div class="field">
-                                <label for="day_description" class="label">Description</label>
-                                <div class="control">
-                                    <textarea class="textarea" placeholder="Please Enter Some Description"
-                                        name="day_description">{{day.description}}</textarea>
-                                </div>
+                        </div>
+                        <div class="field">
+                            <label for="day_description" class="label">Description</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="Please Enter Some Description"
+                                    name="day_description">{{day.description}}</textarea>
                             </div>
-                            <div class="field has-text-centered">
-                                <button type="submit" class="button is-success">Save</button>
-                            </div>
-                        </form>
-                        <div class="box">
-                            <figure class="image is-256by256">
-                                <div id="map" style="height: 384px; width:100%"></div>
-                            </figure>
-                            <br>
-                            <div class="is-centered columns">
-                                <a href="/creation/{{day.id}}/edit/searchpage" class="button is-success is-centered">
-                                    New Venue
-                                </a>
-                            </div>
+                        </div>
+                        <div class="field has-text-centered">
+                            <button type="submit" class="button is-success">Save</button>
+                        </div>
+                    </form>
+                    <div class="box">
+                        <figure class="image is-256by256">
+                            <div id="map" style="height: 384px; width:100%"></div>
+                        </figure>
+                        <br>
+                        <div class="is-centered columns">
+                            <a href="/creation/{{day.id}}/edit/searchpage" class="button is-success is-centered">
+                                New Venue
+                            </a>
                         </div>
                     </div>
                 </div>
