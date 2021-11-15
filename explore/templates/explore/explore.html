@@ -9,7 +9,7 @@
             {% include 'dayplanner/_navbar.html' %}
         </div>
 
-    <div class="column is-7 is-vcentered">
+    <div class="column is-vcentered">
         <div class="box">
             <table class="table">
                 <tr class="has-text-centered">
@@ -17,8 +17,8 @@
                     <th>Name</th>
                     <th>Creator</th>
                     <th>Modify</th>
-                    <th>Delete</th>
                 </tr>
+                    {#days object is all of the days inside of our database#}
                 {% for day in days %}
                     <tr class="has-text-centered">
                         <td>
@@ -31,11 +31,7 @@
                             {{day.creator}}
                         </td>
                         <td>
-                            <a class="button is-primary"> Go to Day...</a>
-                        </td>
-                        <td>
-                            <a  class="button is-danger"> To the
-                                Void!</a>
+                            <a href="/explore/{{ day.id }}" class="button is-primary"> Go to Day...</a>
                         </td>
                     </tr>
                 {% endfor %}
