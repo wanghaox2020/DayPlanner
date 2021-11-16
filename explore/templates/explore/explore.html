@@ -4,40 +4,71 @@
 
 {% block body %}
 
-    <section class="hero is-primary is-fullheight">
-        <div class="hero-head">
-            {% include 'dayplanner/_navbar.html' %}
-        </div>
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
 
-    <div class="column is-vcentered">
-        <div class="box">
-            <table class="table">
-                <tr class="has-text-centered">
-                    <th>Pk</th>
-                    <th>Name</th>
-                    <th>Creator</th>
-                    <th>Modify</th>
-                </tr>
-                    {#days object is all of the days inside of our database#}
-                {% for day in days %}
-                    <tr class="has-text-centered">
-                        <td>
-                            {{day.id}}
-                        </td>
-                        <td>
-                            {{day.name}}
-                        </td>
-                        <td>
-                            {{day.creator}}
-                        </td>
-                        <td>
-                            <a href="/explore/{{ day.id }}" class="button is-primary"> Go to Day...</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+
+                <div class="column is-one-third">
+                    <div class="box has-text-centered">
+                        <div class="container">
+                            <label class="label is-medium">Explore More Days...</label>
+                            <p>Search for days with specific tags.</p>
+                            <form action="" method="post">{% csrf_token %}
+                              <div class="field">
+                                <br>
+                                <div class="control is-medium">
+                                  <input type="text" placeholder="Sushi, coffee, museums..." class="input is-normal is-hovered">                            
+                                </div>
+                                <br>
+                              </div>
+                            </form>
+              
+                        </div>        
+                    </div>   
+                </div>          
+                
+                <div class="column">
+                    <div class="box">
+                        <table class="table">
+                            <tr class="has-text-centered">
+                                <th>Pk</th>
+                                <th>Name</th>
+                                <th>Creator</th>
+                                <th>Tags</th>
+                                <th>View</th>
+                            </tr>
+                                {#days object is all of the days inside of our database#}
+                            {% for day in days %}
+                                <tr class="has-text-centered">
+                                    <td>
+                                        {{day.id}}
+                                    </td>
+                                    <td>
+                                        {{day.name}}
+                                    </td>
+                                    <td>
+                                        {{day.creator}}
+                                    </td>
+                                    <td>
+                                        Tag1, Tag2 ...
+                                    </td>
+                                    <td>
+                                        <a href="/explore/{{ day.id }}" class="button is-primary"> Go to Day...</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
-{% endblock %}
 </section>
+{% endblock %}
