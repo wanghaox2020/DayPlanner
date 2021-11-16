@@ -141,7 +141,7 @@ class CreationEdit(TestCase):
 class DayCategoryTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.creation_url = "/creation/"
+        self.creation_url = "/creation"
 
         User = get_user_model()
         self.test_username = "test"
@@ -155,7 +155,7 @@ class DayCategoryTest(TestCase):
         )
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
 
-    def day_category_page(self):
+    def test_day_category_page(self):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
 
         self.client.login(username=self.test_username, password=self.test_password)
@@ -164,18 +164,18 @@ class DayCategoryTest(TestCase):
         )
         self.assertTrue(response.status_code == 200)
 
-    def add_day_category(self):
+    def test_add_day_category(self):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
         self.test_category = Category.objects.create(cat="sushi")
         self.assertTrue(len(DayCategory.objects.filter(day=self.test_day)) == 0)
         self.client.login(username=self.test_username, password=self.test_password)
         self.client.get(
             "%s/%d/edit/categories/add/%d"
-            % (self.creation_url, self.test_day.id, self.test_category)
+            % (self.creation_url, self.test_day.id, self.test_category.id)
         )
         self.assertTrue(len(DayCategory.objects.filter(day=self.test_day)) == 1)
 
-    def remove_day_category(self):
+    def test_remove_day_category(self):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
         self.test_category = Category.objects.create(cat="sushi")
         self.test_day_category = DayCategory.objects.create(
@@ -185,6 +185,6 @@ class DayCategoryTest(TestCase):
         self.client.login(username=self.test_username, password=self.test_password)
         self.client.get(
             "%s/%d/edit/categories/remove/%d"
-            % (self.creation_url, self.test_day.id, self.test_category)
+            % (self.creation_url, self.test_day.id, self.test_category.id)
         )
         self.assertTrue(len(DayCategory.objects.filter(day=self.test_day)) == 0)

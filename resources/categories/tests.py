@@ -15,9 +15,8 @@ foo_user1 = {
 }
 
 
-class CategoryModelTest(TestCase):
-    def setUp(self):
-        self.client = Client()
+class CategoryModel(TestCase):
+    def test_add_new_category(self):
         user1 = User.objects.create_user(
             username=foo_user1["username"],
             email=foo_user1["email"],
@@ -26,8 +25,6 @@ class CategoryModelTest(TestCase):
             last_name=foo_user1["last_name"],
         )
         Day.objects.create(creator=user1, name="test1 DayPlan1")
-
-    def add_new_category(self):
         Category.objects.create(cat="sushi")
         self.assertTrue(len(Category.objects.get_queryset()) == 1)
 
@@ -36,7 +33,7 @@ class DayCategoryModelTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-    def add_daycategory(self):
+    def test_add_daycategory(self):
         user1 = User.objects.create_user(
             username=foo_user1["username"],
             email=foo_user1["email"],
