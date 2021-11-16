@@ -15,10 +15,8 @@ from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
 import os
 import sys
-from .test_data import create_test_users
 
 load_dotenv(find_dotenv())
-create_test_users()
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 
