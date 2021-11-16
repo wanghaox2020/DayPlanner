@@ -35,7 +35,7 @@
                     {% endif %}
                 </p>
 
-                <div class="modal" id="myModal">
+                <div class="modal BulmaModal" id="myModal_{{dv.id}}" data-dv_id="{{dv.id}}">
                     <div class="modal-background"></div>
                     <div class="modal-card">
                       <header class="modal-card-head">
@@ -43,15 +43,14 @@
                         <button class="delete" aria-label="close" data-bulma-modal="close"></button>
                       </header>
                       <section class="modal-card-body">
-                        <p>There is something here</p>
+                        <p>{{dv.venue.yelp__name}}</p>
                       </section>
                       <footer class="modal-card-foot">
-                        <button class="button is-success">Save changes</button>
-                        <button class="button" data-bulma-modal="close">Cancel</button>
+                        <button class="button" data-bulma-modal="close">Close</button>
                       </footer>
                     </div>
                 </div>
-                <button id="btn" class="button is-outline">Click to Open Modal</button>
+                <button id="btn_{{dv.id}}" class="button is-outline for-collector" data-dv_id="{{dv.id}}">Click to Open Modal</button>
 
             </div>
         </div>
@@ -113,18 +112,41 @@
 	}
 }
 
-var btn = document.querySelector("#btn")
-var mdl = new BulmaModal("#myModal")
+var all_mdls = document.querySelectorAll(".BulmaModal")
+// var all_btns = document.querySelectorAll(".for-collector")
+// var btn = document.querySelector("#btn")
+// var mdl = new BulmaModal("#myModal")
 
-btn.addEventListener("click", function () {
-	mdl.show()
+all_mdls.forEach(function(mdl_c) {
+    const dv_id = mdl_c.dataset.dv_id
+    var mdl = new BulmaModal(`#myModal_${dv_id}`)
+
+    mdl.addEventListener('modal:show', function() {
+        console.log("opened")
+    })
+
+    mdl.addEventListener('modal:close', function() {
+        console.log("closed")
+    })
+
+    const btn_c = document.querySelector(`#btn_${dv_id}`)
+
+    btn_c.addEventListener("click", function(){
+        mdl.show()
+    })
 })
 
-mdl.addEventListener('modal:show', function() {
-	console.log("opened")
-})
 
-mdl.addEventListener("modal:close", function() {
-	console.log("closed")
-})
+// btn.addEventListener("click", function () {
+// 	mdl.show()
+// })
+
+// mdl.addEventListener('modal:show', function() {
+// 	console.log("opened")
+// })
+
+// mdl.addEventListener("modal:close", function() {
+// 	console.log("closed")
+// })
+
 </script>
