@@ -1,4 +1,6 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js'></script>
+<script type="text/javascript" src="https://unpkg.com/bulma-modal-fx/dist/js/modal-fx.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/bulma-modal-fx/dist/css/modal-fx.min.css" />
 
 {% for dv in day.dayvenue_set.all %}
 <div class="card">
@@ -35,22 +37,24 @@
                     {% endif %}
                 </p>
 
-                <div class="modal BulmaModal" id="myModal_{{dv.id}}" data-dv_id="{{dv.id}}">
+                <div class="modal BulmaModal" id="myModal_{{dv.id}}" data-dv_id="{{dv.id}}" style="z-index:2000">
                     <div class="modal-background"></div>
                     <div class="modal-card">
                       <header class="modal-card-head">
-                        <p class="modal-card-title">Modal title</p>
+                        <p class="modal-card-title">{{dv.venue.yelp__name}}</p>
                         <button class="delete" aria-label="close" data-bulma-modal="close"></button>
                       </header>
                       <section class="modal-card-body">
                         <p>{{dv.venue.yelp__name}}</p>
                       </section>
                       <footer class="modal-card-foot">
-                        <button class="button" data-bulma-modal="close">Close</button>
+                        <button class="button">
+                            <a>View on Yelp</a>
+                        </button>
                       </footer>
                     </div>
                 </div>
-                <button id="btn_{{dv.id}}" class="button is-outline for-collector" data-dv_id="{{dv.id}}">Click to Open Modal</button>
+                <button id="btn_{{dv.id}}" class="button is-outline for-collector" data-dv_id="{{dv.id}}">More Details...</button>
 
             </div>
         </div>
