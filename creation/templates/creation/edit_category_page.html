@@ -16,7 +16,7 @@
                     <div class="box">
 
                         <label class="label is-medium has-text-centered">
-                            Added Catorgories
+                            Day Catorgories
                         </label>
 
                         <table class="table">
@@ -28,7 +28,6 @@
                             <tr class="has-text-centered">
                                 <td>
                                     {{daycat.cat}}
-                                    {{daycat.id}}
                                 </td>
                                 <td>
                                     <a href="/creation/{{ day.id }}/edit/categories/remove/{{daycat.id}}" class="button is-danger">
@@ -43,7 +42,7 @@
                 <div class="column is-5">
                     <div class="box">
                         <label class="label is-medium has-text-centered">
-                            New Catorgories
+                            All Catorgories
                         </label>
 
                         <table class="table">
@@ -55,7 +54,6 @@
                             <tr class="has-text-centered">
                                 <td>
                                     {{daycat.cat}}
-                                    {{daycat.id}}
                                 </td>
                                 <td>
                                     <a href="/creation/{{ day.id }}/edit/categories/add/{{daycat.id}}"
@@ -66,6 +64,11 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="is-centered columns">
+                <a href="/creation/{{day.id}}/edit" class="button is-dark is-centered">
+                    Back to Day
+                </a>
             </div>
         </div>
     </div>

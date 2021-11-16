@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from dayplanner.services import yelp_client
-from resources.days.models import Day, DayVenue, Category, DayCategory
+from resources.days.models import Day, DayVenue
+from resources.categories.models import Category, DayCategory
 from resources.venues.models import Venue
 
 
@@ -198,13 +199,3 @@ def remove_daycategory(request, day_id, daycat_id):
         except Exception as e:
             print("-- deletion error %s") % (e)
     return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
-
-
-def delete_dayvenue(request, day_id, dayvenue_id):
-    day = get_object_or_404(Day, pk=day_id)
-    try:
-        day.delete_dayvenue(pk=dayvenue_id)
-    except Exception as e:
-        print("-- deletion error %s") % (e)
-
-    return HttpResponseRedirect("/creation/%i/edit" % day_id)
