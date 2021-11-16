@@ -4,6 +4,7 @@ from resources.days.models import Day
 
 # Create your tests here.
 
+
 class TestExplore(TestCase):
     def setUp(self):
         self.client = Client()
@@ -12,12 +13,12 @@ class TestExplore(TestCase):
         self.test_username = "test"
         self.test_password = "test"
         self.test_user = User.objects.create_user(
-        username=self.test_username,
-        email="test2@test.test",
-        password=self.test_password,
-        first_name="test",
-        last_name="test",
-    )
+            username=self.test_username,
+            email="test2@test.test",
+            password=self.test_password,
+            first_name="test",
+            last_name="test",
+        )
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
 
     def test_explore_index(self):
@@ -25,14 +26,9 @@ class TestExplore(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_explore_day_fail(self):
-        response = self.client.get(self.explore_url+"0")
+        response = self.client.get(self.explore_url + "0")
         self.assertEqual(response.status_code, 404)
 
     def test_explore_day_success(self):
-        response = self.client.get(self.explore_url+str(self.test_day.id))
+        response = self.client.get(self.explore_url + str(self.test_day.id))
         self.assertEqual(response.status_code, 200)
-
-
-
-
-

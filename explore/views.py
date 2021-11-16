@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+
 # Create your views here.
 from dayplanner.services import yelp_client
 from resources.days.models import Day
@@ -15,7 +16,8 @@ def explore(requets):
         except Exception as e:
             return HttpResponse("Error Code: %s" % e)
 
-    return render(requets,"explore/explore.html", context)
+    return render(requets, "explore/explore.html", context)
+
 
 def day_summary(requests, day_id):
     day = get_object_or_404(Day, pk=day_id)
