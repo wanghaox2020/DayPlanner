@@ -175,11 +175,36 @@ def edit_categories_page(request, day_id):
     return render(request, "creation/edit_category_page.html", context)
 
 
-def add_category(request, day_id, daycat_id):
+def add_daycategory(request, day_id, daycat_id):
     day = get_object_or_404(Day, pk=day_id)
-    daycat = get_object_or_404(Category, pk=daycat_id)
+    cat = get_object_or_404(Category, pk=daycat_id)
+    daycat = DayCategory.objects.filter(day=day, cat=cat)
+    if len(daycat) == 0:
+        try:
+            DayCategory.objects.create(day=day, cat=cat)
+        except Exception as e:
+            print("-- Add error %s") % (e)
+    return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
+
+
+def remove_daycategory(request, day_id, daycat_id):
+    day = get_object_or_404(Day, pk=day_id)
+    daycat = get_object_or_404(DayCategory, pk=daycat_id)
+    cat = get_object_or_404(Category, cat=daycat.cat)
+    curr = DayCategory.objects.filter(day=day, cat=cat, pk=daycat_id)
+    if len(curr) == 1:
+        try:
+            DayCategory.objects.get(pk=daycat_id).delete()
+        except Exception as e:
+            print("-- deletion error %s") % (e)
+    return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
+
+
+def delete_dayvenue(request, day_id, dayvenue_id):
+    day = get_object_or_404(Day, pk=day_id)
     try:
-        DayCategory.objects.create(day=day, cat=daycat)
+        day.delete_dayvenue(pk=dayvenue_id)
     except Exception as e:
         print("-- deletion error %s") % (e)
-    return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
+
+    return HttpResponseRedirect("/creation/%i/edit" % day_id)

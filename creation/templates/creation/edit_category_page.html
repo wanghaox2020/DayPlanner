@@ -28,9 +28,10 @@
                             <tr class="has-text-centered">
                                 <td>
                                     {{daycat.cat}}
+                                    {{daycat.id}}
                                 </td>
                                 <td>
-                                    <a href="/creation/delete_day?day_id={{ day.id }}" class="button is-danger">
+                                    <a href="/creation/{{ day.id }}/edit/categories/remove/{{daycat.id}}" class="button is-danger">
                                         Remove</a>
                                 </td>
                             </tr>
@@ -54,6 +55,7 @@
                             <tr class="has-text-centered">
                                 <td>
                                     {{daycat.cat}}
+                                    {{daycat.id}}
                                 </td>
                                 <td>
                                     <a href="/creation/{{ day.id }}/edit/categories/add/{{daycat.id}}"
