@@ -4,3 +4,4 @@ django_heroku
 psycopg2-binary>=2.8
 python-dotenv
 requests
+whitenoise
