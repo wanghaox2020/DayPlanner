@@ -9,7 +9,7 @@ from resources.days.models import Day
 def explore(requets):
     context = {}
     try:
-        days = Day.objects.all()
+        days = Day.objects.all().filter(is_active=True)
         context["days"] = days
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
