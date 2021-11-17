@@ -16,7 +16,7 @@
                     <div class="box">
 
                         <label class="label is-medium has-text-centered">
-                            Day Catorgories
+                            Active Day Categories
                         </label>
 
                         <table class="table">
@@ -24,7 +24,7 @@
                                 <th>Category</th>
                                 <th>Remove</th>
                             </tr>
-                            {% for daycat in curr_categories %}
+                            {% for daycat in active_categories %}
                             <tr class="has-text-centered">
                                 <td>
                                     {{daycat.cat}}
@@ -42,7 +42,7 @@
                 <div class="column is-5">
                     <div class="box">
                         <label class="label is-medium has-text-centered">
-                            All Catorgories
+                            Inactive Day Categories
                         </label>
 
                         <table class="table">
@@ -50,7 +50,7 @@
                                 <th>Category</th>
                                 <th>Add</th>
                             </tr>
-                            {% for daycat in all_categories %}
+                            {% for daycat in inactive_categories %}
                             <tr class="has-text-centered">
                                 <td>
                                     {{daycat.cat}}

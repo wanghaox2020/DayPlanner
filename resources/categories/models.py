@@ -1,3 +1,4 @@
+from enum import unique
 from django.db import models
 
 from resources.days.models import Day
@@ -21,3 +22,8 @@ class Category(models.Model):
 class DayCategory(models.Model):
     cat = models.ForeignKey(Category, on_delete=models.CASCADE)
     day = models.ForeignKey(Day, on_delete=models.CASCADE)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["day", "cat"], name="unique_daycat")
+        ]

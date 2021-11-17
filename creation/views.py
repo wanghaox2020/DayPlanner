@@ -168,9 +168,10 @@ def daylist(request):
 
 def edit_categories_page(request, day_id):
     day = get_object_or_404(Day, pk=day_id)
+    cat_list = [daycat.cat for daycat in day.daycategory_set.all()]
     context = {
-        "curr_categories": day.daycategory_set.all(),
-        "all_categories": Category.objects.filter(),
+        "active_categories": day.daycategory_set.all(),
+        "inactive_categories": Category.objects.all().exclude(cat__in=cat_list),
         "day": day,
     }
     return render(request, "creation/edit_category_page.html", context)
@@ -179,12 +180,10 @@ def edit_categories_page(request, day_id):
 def add_daycategory(request, day_id, daycat_id):
     day = get_object_or_404(Day, pk=day_id)
     cat = get_object_or_404(Category, pk=daycat_id)
-    daycat = DayCategory.objects.filter(day=day, cat=cat)
-    if len(daycat) == 0:
-        try:
-            DayCategory.objects.create(day=day, cat=cat)
-        except Exception as e:
-            print("-- Add error %s") % (e)
+    try:
+        DayCategory.objects.create(day=day, cat=cat)
+    except Exception as e:
+        print("-- Add error %s") % (e)
     return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
 
 
