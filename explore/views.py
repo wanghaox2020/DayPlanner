@@ -10,7 +10,7 @@ def explore(requets):
     context = {}
     try:
         days = Day.objects.all().filter(is_active=True)
-        context["days"] = days
+        context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
 
