@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "resources.categories.apps.CategoriesConfig",
     "profilepage",
     "creation",
+    "explore",
 ]
 
 MIDDLEWARE = [
