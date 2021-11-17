@@ -61,6 +61,8 @@ class Day(models.Model):
             for dv in self.dayvenue_set.all():
                 DayVenue.objects.create(day=new_day, venue=dv.venue, pos=dv.pos)
 
+        return new_day
+
 
 class DayVenue(models.Model):
     class Meta:
