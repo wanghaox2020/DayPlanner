@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -36,3 +36,10 @@ def day_summary(requests, day_id):
     context["coordinates"] = coordinates
 
     return render(requests, "explore/day_summary.html", context)
+
+
+def fork(request, day_id):
+    day = get_object_or_404(Day, pk=day_id)
+
+    new_day = day.fork(request.user)
+    return HttpResponseRedirect("/creation/%i/edit" % new_day.id)
