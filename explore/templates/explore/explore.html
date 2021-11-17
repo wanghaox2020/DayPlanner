@@ -36,7 +36,9 @@
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
-                            <img src="{{day.dayvenue_set.first.venue.yelp__image_url}}">
+                                 <a href="/explore/{{ day.id }}">
+                                    <img src="{{day.dayvenue_set.first.venue.yelp__image_url}}">
+                                </a>
                             </p>
                         </figure>
 
