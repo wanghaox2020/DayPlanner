@@ -41,7 +41,9 @@
                         </figure>
 
                         <div class="media-content">
-                            <strong>{{day.name}}</strong>
+                            <a href="/explore/{{ day.id }}">
+                                <strong>{{day.name}}</strong>
+                            </a>
                             <br>
                             <a href="/profilepage/{{ day.creator.pk }}">
                                 <small>{{day.creator}}</small>
