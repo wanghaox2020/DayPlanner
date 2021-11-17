@@ -35,6 +35,11 @@
                         <div class="content has-text-centered">
                             <h5>{{day.name}}</h5>
                             <p>{{day.description}}</p>
+                            <div class="column is-centered has-text-centered">
+                                {% for daycat in active_categories %}
+                                    <span class="button is-static">#{{daycat.cat}}</span>
+                                {% endfor %}
+                            </div>
                         </div>
                         <figure class="image is-128by128">
                             <div id="map" style="height: 384px; width:100%"></div>
