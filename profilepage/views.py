@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from .models import Profile
@@ -22,7 +23,7 @@ class ProfileView(DetailView):
 
         context["page_user"] = page_user
 
-        userObject = self.request.user
+        userObject = User.objects.get(id=self.kwargs["pk"])
 
         context["userDayList"] = userObject.day_set.all().filter(is_active=True)
 
