@@ -1,0 +1,58 @@
+{% extends "dayplanner/base.html" %}
+
+{% load static %}
+{%block head%}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+    {% load static %}
+    <script src="{% static 'map.js' %}"></script>
+{% endblock %}
+
+{% block title %} Day Summary List {% endblock %}
+
+{% block body %}
+
+    <section class="hero is-primary is-fullheight">
+        <div class="hero-head">
+            {% include 'dayplanner/_navbar.html' %}
+        </div>
+
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-5 is-centered">
+                        {% if day %}
+                            {% include 'creation/_dayVenueList.html' with day=day %}
+                        {% endif %}
+
+                        {{ coordinates|json_script:"coordinates" }}
+                    </div>
+                    <div class="column is-5">
+                        <div class="box">
+                            <div class="content has-text-centered">
+                                <h5>{{day.name}}</h5>
+                                <p>{{day.description}}</p>
+                                    <div class="column is-centered has-text-centered">
+                                    {% for daycat in active_categories %}
+                                        <span class="button is-static">#{{daycat.cat}}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <figure class="image is-128by128">
+                                <div id="map" style="height: 384px; width:100%"></div>
+                            </figure>
+                            <br>
+                            <div class="is-centered columns">
+                            <a href="/explore/{{day.id}}/fork" class="button is-primary">
+                                Fork
+                            </a> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </section>
+
+{% endblock %}

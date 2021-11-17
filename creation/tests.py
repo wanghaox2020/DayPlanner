@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
+from resources.categories.models import Category, DayCategory
 from resources.days.models import Day, DayVenue
 from resources.venues.models import Venue
 
@@ -33,7 +34,6 @@ class CreationIndex(TestCase):
 
     def test_creation_page_present_days(self):
         self.test_day = Day.objects.create(creator=self.test_user, name="test")
-
         self.client.login(username=self.test_username, password=self.test_password)
         response = self.client.get(self.creation_url)
         self.assertTrue(response.context["userDayList"].count() > 0)
@@ -136,3 +136,55 @@ class CreationEdit(TestCase):
             % (self.creation_url, self.test_day.id)
         )
         self.assertTrue(self.test_day.dayvenue_set.count() == 3)
+
+
+class DayCategoryTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.creation_url = "/creation"
+
+        User = get_user_model()
+        self.test_username = "test"
+        self.test_password = "test"
+        self.test_user = User.objects.create_user(
+            username=self.test_username,
+            email="test2@test.test",
+            password=self.test_password,
+            first_name="test",
+            last_name="test",
+        )
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+
+    def test_day_category_page(self):
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+
+        self.client.login(username=self.test_username, password=self.test_password)
+        response = self.client.get(
+            "%s/%d/edit/categories" % (self.creation_url, self.test_day.id)
+        )
+        self.assertTrue(response.status_code == 200)
+
+    def test_add_day_category(self):
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+        self.test_category = Category.objects.create(cat="sushi")
+        self.assertTrue(len(DayCategory.objects.filter(day=self.test_day)) == 0)
+        self.client.login(username=self.test_username, password=self.test_password)
+        self.client.get(
+            "%s/%d/edit/categories/add/%d"
+            % (self.creation_url, self.test_day.id, self.test_category.id)
+        )
+        self.assertTrue(len(DayCategory.objects.filter(day=self.test_day)) == 1)
+
+    def test_remove_day_category(self):
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+        self.test_category = Category.objects.create(cat="sushi")
+        self.test_day_category = DayCategory.objects.create(
+            day=self.test_day, cat=self.test_category
+        )
+        self.assertTrue(len(DayCategory.objects.filter(day=self.test_day)) == 1)
+        self.client.login(username=self.test_username, password=self.test_password)
+        self.client.get(
+            "%s/%d/edit/categories/remove/%d"
+            % (self.creation_url, self.test_day.id, self.test_category.id)
+        )
+        self.assertTrue(len(DayCategory.objects.filter(day=self.test_day)) == 0)

@@ -1,0 +1,77 @@
+{% extends "dayplanner/base.html" %}
+
+{% block title %} Day List {% endblock %}
+
+{% block body %}
+
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
+
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-5">
+                    <div class="box">
+
+                        <label class="label is-medium has-text-centered">
+                            Active Day Categories
+                        </label>
+
+                        <table class="table">
+                            <tr class="has-text-centered">
+                                <th>Category</th>
+                                <th>Remove</th>
+                            </tr>
+                            {% for daycat in active_categories %}
+                            <tr class="has-text-centered">
+                                <td>
+                                    {{daycat.cat}}
+                                </td>
+                                <td>
+                                    <a href="/creation/{{ day.id }}/edit/categories/remove/{{daycat.id}}" class="button is-danger">
+                                        Remove</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+                <div class="column is-5">
+                    <div class="box">
+                        <label class="label is-medium has-text-centered">
+                            Inactive Day Categories
+                        </label>
+
+                        <table class="table">
+                            <tr class="has-text-centered">
+                                <th>Category</th>
+                                <th>Add</th>
+                            </tr>
+                            {% for daycat in inactive_categories %}
+                            <tr class="has-text-centered">
+                                <td>
+                                    {{daycat.cat}}
+                                </td>
+                                <td>
+                                    <a href="/creation/{{ day.id }}/edit/categories/add/{{daycat.id}}"
+                                        class="button is-primary"> Add</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="is-centered columns">
+                <a href="/creation/{{day.id}}/edit" class="button is-dark is-centered">
+                    Back to Day
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

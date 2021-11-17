@@ -1,0 +1,65 @@
+{% extends "dayplanner/base.html" %}
+
+{% block title %} Day List {% endblock %}
+
+{% block body %}
+
+<section class="hero is-primary is-fullheight">
+    <div class="hero-head">
+        {% include 'dayplanner/_navbar.html' %}
+    </div>
+
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column"></div>
+                <div class="column is-half">
+                    <h2 class="title has-text-centered">Explore More Days</h2>
+                    <p class="subtitle has-text-centered">Search for days with specific tags.</p>
+
+                    <form action="" method="post">{% csrf_token %}
+                        <div class="field">
+                            <div class="control is-medium">
+                                <input class="input is-normal is-hovered is-rounded" type="text" placeholder="Search" >
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="column"></div>
+            </div>
+        <div class="box">
+
+        <div class="columns is-multiline">
+        {% for day in days %}
+            <div class="column is-one-third">
+                <div class="box">
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                 <a href="/explore/{{ day.id }}">
+                                    <img src="{{day.dayvenue_set.first.venue.yelp__image_url}}">
+                                </a>
+                            </p>
+                        </figure>
+
+                        <div class="media-content">
+                            <a href="/explore/{{ day.id }}">
+                                <strong>{{day.name}}</strong>
+                            </a>
+                            <br>
+                            <a href="/profilepage/{{ day.creator.pk }}">
+                                <small>{{day.creator}}</small>
+                            </a>
+                            <br>
+                            {% for daycat in day.daycategory_set.all|slice:"0:3" %}
+                                <span class="button is-static">#{{daycat.cat}}</span>
+                            {% endfor %}
+                        </div>
+                    </article>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
