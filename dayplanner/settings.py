@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "authentication",
     "resources.venues.apps.VenuesResourceConfig",
     "resources.days.apps.DaysConfig",
+    "resources.categories.apps.CategoriesConfig",
     "profilepage",
     "creation",
     "explore",
