@@ -12,65 +12,50 @@
     <div class="hero-body">
         <div class="container">
             <div class="columns">
+                <div class="column"></div>
+                <div class="column is-half">
+                    <h2 class="title has-text-centered">Explore More Days</h2>
+                    <p class="subtitle has-text-centered">Search for days with specific tags.</p>
 
-                <div class="column is-one-third">
-                    <div class="box has-text-centered">
-                        <div class="container">
-                            <label class="label is-medium">Explore More Days...</label>
-                            <p>Search for days with specific tags.</p>
-                            <form action="" method="post">{% csrf_token %}
-                              <div class="field">
-                                <br>
-                                <div class="control is-medium">
-                                  <input type="text" placeholder="Sushi, coffee, museums..." class="input is-normal is-hovered">                            
-                                </div>
-                                <br>
-                              </div>
-                            </form>
-              
-                        </div>        
-                    </div>   
-                </div>          
-                
-                <div class="column">
-                    <div class="box">
-                        <table class="table">
-                            <tr class="has-text-centered">
-                                <th>Pk</th>
-                                <th>Name</th>
-                                <th>Creator</th>
-                                <th>Tags</th>
-                                <th>View</th>
-                            </tr>
-                                {#days object is all of the days inside of our database#}
-                            {% for day in days %}
-                                <tr class="has-text-centered">
-                                    <td>
-                                        {{day.id}}
-                                    </td>
-                                    <td>
-                                        {{day.name}}
-                                    </td>
-                                    <td>
-                                        <a href="/profilepage/{{ day.creator.pk }}">
-                                            {{day.creator}}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        Tag1, Tag2 ...
-                                    </td>
-                                    <td>
-                                        <a href="/explore/{{ day.id }}" class="button is-primary"> Go to Day...</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
+                    <form action="" method="post">{% csrf_token %}
+                        <div class="field">
+                            <div class="control is-medium">
+                                <input class="input is-normal is-hovered is-rounded" type="text" placeholder="Search" >
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
+                <div class="column"></div>
             </div>
+        <div class="box">
+
+        <div class="columns is-multiline">
+        {% for day in days %}
+            <div class="column is-one-third">
+                <div class="box">
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                            <img src="{{day.dayvenue_set.first.venue.yelp__image_url}}">
+                            </p>
+                        </figure>
+
+                        <div class="media-content">
+                            <strong>{{day.name}}</strong>
+                            <br>
+                            <a href="/profilepage/{{ day.creator.pk }}">
+                                <small>{{day.creator}}</small>
+                            </a>
+                            <br>
+                            {% for daycat in day.daycategory_set.all|slice:"0:3" %}
+                                <span class="button is-static">#{{daycat.cat}}</span>
+                            {% endfor %}
+                        </div>
+                    </article>
+                </div>
+            </div>
+        {% endfor %}
         </div>
     </div>
-
 </section>
 {% endblock %}
