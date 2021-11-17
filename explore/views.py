@@ -9,12 +9,11 @@ from resources.days.models import Day
 
 def explore(requets):
     context = {}
-    with transaction.atomic():
-        try:
-            days = Day.objects.all()
-            context["days"] = days
-        except Exception as e:
-            return HttpResponse("Error Code: %s" % e)
+    try:
+        days = Day.objects.all()
+        context["days"] = days
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
 
     return render(requets, "explore/explore.html", context)
 
@@ -36,6 +35,5 @@ def day_summary(requests, day_id):
         data["name"] = resp["name"]
         coordinates.append(data)
     context["coordinates"] = coordinates
-    print(context["coordinates"])
 
     return render(requests, "explore/day_summary.html", context)
