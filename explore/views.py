@@ -21,6 +21,7 @@ def day_summary(requests, day_id):
     day = get_object_or_404(Day, pk=day_id)
     context = {}
     context["day"] = day
+    context["active_categories"] = day.daycategory_set.all()
     DayVenues = day.dayvenue_set.all()
     fetch_list = []
     for dv in DayVenues:
