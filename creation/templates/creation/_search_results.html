@@ -9,18 +9,35 @@
 
     {% for business in data %}
         <tr>
-        <td>{{ business.name }}</td>
-        <td>{{ business.location.display_address.0 }}</td> 
-        <td>
-            <a href="/resources/venues/for_yelp_id/{{ business.id }}"> 
-                <span class="icon"><i class="fas fa-info-circle"></i></span>
-            </a>
-        </td>
-        <td>       
-            <a href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}">
-                <span class="icon"><i class="fas fa-plus-circle"></i></span>
-            </a>
-        </td>
+            <td>{{ business.name }}</td>
+            <td>{{ business.location.display_address.0 }}</td> 
+            <td>
+                <a href="#">
+                    <span class="icon"
+                        onclick="document.getElementById('modal_{{ business.id }}').classList.add('is-active')">
+                        <i class="fas fa-info-circle"></i>
+                    </span>
+                </a>
+            </td>
+            <td>       
+                <a href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}">
+                    <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                </a>
+            </td>
+
+            <div class="modal" id="modal_{{ business.id }}">
+                <div class="modal-background"
+                     onclick="document.getElementById('modal_{{ business.id }}').classList.remove('is-active')">
+                </div>
+                <div class="modal-content">
+                    
+                </div>
+                <button class="modal-close is-large" 
+                        aria-label="close" 
+                        onclick="document.getElementById('modal_{{ business.id }}').classList.remove('is-active')">
+                </button>
+            </div>
+            
         </tr>
     {% endfor %}
 {% else %}
