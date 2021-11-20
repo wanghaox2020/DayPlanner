@@ -30,14 +30,20 @@
                      onclick="document.getElementById('modal_{{ business.id }}').classList.remove('is-active')">
                 </div>
                 <div class="modal-content">
-                    
+             
+                </div>
+                <div class="modal-card">
+                    <div class="modal-card-body">
+                        {{ business.name }}
+                        {{ business.location.display_address.0 }}
+                    </div>
                 </div>
                 <button class="modal-close is-large" 
                         aria-label="close" 
                         onclick="document.getElementById('modal_{{ business.id }}').classList.remove('is-active')">
                 </button>
             </div>
-            
+
         </tr>
     {% endfor %}
 {% else %}
