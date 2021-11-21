@@ -41,9 +41,9 @@
                             <div class="media-content">
                                 <div class="content has-text-left">
                                     <p>
-                                        <strong>{{ business.name }}</strong> 
-                                        <small>{{ business.rating }}<i class="fas fa-star"></i></small>
-                                        <small>{{ business.price }}</small> 
+                                        <strong class="mx-0">{{ business.name }}</strong>
+                                        <small class="mx-0">{{ business.rating }}<i class="fas fa-star" style="color: goldenrod"></i></small>
+                                        <small class="mx-0">{{ business.price }}</small> 
                                         <br>
                                     </p>
                                     <p>
@@ -54,7 +54,7 @@
                                     </p>
                                 
                                 </div>
-                                <nav class="level is-mobile">
+                                    <nav class="level">
                                     <div class="level-left">
                                         <a class="level-item" href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}">
                                             <button class="button is-primary">Add</button>
