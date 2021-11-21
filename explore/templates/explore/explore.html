@@ -17,10 +17,11 @@
                     <h2 class="title has-text-centered">Explore More Days</h2>
                     <p class="subtitle has-text-centered">Search for days with specific tags.</p>
 
-                    <form action="" method="post">{% csrf_token %}
+                    <form action="search" method="post">{% csrf_token %}
                         <div class="field">
                             <div class="control is-medium">
-                                <input class="input is-normal is-hovered is-rounded" type="text" placeholder="Search" >
+                                <input class="input is-normal is-hovered is-rounded" type="text" placeholder="Search"
+                                name= "search_input">
                             </div>
                         </div>
                     </form>

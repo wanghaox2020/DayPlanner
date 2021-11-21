@@ -13,7 +13,6 @@ def explore(requets):
         context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
-
     return render(requets, "explore/explore.html", context)
 
 
@@ -44,3 +43,16 @@ def fork(request, day_id):
 
     new_day = day.fork(request.user)
     return HttpResponseRedirect("/creation/%i/edit" % new_day.id)
+
+def search_handeler(request):
+    context = {}
+    search_key = request.POST["search_input"]
+
+    if search_key == "":
+        return explore(request)
+
+    try:
+        context["days"] = Day.objects.all().filter(name__contains=search_key,is_active=True)
+    except Exception as e:
+        return HttpResponse(e)
+    return render(request, "explore/explore.html",context=context)
