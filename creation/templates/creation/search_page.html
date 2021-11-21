@@ -1,5 +1,14 @@
 {% extends "dayplanner/base.html" %}
 
+{%block head%}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
+    {% load static %}
+    <script src="{% static 'map.js' %}"></script>
+{% endblock %}
+
 {% block title %} Yelp Search {% endblock %}
 
 {% block body %}
@@ -12,37 +21,8 @@
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
-
-        <div class="column is-4 is-centered">
+        <div class="column is-4">
           <div class="box has-text-centered">
-
-
-            <label class="label is-medium has-text-centered">
-              {{day.name}}
-              <!-- <br>
-                      by {{ day.creator.username }} -->
-            </label>
-
-            <!-- <label class="label is-medium has-text-left has-text-weight-normal">
-                    Current Venues:
-                  </label> -->
-
-            {% if day %}
-              {% include 'creation/_edit_day_venue_list.html' with day=day %}
-            {% endif %}
-
-            {{ coordinates|json_script:"coordinates" }}
-
-            <a href="/creation/{{day.id}}/detail" class="button is-primary is-centered">
-              To Map...
-            </a>
-
-          </div>
-        </div>
-
-        <div class="column is-6">
-          <div class="box has-text-centered">
-
             <div class="container">
               <label class="label is-medium">Locations</label>
               <p>Please perform your location searches here to start populating your day.</p>
@@ -68,37 +48,39 @@
                   </button>
                   <br>
                   <br>
-
                   {# <button type="submit" #} {# class="button is-success">#}
                     {# Search Near Me#}
                     {# </button>#}
-
                   <button id="find-me" class="button is-warning has-text-centered">
                     Search Near Me
                   </button>
-
                 </div>
-
               </form>
-
             </div>
-
-            <br><br>
-
+            <br>
             <p id="status"></p>
             <a id="map-link" target="_blank"></a>
-
-            {% if search_results %}
-              {% include 'creation/_search_results.html' with data=search_results day=day %}
-            {% endif %}
-
           </div>
         </div>
-
+        <div class="column is-6">
+          {% if search_results %}
+            {% include 'creation/_search_results.html' with data=search_results day=day %}
+          {% endif %}
+        </div>
       </div>
-
+      <div class="columns is-centered">
+        <div class="column is-10">
+          <div class="box has-text-centered">
+            {{ coordinates|json_script:"coordinates" }}
+            <div class="container">
+              <figure class="image is-128by128">
+                <div id="map" style="height: 384px; width:100%"></div>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
 </section>
 
 
