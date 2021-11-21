@@ -12,14 +12,15 @@
             <td>{{ business.name }}</td>
             <td>{{ business.location.display_address.0 }}</td> 
             <td>
+                <span>{{ business.rating }}<i class="fas fa-star" style="color: goldenrod"></i></span>
+            </td>
+             <td>    
                 <a href="#">
                     <span class="icon"
                         onclick="document.getElementById('modal_{{ business.id }}').classList.add('is-active')">
                         <i class="fas fa-info-circle"></i>
                     </span>
-                </a>
-            </td>
-            <td>       
+                </a>   
                 <a href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}">
                     <span class="icon"><i class="fas fa-plus-circle"></i></span>
                 </a>
