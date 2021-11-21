@@ -32,11 +32,6 @@
 
                 <div class="modal-card">
                     <div class="modal-card-body">                       
-                        <figure class="image is-128x128">
-                            <img src="{{business.image_url}}" alt="Venue Image">
-                        </figure>
-
-
                         <article class="media">
                             <figure class="media-left">
                                 <p class="image is-128x128">
@@ -45,27 +40,33 @@
                             </figure>
                             <div class="media-content">
                                 <div class="content has-text-left">
-                                <p>
-                                    <strong>{{ business.name }}</strong> 
-                                    <small>{{ business.rating }}<i class="fas fa-star"></i></small>
-                                    <small>{{ business.price }}</small> 
-                                    <br>
-                                </p>
-                                <p>
-                                    {{ business.location.display_address.0 }}
-                                </p>
+                                    <p>
+                                        <strong>{{ business.name }}</strong> 
+                                        <small>{{ business.rating }}<i class="fas fa-star"></i></small>
+                                        <small>{{ business.price }}</small> 
+                                        <br>
+                                    </p>
+                                    <p>
+                                        {{ business.location.display_address.0 }}
+                                    </p>
+                                    <p>
+                                        {{ business.display_phone }}
+                                    </p>
+                                
                                 </div>
                                 <nav class="level is-mobile">
                                     <div class="level-left">
                                         <a class="level-item" href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}">
-                                            <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                                            <button class="button is-primary">Add</button>
                                         </a>
-                                        </a>
-                                        <a class="level-item">
-                                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-                                        </a>
-                                        <a class="level-item">
-                                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                                    </div>
+                                    <div class="level-right">
+                                        <a class="level-item" href="{{business.url}}">
+                                            <button class="button is-link">
+                                                <span>Yelp</span>
+                                                <span class="icon"><i class="fas fa-arrow-right"></i></span>
+                                            </button>
+                                            
                                         </a>
                                     </div>
                                 </nav>
