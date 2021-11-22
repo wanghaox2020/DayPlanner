@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from dayplanner.services import yelp_client
 from resources.days.models import Day
+from resources.categories.models import Category
 
 
 def explore(requets):
@@ -11,9 +12,14 @@ def explore(requets):
     try:
         days = Day.objects.all().filter(is_active=True)
         context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
+        context["cats"] = [cat for cat in Category.objects.all()]
+        print(context["cats"])
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
+
     return render(requets, "explore/explore.html", context)
+
+
 
 
 def day_summary(requests, day_id):
