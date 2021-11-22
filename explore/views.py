@@ -47,7 +47,6 @@ def fork(request, day_id):
 def search_handeler(request):
     context = {}
     search_key = request.POST["search_input"]
-
     if search_key == "":
         return explore(request)
 
