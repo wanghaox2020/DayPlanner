@@ -28,7 +28,7 @@
                   </label> -->
 
             {% if day %}
-            {% include 'creation/_edit_day_venue_list.html' with day=day %}
+              {% include 'creation/_edit_day_venue_list.html' with day=day %}
             {% endif %}
 
             {{ coordinates|json_script:"coordinates" }}
@@ -89,7 +89,7 @@
             <a id="map-link" target="_blank"></a>
 
             {% if search_results %}
-            {% include 'creation/_search_results.html' with data=search_results day=day %}
+              {% include 'creation/_search_results.html' with data=search_results day=day %}
             {% endif %}
 
           </div>
@@ -149,7 +149,3 @@
 </script>
 
 {% endblock %}
-
-</body>
-
-</html>
