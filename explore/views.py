@@ -20,6 +20,23 @@ def explore(requets):
     return render(requets, "explore/explore.html", context)
 
 
+def explore_tags(requests, tag):
+    context = {}
+    try:
+        Tag = Category.objects.get(cat=tag)
+        days = []
+        for day in Day.objects.all():
+            for tags in day.daycategory_set.all():
+                if tags.cat == Tag:
+                    days.append(day)
+
+        context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
+        context["cats"] = [cat for cat in Category.objects.all()]
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+
+    return render(requests, "explore/explore.html", context)
+
 
 
 def day_summary(requests, day_id):
