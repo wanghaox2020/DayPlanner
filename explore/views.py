@@ -72,7 +72,6 @@ def search_handeler(request):
     search_key = request.POST["search_input"]
     if search_key == "":
         return explore(request)
-
     try:
         context["days"] = Day.objects.all().filter(
             name__contains=search_key, is_active=True
