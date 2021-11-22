@@ -38,7 +38,6 @@ def explore_tags(requests, tag):
     return render(requests, "explore/explore.html", context)
 
 
-
 def day_summary(requests, day_id):
     day = get_object_or_404(Day, pk=day_id)
     context = {}
@@ -67,6 +66,7 @@ def fork(request, day_id):
     new_day = day.fork(request.user)
     return HttpResponseRedirect("/creation/%i/edit" % new_day.id)
 
+
 def search_handeler(request):
     context = {}
     search_key = request.POST["search_input"]
@@ -74,7 +74,9 @@ def search_handeler(request):
         return explore(request)
 
     try:
-        context["days"] = Day.objects.all().filter(name__contains=search_key,is_active=True)
+        context["days"] = Day.objects.all().filter(
+            name__contains=search_key, is_active=True
+        )
     except Exception as e:
         return HttpResponse(e)
-    return render(request, "explore/explore.html",context=context)
+    return render(request, "explore/explore.html", context=context)
