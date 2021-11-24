@@ -19,7 +19,7 @@ class ProfileView(DetailView):
             curr_user = get_object_or_404(Profile, user=self.request.user)
             context["curr_user"] = curr_user
 
-        page_user = get_object_or_404(Profile, id=self.kwargs["pk"])
+        page_user = get_object_or_404(Profile, user_id=self.kwargs["pk"])
 
         context["page_user"] = page_user
 
