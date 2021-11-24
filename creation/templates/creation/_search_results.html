@@ -5,27 +5,87 @@
 {% block body %}
 
 {% if data %}
+    <div class="box has-text-centered">
     <table class="table has-text-left is-fullwidth">
-    <tr>
-        <th>Name</th>
-        <!-- <th>Distance</th> -->
-        <th class="has-text-centered">Details</th>
-        <th class="has-text-centered">Add</th>
-    </tr>
+        {% for business in data %}
+            <tr>
+                <td>{{ business.name }}</td>
+                <td>{{ business.location.display_address.0 }}</td> 
+                <td>
+                    <span>{{ business.rating }}<i class="fas fa-star" style="color: goldenrod"></i></span>
+                </td>
+                <td>    
+                    <a href="#">
+                        <span class="icon"
+                            onclick="document.getElementById('modal_{{ business.id }}').classList.add('is-active')">
+                            <i class="fas fa-info-circle"></i>
+                        </span>
+                    </a>   
+                    <a href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}">
+                        <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                    </a>
+                </td>
 
-    {% for business in data %}
-        <tr>
-        <td>{{ business.name }}</td>
-        <!-- <td>{{ business.distance }}ft</td> -->
-        <td>
-            <a href="/resources/venues/for_yelp_id/{{ business.id }}" class="button is-primary is-light is-outlined"> To Venue... </a>
-        </td>
-        <td>
-            <a href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}" class="button is-success is-light is-outlined"> Add to Day! </a>
-        </td>
-        </tr>
-    {% endfor %}
-            {% else %}
+                <div class="modal" id="modal_{{ business.id }}">
+                    <div class="modal-background"
+                        onclick="document.getElementById('modal_{{ business.id }}').classList.remove('is-active')">
+                    </div>
+
+                    <div class="modal-card">
+                        <div class="modal-card-body">                       
+                            <article class="media">
+                                <figure class="media-left">
+                                    <p class="image is-128x128">
+                                        <img src="{{business.image_url}}" alt="Venue Image">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content has-text-left">
+                                        <p>
+                                            <strong class="mx-0">{{ business.name }}</strong>
+                                            <small class="mx-0">{{ business.rating }}<i class="fas fa-star" style="color: goldenrod"></i></small>
+                                            <small class="mx-0">{{ business.price }}</small> 
+                                            <br>
+                                        </p>
+                                        <p>
+                                            {{ business.location.display_address.0 }}
+                                        </p>
+                                        <p>
+                                            {{ business.display_phone }}
+                                        </p>
+                                    
+                                    </div>
+                                        <nav class="level">
+                                        <div class="level-left">
+                                            <a class="level-item" href="/creation/{{ day.id }}/edit/searchpage?yelp_id={{ business.id }}">
+                                                <button class="button is-primary">Add</button>
+                                            </a>
+                                        </div>
+                                        <div class="level-right">
+                                            <a class="level-item" href="{{business.url}}">
+                                                <button class="button is-link">
+                                                    <span>Yelp</span>
+                                                    <span class="icon"><i class="fas fa-arrow-right"></i></span>
+                                                </button>
+                                                
+                                            </a>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <button class="modal-close is-large" 
+                            aria-label="close" 
+                            onclick="document.getElementById('modal_{{ business.id }}').classList.remove('is-active')">
+                    </button>
+                </div>
+
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+{% else %}
     <h2>Sorry data not found, please try again</h2>
 {% endif %}
 

@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from dayplanner.services import yelp_client
 from resources.days.models import Day
+from resources.categories.models import Category
 
 
 def explore(requets):
@@ -11,10 +12,29 @@ def explore(requets):
     try:
         days = Day.objects.all().filter(is_active=True)
         context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
+        context["cats"] = Category.objects.all()
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
 
     return render(requets, "explore/explore.html", context)
+
+
+def explore_cats(requests, cat):
+    context = {}
+    try:
+        cat_object = Category.objects.get(cat=cat)
+        days = []
+        for day in Day.objects.all():
+            for cats in day.daycategory_set.all():
+                if cats.cat == cat_object:
+                    days.append(day)
+
+        context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
+        context["cats"] = Category.objects.all()
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+
+    return render(requests, "explore/explore.html", context)
 
 
 def day_summary(requests, day_id):
@@ -44,3 +64,17 @@ def fork(request, day_id):
 
     new_day = day.fork(request.user)
     return HttpResponseRedirect("/creation/%i/edit" % new_day.id)
+
+
+def search_handeler(request):
+    context = {}
+    search_key = request.POST["search_input"]
+    if search_key == "":
+        return explore(request)
+    try:
+        context["days"] = Day.objects.all().filter(
+            name__contains=search_key, is_active=True
+        )
+    except Exception as e:
+        return HttpResponse(e)
+    return render(request, "explore/explore.html", context=context)
