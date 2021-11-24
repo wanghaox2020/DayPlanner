@@ -1,0 +1,32 @@
+
+<div class="columns">
+    <div class="column"></div>
+
+    <div class="column is-half">
+        <h2 class="title has-text-centered">Explore More Days</h2>
+        <p class="subtitle has-text-centered">Search days by name</p>
+
+        <form action="search" method="post">{% csrf_token %}
+            <div class="field">
+                <div class="control is-medium">
+                    <input class="input is-normal is-hovered is-rounded" type="text" placeholder="Search"
+                           name= "search_input">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="column"></div>
+</div>
+
+<div class="columns">
+<div class="column"></div>
+<div class="column is-full">
+    <p class="panel-tabs">
+        <a href="/explore">All</a>
+        {% for cat in cats %}
+            <a href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
+        {% endfor %}
+    </p>
+</div>
+<div class="column"></div>
+</div>

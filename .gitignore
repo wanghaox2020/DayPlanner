@@ -8,3 +8,4 @@ tmp
 db.sqlite3
 .vscode
 .coverage
+htmlcov
