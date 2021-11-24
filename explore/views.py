@@ -19,14 +19,14 @@ def explore(requets):
     return render(requets, "explore/explore.html", context)
 
 
-def explore_cats(requests, tag):
+def explore_cats(requests, cat):
     context = {}
     try:
-        tag_object = Category.objects.get(cat=tag)
+        cat_object = Category.objects.get(cat=cat)
         days = []
         for day in Day.objects.all():
-            for tags in day.daycategory_set.all():
-                if tags.cat == tag_object:
+            for cats in day.daycategory_set.all():
+                if cats.cat == cat_object:
                     days.append(day)
 
         context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
