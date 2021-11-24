@@ -4,7 +4,7 @@
 
     <div class="column is-half">
         <h2 class="title has-text-centered">Explore More Days</h2>
-        <p class="subtitle has-text-centered">Search for days with specific tags.</p>
+        <p class="subtitle has-text-centered">Search days by name</p>
 
         <form action="search" method="post">{% csrf_token %}
             <div class="field">
@@ -24,7 +24,7 @@
     <p class="panel-tabs">
         <a href="/explore">All</a>
         {% for cat in cats %}
-            <a href="{{ cat.cat }}"> {{ cat.cat }}</a>
+            <a href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
         {% endfor %}
     </p>
 </div>
