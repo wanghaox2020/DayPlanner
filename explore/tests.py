@@ -47,8 +47,8 @@ class TestExplore(TestCase):
         response = self.client.post("/explore/search", self.search_test)
         self.assertEqual(response.status_code, 200)
 
-    def test_explore_tags(self):
-        response = self.client.get("/explore/" + self.test_cat.cat)
+    def test_explore_categories(self):
+        response = self.client.get("/explore/search/" + self.test_cat.cat)
         self.assertEqual(response.status_code, 200)
 
     def test_fork(self):
