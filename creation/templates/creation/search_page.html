@@ -63,9 +63,12 @@
           </div>
         </div>
         <div class="column is-6">
-          {% if search_results %}
-            {% include 'creation/_search_results.html' with data=search_results day=day %}
-          {% endif %}
+          <div class="box has-text-centered">
+            <label class="label is-medium">Search Result</label>
+              {% if search_results %}
+                {% include 'creation/_search_results.html' with data=search_results day=day %}
+              {% endif %}
+          </div>
         </div>
       </div>
       <div class="columns is-centered">
