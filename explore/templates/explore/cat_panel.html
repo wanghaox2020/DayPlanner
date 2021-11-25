@@ -9,7 +9,7 @@
       font-size: 15px;
     }
     
-    .content {
+    .collapse-content {
       padding: 0 18px;
       max-height: 0;
       overflow: hidden;
@@ -43,22 +43,23 @@
 <div class="column has-text-centered">
     <div>
         {% for cat in cats|slice:"3" %}
-            <a class="tag is-warning" style="margin-right: 5px;" href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
+            <a class="tag is-warning mr-1" href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
         {% endfor %}
-        <a class="tag is-success is-light" style="margin-right: 5px;" href="/explore">Reset</a>
+        <a class="tag is-success is-light mr-1" href="/explore">Reset</a>
     </div>
     <br>
     <div class="box has-background-light">
         <button class="button is-warning collapsible">View All Tags</button>
-        <div class="content">
-            {% for cat in cats %}
-                <a class="tag is-warning" style="margin-right: 5px; margin-top: 15px;" href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
+        <div class="collapse-content">
+            {% for cat in cats|slice:"3:" %}
+                <a class="tag is-warning mr-1 mt-3" href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
             {% endfor %}
         </div>
     </div>
 </div>
 <div class="column"></div>
 </div>
+
 
 <script>
     var coll = document.getElementsByClassName("collapsible");
