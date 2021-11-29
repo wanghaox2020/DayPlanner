@@ -1,5 +1,8 @@
 from django.db import models
 from dayplanner.services import yelp_client
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # Create your models here.
@@ -17,3 +20,16 @@ class Venue(models.Model):
 
     def yelp__rating(self):
         return self.raw_yelp_data()["rating"]
+
+
+class FavoriteVenue(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    created_at = models.TimeField("Created at", auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "venue"], name="favoritevenue_unique_user_venue"
+            )
+        ]
