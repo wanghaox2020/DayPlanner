@@ -10,5 +10,6 @@ urlpatterns = [
     path("<int:day_id>/fork", views.fork),
     path("search", views.search_handeler),
     path("search/<str:cat>", views.explore_cats),
-    path("favorite/<int:day_id>", views.favorite)
+    path("favorite/<int:day_id>", views.favorite),
+    path("unfavorite/<int:day_id>", views.unfavorite),
 ]

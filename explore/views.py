@@ -11,7 +11,18 @@ def explore(requets):
     context = {}
     try:
         days = Day.objects.all().filter(is_active=True)
-        context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
+        List = []
+        for day in days:
+            if day.dayvenue_set.count() >= 1:
+                if not requets.user.is_anonymous:
+                    if day.favoriteday_set.filter(user=requets.user).count() == 1:
+                        List.append({"day": day, "is_fav": True})
+                    else:
+                        List.append({"day": day, "is_fav": False})
+                else:
+                    List.append({"day": day, "is_fav": False})
+
+        context["days"] = List
         context["cats"] = Category.objects.all()
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
@@ -28,8 +39,18 @@ def explore_cats(requests, cat):
             for cats in day.daycategory_set.all():
                 if cats.cat == cat_object:
                     days.append(day)
+        List = []
+        for day in days:
+            if day.dayvenue_set.count() >= 1:
+                if not requests.user.is_anonymous:
+                    if day.favoriteday_set.filter(user=requests.user).count() == 1:
+                        List.append({"day": day, "is_fav": True})
+                    else:
+                        List.append({"day": day, "is_fav": False})
+                else:
+                    List.append({"day": day, "is_fav": False})
 
-        context["days"] = [day for day in days if day.dayvenue_set.count() >= 1]
+        context["days"] = List
         context["cats"] = Category.objects.all()
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
@@ -83,8 +104,18 @@ def search_handeler(request):
 
 def favorite(request, day_id):
     last_url = request.GET.get("last")
+
     # Create a FavoriteDay relation
     day = Day.objects.get(pk=day_id)
     FavoriteDay.objects.create(user=request.user, day=day)
+
+    return HttpResponseRedirect(last_url)
+
+
+def unfavorite(request, day_id):
+    last_url = request.GET.get("last")
+    # Create a FavoriteDay relation
+    day = Day.objects.get(pk=day_id)
+    day.favoriteday_set.filter(user=request.user).delete()
 
     return HttpResponseRedirect(last_url)

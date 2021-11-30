@@ -23,28 +23,31 @@
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                 <a href="/explore/{{ day.id }}">
-                                    <img src="{{day.dayvenue_set.first.venue.yelp__image_url}}">
+                                 <a href="/explore/{{ day.day.id }}">
+                                    <img src="{{day.day.dayvenue_set.first.venue.yelp__image_url}}">
                                 </a>
                             </p>
                         </figure>
 
                         <div class="media-content">
-                            <a href="/explore/{{ day.id }}">
-                                <strong>{{day.name}}</strong>
+                            <a href="/explore/{{ day.day.id }}">
+                                <strong>{{day.day.name}}</strong>
                             </a>
                             <br>
-                            <a href="/profilepage/{{ day.creator.pk }}">
-                                <small>{{day.creator}}</small>
+                            <a href="/profilepage/{{ day.day.creator.pk }}">
+                                <small>{{day.day.creator}}</small>
                             </a>
                             <br>
-                            {% for daycat in day.daycategory_set.all|slice:"0:3" %}
+                            {% for daycat in day.day.daycategory_set.all|slice:"0:3" %}
                                 <span class="button is-static">#{{daycat.cat}}</span>
                             {% endfor %}
                         </div>
-
-                        <a href="favorite/{{ day.pk }}?last={{ request.path }}" class="has-text-right">favorite</a>
-
+                        <br>
+                        {% if day.is_fav %}
+                            <a href="unfavorite/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">Unfavorite</a>
+                        {% else %}
+                            <a href="favorite/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">favorite</a>
+                        {% endif %}
 
                     </article>
                 </div>
