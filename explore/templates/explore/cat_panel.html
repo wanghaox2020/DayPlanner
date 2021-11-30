@@ -1,3 +1,23 @@
+<style>
+    .collapsible {
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
+    
+    .collapse-content {
+      padding: 0 18px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+</style>
+
+
 
 <div class="columns">
     <div class="column"></div>
@@ -20,13 +40,40 @@
 
 <div class="columns">
 <div class="column"></div>
-<div class="column is-full">
-    <p class="panel-tabs">
-        <a href="/explore">All</a>
-        {% for cat in cats %}
-            <a href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
+<div class="column has-text-centered">
+    <div>
+        {% for cat in cats|slice:"3" %}
+            <a class="tag is-warning mr-1" href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
         {% endfor %}
-    </p>
+        <a class="tag is-success is-light mr-1" href="/explore">Reset</a>
+    </div>
+    <br>
+    <div class="box has-background-light">
+        <button class="button is-warning collapsible">View All Tags</button>
+        <div class="collapse-content">
+            {% for cat in cats|slice:"3:" %}
+                <a class="tag is-warning mr-1 mt-3" href="/explore/search/{{ cat.cat }}"> {{ cat.cat }}</a>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 <div class="column"></div>
 </div>
+
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
+      });
+    }
+</script>
