@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
@@ -102,9 +103,12 @@ def search_handeler(request):
     return render(request, "explore/explore.html", context=context)
 
 
+@login_required(login_url='/example url you want redirect/')
 def favorite(request, day_id):
-    last_url = request.GET.get("last")
+    if request.user.is_anonymous:
+        return send_login_errormessage(request)
 
+    last_url = request.GET.get("last")
     # Create a FavoriteDay relation
     day = Day.objects.get(pk=day_id)
     FavoriteDay.objects.create(user=request.user, day=day)
@@ -113,6 +117,9 @@ def favorite(request, day_id):
 
 
 def unfavorite(request, day_id):
+    if request.user.is_anonymous:
+        return send_login_errormessage(request)
+
     last_url = request.GET.get("last")
     # Create a FavoriteDay relation
     day = Day.objects.get(pk=day_id)
@@ -121,3 +128,19 @@ def unfavorite(request, day_id):
     return HttpResponseRedirect(last_url)
 
 
+def send_login_errormessage(request):
+    context = {}
+    try:
+        days = Day.objects.all().filter(is_active=True)
+        List = []
+        for day in days:
+            if day.dayvenue_set.count() >= 1:
+                List.append({"day": day, "is_fav": False})
+
+        context["days"] = List
+        context["cats"] = Category.objects.all()
+        context["error"] = "Please Login to Save Your Favorite Day"
+    except Exception as e:
+        return HttpResponse("Error Code: %s" % e)
+
+    return render(request, "explore/explore.html", context)

@@ -3,6 +3,13 @@
 {% block title %} Day List {% endblock %}
 
 {% block body %}
+    {% if error %}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{ error }}
+            </div>
+        </article>
+    {% endif %}
 
 <section class="hero is-primary is-fullheight">
     <div class="hero-head">
