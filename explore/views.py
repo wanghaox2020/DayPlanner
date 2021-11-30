@@ -3,8 +3,10 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from dayplanner.services import yelp_client
-from resources.days.models import Day, FavoriteDay
+from resources.days.models import Day, FavoriteDay, DayVenue
 from resources.categories.models import Category
+from resources.venues.models import FavoriteVenue, Venue
+
 
 ERROR_FAV_NoLOGIN = "To Save your Favourite day, Please Log in First"
 
@@ -69,13 +71,21 @@ def explore_cats(requests, cat):
 def day_summary(requests, day_id):
     day = get_object_or_404(Day, pk=day_id)
     context = {}
-    context["day"] = day
     context["active_categories"] = day.daycategory_set.all()
     DayVenues = day.dayvenue_set.all()
     fetch_list = []
+    dayvenue_list = []
+
+    if "Error_Message" in requests.session:
+        context["error"] = requests.session["Error_Message"]
+        del requests.session["Error_Message"]
+    elif "success_Message" in requests.session:
+        context["message"] = requests.session["success_Message"]
+        del requests.session["success_Message"]
+
     for dv in DayVenues:
         fetch_list.append(dv.venue.yelp_id)
-
+    context["dayvenue_list"] = dayvenue_list
     responses = yelp_client.fetch_many(fetch_list)
     coordinates = []
     # [{"latitude":<lat_val>,"longitude":<long_val>,"name":<name>}]
@@ -110,7 +120,7 @@ def search_handeler(request):
     return render(request, "explore/explore.html", context=context)
 
 
-def favorite(request, day_id):
+def favorite_day(request, day_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
         # Create a Error Message
@@ -126,7 +136,7 @@ def favorite(request, day_id):
     return HttpResponseRedirect(last_url)
 
 
-def unfavorite(request, day_id):
+def unfavorite_day(request, day_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
         request.session["error"] = ERROR_FAV_NoLOGIN
@@ -140,3 +150,41 @@ def unfavorite(request, day_id):
     request.session["success_Message"] = msg
 
     return HttpResponseRedirect(last_url)
+
+
+def favorite_venue(request, dayvenue_id):
+    last_url = request.GET.get("last")
+    if request.user.is_anonymous:
+        # Create a Error Message
+        request.session["Error_Message"] = ERROR_FAV_NoLOGIN
+        return HttpResponseRedirect(last_url)
+
+    # Create a FavoriteDay relation
+    dayvenue = DayVenue.objects.get(pk=dayvenue_id)
+    venue = dayvenue.venue
+    FavoriteVenue.objects.create(user=request.user, venue=venue)
+
+    # create a success message
+    msg = "Added venue from Favorite List"
+    request.session["success_Message"] = msg
+    return HttpResponseRedirect(last_url)
+
+
+def unfavorite_venue(request, dayvenue_id):
+    last_url = request.GET.get("last")
+    if request.user.is_anonymous:
+        # Create a Error Message
+        request.session["Error_Message"] = ERROR_FAV_NoLOGIN
+        return HttpResponseRedirect(last_url)
+    # Remove a FavoriteDay relation
+    dayvenue = DayVenue.objects.get(pk=dayvenue_id)
+    venue = dayvenue.venue
+    FavoriteVenue.objects.get(user=request.user, venue=venue).delete()
+    # Create a success message
+    msg = "Removed venue from Favorite List"
+    request.session["success_Message"] = msg
+    return HttpResponseRedirect(last_url)
+
+
+
+
