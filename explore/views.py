@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from dayplanner.services import yelp_client
-from resources.days.models import Day
+from resources.days.models import Day, FavoriteDay
 from resources.categories.models import Category
 
 
@@ -79,3 +79,12 @@ def search_handeler(request):
     except Exception as e:
         return HttpResponse(e)
     return render(request, "explore/explore.html", context=context)
+
+
+def favorite(request, day_id):
+    last_url = request.GET.get("last")
+    # Create a FavoriteDay relation
+    day = Day.objects.get(pk=day_id)
+    FavoriteDay.objects.create(user=request.user, day=day)
+
+    return HttpResponseRedirect(last_url)

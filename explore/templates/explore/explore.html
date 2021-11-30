@@ -42,6 +42,10 @@
                                 <span class="button is-static">#{{daycat.cat}}</span>
                             {% endfor %}
                         </div>
+
+                        <a href="favorite/{{ day.pk }}?last={{ request.path }}" class="has-text-right">favorite</a>
+
+
                     </article>
                 </div>
             </div>
