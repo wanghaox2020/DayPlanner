@@ -71,3 +71,16 @@ class DayVenue(models.Model):
     day = models.ForeignKey(Day, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
     pos = models.IntegerField()
+
+
+class FavoriteDay(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    day = models.ForeignKey(Day, on_delete=models.CASCADE)
+    created_at = models.TimeField("Created at", auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "day"], name="favoriteday_unique_user_day"
+            )
+        ]
