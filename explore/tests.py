@@ -101,3 +101,49 @@ class TestExplore(TestCase):
         self.assertEqual(
             dv.venue.favoritevenue_set.filter(user=self.test_user).count(), 0
         )
+
+    def test_favorite_venue_withoutLogin(self):
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+        dv = DayVenue.objects.create(day=self.test_day, venue=self.venue, pos=1)
+        # test Add fav venue
+        last_url = "/explore/" + str(self.test_day.id)
+        response = self.client.get(
+            "/explore/favorite_venue/" + str(dv.id) + "?" + last_url
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            dv.venue.favoritevenue_set.filter(user=self.test_user).count(), 0
+        )
+
+        # test remove fav venue
+        response = self.client.get(
+            "/explore/unfavorite_venue/" + str(dv.id) + "?" + last_url
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            dv.venue.favoritevenue_set.filter(user=self.test_user).count(), 0
+        )
+
+    def test_favorite_day_withoutLogin(self):
+        # test Add fav day
+        last_url = "/explore/"
+        self.test_day = Day.objects.create(creator=self.test_user, name="test")
+        response = self.client.get(
+            "/explore/favorite_day/" + str(self.test_day.id) + "?" + last_url
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            self.test_day.favoriteday_set.filter(user=self.test_user).count(), 0
+        )
+
+        # test remove fav day
+        response = self.client.get(
+            "/explore/unfavorite_day/" + str(self.test_day.id) + "?" + last_url
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(
+            self.test_day.favoriteday_set.filter(user=self.test_user).count(), 0
+        )
+
+
+
