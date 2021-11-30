@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from dayplanner.services import yelp_client
 from resources.days.models import Day, FavoriteDay, DayVenue
 from resources.categories.models import Category
-from resources.venues.models import FavoriteVenue, Venue
+from resources.venues.models import FavoriteVenue
 
 
 ERROR_FAV_NoLOGIN = "To Save your Favourite day, Please Log in First"
@@ -184,7 +184,3 @@ def unfavorite_venue(request, dayvenue_id):
     msg = "Removed venue from Favorite List"
     request.session["success_Message"] = msg
     return HttpResponseRedirect(last_url)
-
-
-
-
