@@ -21,18 +21,18 @@ def explore(requets):
         del requets.session["success_Message"]
     try:
         days = Day.objects.all().filter(is_active=True)
-        List = []
+        day_list = []
         for day in days:
             if day.dayvenue_set.count() >= 1:
                 if not requets.user.is_anonymous:
                     if day.favoriteday_set.filter(user=requets.user).count() == 1:
-                        List.append({"day": day, "is_fav": True})
+                        day_list.append({"day": day, "is_fav": True})
                     else:
-                        List.append({"day": day, "is_fav": False})
+                        day_list.append({"day": day, "is_fav": False})
                 else:
-                    List.append({"day": day, "is_fav": False})
+                    day_list.append({"day": day, "is_fav": False})
 
-        context["days"] = List
+        context["days"] = day_list
         context["cats"] = Category.objects.all()
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
@@ -49,18 +49,18 @@ def explore_cats(requests, cat):
             for cats in day.daycategory_set.all():
                 if cats.cat == cat_object:
                     days.append(day)
-        List = []
+        day_list = []
         for day in days:
             if day.dayvenue_set.count() >= 1:
                 if not requests.user.is_anonymous:
                     if day.favoriteday_set.filter(user=requests.user).count() == 1:
-                        List.append({"day": day, "is_fav": True})
+                        day_list.append({"day": day, "is_fav": True})
                     else:
-                        List.append({"day": day, "is_fav": False})
+                        day_list.append({"day": day, "is_fav": False})
                 else:
-                    List.append({"day": day, "is_fav": False})
+                    day_list.append({"day": day, "is_fav": False})
 
-        context["days"] = List
+        context["days"] = day_list
         context["cats"] = Category.objects.all()
     except Exception as e:
         return HttpResponse("Error Code: %s" % e)
@@ -84,6 +84,13 @@ def day_summary(requests, day_id):
         del requests.session["success_Message"]
 
     for dv in DayVenues:
+        if not requests.user.is_anonymous:
+            if dv.venue.favoritevenue_set.filter(user=requests.user).count() == 1:
+                dayvenue_list.append({"dayvenue": dv, "is_fav": True})
+            else:
+                dayvenue_list.append({"dayvenue": dv, "is_fav": False})
+        else:
+            dayvenue_list.append({"dayvenue": dv, "is_fav": False})
         fetch_list.append(dv.venue.yelp_id)
     context["dayvenue_list"] = dayvenue_list
     responses = yelp_client.fetch_many(fetch_list)
