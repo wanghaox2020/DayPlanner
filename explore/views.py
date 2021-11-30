@@ -11,12 +11,12 @@ ERROR_FAV_NoLOGIN = "To Save your Favourite day, Please Log in First"
 
 def explore(requets):
     context = {}
-    if 'Error_Message' in requets.session:
-        context["error"] = requets.session['Error_Message']
-        del requets.session['Error_Message']
-    elif 'success_Message' in requets.session:
-        context["message"] = requets.session['success_Message']
-        del requets.session['success_Message']
+    if "Error_Message" in requets.session:
+        context["error"] = requets.session["Error_Message"]
+        del requets.session["Error_Message"]
+    elif "success_Message" in requets.session:
+        context["message"] = requets.session["success_Message"]
+        del requets.session["success_Message"]
     try:
         days = Day.objects.all().filter(is_active=True)
         List = []
@@ -114,26 +114,29 @@ def favorite(request, day_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
         # Create a Error Message
-        request.session['Error_Message'] = ERROR_FAV_NoLOGIN
+        request.session["Error_Message"] = ERROR_FAV_NoLOGIN
         return HttpResponseRedirect(last_url)
 
     # Create a FavoriteDay relation
     day = Day.objects.get(pk=day_id)
     FavoriteDay.objects.create(user=request.user, day=day)
     # Create a success Message
-
+    msg = "Added %s to Favorite List" % day.name
+    request.session["success_Message"] = msg
     return HttpResponseRedirect(last_url)
 
 
 def unfavorite(request, day_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
-        request.session['error'] = ERROR_FAV_NoLOGIN
+        request.session["error"] = ERROR_FAV_NoLOGIN
         return HttpResponseRedirect(last_url)
 
     # Create a FavoriteDay relation
     day = Day.objects.get(pk=day_id)
     day.favoriteday_set.filter(user=request.user).delete()
+    # Create a success Message
+    msg = "Removed %s from Favorite List" % day.name
+    request.session["success_Message"] = msg
 
     return HttpResponseRedirect(last_url)
-
