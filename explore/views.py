@@ -119,3 +119,5 @@ def unfavorite(request, day_id):
     day.favoriteday_set.filter(user=request.user).delete()
 
     return HttpResponseRedirect(last_url)
+
+
