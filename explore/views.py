@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
@@ -7,9 +6,17 @@ from dayplanner.services import yelp_client
 from resources.days.models import Day, FavoriteDay
 from resources.categories.models import Category
 
+ERROR_FAV_NoLOGIN = "To Save your Favourite day, Please Log in First"
+
 
 def explore(requets):
     context = {}
+    if 'Error_Message' in requets.session:
+        context["error"] = requets.session['Error_Message']
+        del requets.session['Error_Message']
+    elif 'success_Message' in requets.session:
+        context["message"] = requets.session['success_Message']
+        del requets.session['success_Message']
     try:
         days = Day.objects.all().filter(is_active=True)
         List = []
@@ -104,42 +111,29 @@ def search_handeler(request):
 
 
 def favorite(request, day_id):
-    if request.user.is_anonymous:
-        return send_login_errormessage(request)
-
     last_url = request.GET.get("last")
+    if request.user.is_anonymous:
+        # Create a Error Message
+        request.session['Error_Message'] = ERROR_FAV_NoLOGIN
+        return HttpResponseRedirect(last_url)
+
     # Create a FavoriteDay relation
     day = Day.objects.get(pk=day_id)
     FavoriteDay.objects.create(user=request.user, day=day)
+    # Create a success Message
 
     return HttpResponseRedirect(last_url)
 
 
 def unfavorite(request, day_id):
-    if request.user.is_anonymous:
-        return send_login_errormessage(request)
-
     last_url = request.GET.get("last")
+    if request.user.is_anonymous:
+        request.session['error'] = ERROR_FAV_NoLOGIN
+        return HttpResponseRedirect(last_url)
+
     # Create a FavoriteDay relation
     day = Day.objects.get(pk=day_id)
     day.favoriteday_set.filter(user=request.user).delete()
 
     return HttpResponseRedirect(last_url)
 
-
-def send_login_errormessage(request):
-    context = {}
-    try:
-        days = Day.objects.all().filter(is_active=True)
-        List = []
-        for day in days:
-            if day.dayvenue_set.count() >= 1:
-                List.append({"day": day, "is_fav": False})
-
-        context["days"] = List
-        context["cats"] = Category.objects.all()
-        context["error"] = "Please Login to Save Your Favorite Day"
-    except Exception as e:
-        return HttpResponse("Error Code: %s" % e)
-
-    return render(request, "explore/explore.html", context)

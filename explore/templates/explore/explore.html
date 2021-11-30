@@ -14,6 +14,7 @@
             {% if cats %}
                 {% include 'explore/cat_panel.html' with cats=cats %}
             {% endif %}
+
             {% if error %}
                 <article class="message is-danger">
                     <div class="message-body">
@@ -21,6 +22,15 @@
                     </div>
                 </article>
             {% endif %}
+
+            {% if message %}
+                <article class="message is-primary">
+                    <div class="message-body">
+                        {{ message }}
+                    </div>
+                </article>
+            {% endif %}
+
         <div class="box has-background-light">
         <div class="columns is-multiline">
         {% for day in days %}
