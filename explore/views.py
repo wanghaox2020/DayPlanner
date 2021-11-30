@@ -103,7 +103,6 @@ def search_handeler(request):
     return render(request, "explore/explore.html", context=context)
 
 
-@login_required(login_url='/example url you want redirect/')
 def favorite(request, day_id):
     if request.user.is_anonymous:
         return send_login_errormessage(request)

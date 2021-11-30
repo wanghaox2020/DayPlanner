@@ -3,13 +3,6 @@
 {% block title %} Day List {% endblock %}
 
 {% block body %}
-    {% if error %}
-        <article class="message is-danger">
-            <div class="message-body">
-                {{ error }}
-            </div>
-        </article>
-    {% endif %}
 
 <section class="hero is-primary is-fullheight">
     <div class="hero-head">
@@ -21,7 +14,13 @@
             {% if cats %}
                 {% include 'explore/cat_panel.html' with cats=cats %}
             {% endif %}
-
+            {% if error %}
+                <article class="message is-danger">
+                    <div class="message-body">
+                        {{ error }}
+                    </div>
+                </article>
+            {% endif %}
         <div class="box has-background-light">
         <div class="columns is-multiline">
         {% for day in days %}
