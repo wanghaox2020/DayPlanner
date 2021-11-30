@@ -144,6 +144,3 @@ class TestExplore(TestCase):
         self.assertEqual(
             self.test_day.favoriteday_set.filter(user=self.test_user).count(), 0
         )
-
-
-
