@@ -1,10 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
-from resources.days.models import Day
+from resources.days.models import Day, DayVenue
 from resources.categories.models import Category, DayCategory
 
-
 # Create your tests here.
+from resources.venues.models import Venue
 
 
 class TestExplore(TestCase):
