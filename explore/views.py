@@ -75,6 +75,7 @@ def search_handeler(request):
         context["days"] = Day.objects.all().filter(
             name__contains=search_key, is_active=True
         )
+        context["cats"] = Category.objects.all()
     except Exception as e:
         return HttpResponse(e)
     return render(request, "explore/explore.html", context=context)
