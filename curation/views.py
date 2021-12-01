@@ -6,10 +6,6 @@ from resources.venues.models import FavoriteVenue
 # # Create your views here.
 
 
-def index(request):
-    return render(request, "curation/curation_page.html")
-
-
 @login_required(login_url="/authentication/login")
 def favorite_day_dayvenue(request):
     user = request.user
