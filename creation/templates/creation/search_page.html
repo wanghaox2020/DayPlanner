@@ -42,6 +42,13 @@
                       required>
                   </div>
                   <br>
+                    {% if error %}
+                    <article class="message is-danger">
+                        <div class="message-body">
+                            {{ error }}
+                        </div>
+                    </article>
+                    {% endif %}
 
                   <button type="submit" class="button is-success has-text-centered">
                     Search
