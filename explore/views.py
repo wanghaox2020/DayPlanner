@@ -105,6 +105,8 @@ def fork(request, day_id):
 
 
 def search_post_to_get(request):
+    if request.POST["search_input"] == "":
+        return explore(request)
     url = request.path
     get_url = url + "=" + request.POST["search_input"]
     return HttpResponseRedirect(get_url)
@@ -113,8 +115,6 @@ def search_post_to_get(request):
 def search_handeler(request, search_key):
     context = {}
     handle_message(request, context)
-    # if request.POST["search_input"] == "":
-    #     return explore(request)
     try:
         # search_key = request.POST["search_input"]
         request.session["search_key"] = search_key
