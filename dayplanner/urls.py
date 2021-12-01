@@ -26,5 +26,6 @@ urlpatterns = [
     path("profilepage/", include("profilepage.urls")),
     path("creation/", include("creation.urls")),
     path("explore/", include("explore.urls")),
+    path("curation/", include("curation.urls")),
     path("", views.index),
 ]
