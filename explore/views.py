@@ -7,18 +7,12 @@ from resources.days.models import Day, FavoriteDay, DayVenue
 from resources.categories.models import Category
 from resources.venues.models import FavoriteVenue
 
-
 ERROR_FAV_NO_LOGIN = "To Save your Favourite day, Please Log in First"
 
 
 def explore(requets):
     context = {}
-    if "Error_Message" in requets.session:
-        context["error"] = requets.session["Error_Message"]
-        del requets.session["Error_Message"]
-    elif "Success_Message" in requets.session:
-        context["message"] = requets.session["Success_Message"]
-        del requets.session["Success_Message"]
+    handle_message(requets, context)
     try:
         days = Day.objects.all().filter(is_active=True)
         day_list = []
@@ -42,6 +36,8 @@ def explore(requets):
 
 def explore_cats(requests, cat):
     context = {}
+    handle_message(requests, context)
+
     try:
         cat_object = Category.objects.get(cat=cat)
         days = []
@@ -77,12 +73,7 @@ def day_summary(requests, day_id):
     fetch_list = []
     dayvenue_list = []
 
-    if "Error_Message" in requests.session:
-        context["error"] = requests.session["Error_Message"]
-        del requests.session["Error_Message"]
-    elif "Success_Message" in requests.session:
-        context["message"] = requests.session["Success_Message"]
-        del requests.session["Success_Message"]
+    handle_message(requests, context)
 
     for dv in DayVenues:
         if not requests.user.is_anonymous:
@@ -113,15 +104,32 @@ def fork(request, day_id):
     return HttpResponseRedirect("/creation/%i/edit" % new_day.id)
 
 
-def search_handeler(request):
-    context = {}
-    search_key = request.POST["search_input"]
-    if search_key == "":
+def search_post_to_get(request):
+    if request.method == "GET" or request.POST["search_input"] == "":
         return explore(request)
+    url = request.path
+    get_url = url + "=" + request.POST["search_input"]
+    return HttpResponseRedirect(get_url)
+
+
+def search_handeler(request, search_key):
+    context = {}
+    handle_message(request, context)
     try:
-        context["days"] = Day.objects.all().filter(
-            name__contains=search_key, is_active=True
-        )
+        # search_key = request.POST["search_input"]
+        request.session["search_key"] = search_key
+        days = Day.objects.all().filter(name__contains=search_key, is_active=True)
+        day_list = []
+        for day in days:
+            if day.dayvenue_set.count() >= 1:
+                if not request.user.is_anonymous:
+                    if day.favoriteday_set.filter(user=request.user).count() == 1:
+                        day_list.append({"day": day, "is_fav": True})
+                    else:
+                        day_list.append({"day": day, "is_fav": False})
+                else:
+                    day_list.append({"day": day, "is_fav": False})
+        context["days"] = day_list
         context["cats"] = Category.objects.all()
     except Exception as e:
         return HttpResponse(e)
@@ -192,3 +200,12 @@ def unfavorite_venue(request, dayvenue_id):
     msg = "Removed venue from Favorite List"
     request.session["Success_Message"] = msg
     return HttpResponseRedirect(last_url)
+
+
+def handle_message(request, context):
+    if "Error_Message" in request.session:
+        context["error"] = request.session["Error_Message"]
+        del request.session["Error_Message"]
+    elif "Success_Message" in request.session:
+        context["message"] = request.session["Success_Message"]
+        del request.session["Success_Message"]

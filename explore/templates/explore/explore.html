@@ -60,11 +60,11 @@
                         </div>
                         <br>
                         {% if day.is_fav %}
-                            <a href="unfavorite_day/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">
+                            <a href="/explore/unfavorite_day/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">
                                 <i class="fas fa-heart"></i>
                             </a>
                         {% else %}
-                            <a href="favorite_day/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">
+                            <a href="/explore/favorite_day/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">
                                 <i class="far fa-heart"></i>
                             </a>
                         {% endif %}
