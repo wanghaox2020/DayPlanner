@@ -42,6 +42,13 @@ def explore(requets):
 
 def explore_cats(requests, cat):
     context = {}
+    if "Error_Message" in requests.session:
+        context["error"] = requests.session["Error_Message"]
+        del requests.session["Error_Message"]
+    elif "Success_Message" in requests.session:
+        context["message"] = requests.session["Success_Message"]
+        del requests.session["Success_Message"]
+
     try:
         cat_object = Category.objects.get(cat=cat)
         days = []
