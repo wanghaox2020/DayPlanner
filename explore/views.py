@@ -105,7 +105,7 @@ def fork(request, day_id):
 
 
 def search_post_to_get(request):
-    if request.POST["search_input"] == "":
+    if request.method == "GET" or request.POST["search_input"] == "":
         return explore(request)
     url = request.path
     get_url = url + "=" + request.POST["search_input"]
