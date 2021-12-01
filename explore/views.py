@@ -8,7 +8,7 @@ from resources.categories.models import Category
 from resources.venues.models import FavoriteVenue
 
 
-ERROR_FAV_NoLOGIN = "To Save your Favourite day, Please Log in First"
+ERROR_FAV_NO_LOGIN = "To Save your Favourite day, Please Log in First"
 
 
 def explore(requets):
@@ -16,9 +16,9 @@ def explore(requets):
     if "Error_Message" in requets.session:
         context["error"] = requets.session["Error_Message"]
         del requets.session["Error_Message"]
-    elif "success_Message" in requets.session:
-        context["message"] = requets.session["success_Message"]
-        del requets.session["success_Message"]
+    elif "Success_Message" in requets.session:
+        context["message"] = requets.session["Success_Message"]
+        del requets.session["Success_Message"]
     try:
         days = Day.objects.all().filter(is_active=True)
         day_list = []
@@ -80,9 +80,9 @@ def day_summary(requests, day_id):
     if "Error_Message" in requests.session:
         context["error"] = requests.session["Error_Message"]
         del requests.session["Error_Message"]
-    elif "success_Message" in requests.session:
-        context["message"] = requests.session["success_Message"]
-        del requests.session["success_Message"]
+    elif "Success_Message" in requests.session:
+        context["message"] = requests.session["Success_Message"]
+        del requests.session["Success_Message"]
 
     for dv in DayVenues:
         if not requests.user.is_anonymous:
@@ -132,7 +132,7 @@ def favorite_day(request, day_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
         # Create a Error Message
-        request.session["Error_Message"] = ERROR_FAV_NoLOGIN
+        request.session["Error_Message"] = ERROR_FAV_NO_LOGIN
         return HttpResponseRedirect(last_url)
 
     # Create a FavoriteDay relation
@@ -140,14 +140,14 @@ def favorite_day(request, day_id):
     FavoriteDay.objects.create(user=request.user, day=day)
     # Create a success Message
     msg = "Added %s to Favorite List" % day.name
-    request.session["success_Message"] = msg
+    request.session["Success_Message"] = msg
     return HttpResponseRedirect(last_url)
 
 
 def unfavorite_day(request, day_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
-        request.session["error"] = ERROR_FAV_NoLOGIN
+        request.session["error"] = ERROR_FAV_NO_LOGIN
         return HttpResponseRedirect(last_url)
 
     # Create a FavoriteDay relation
@@ -155,7 +155,7 @@ def unfavorite_day(request, day_id):
     day.favoriteday_set.filter(user=request.user).delete()
     # Create a success Message
     msg = "Removed %s from Favorite List" % day.name
-    request.session["success_Message"] = msg
+    request.session["Success_Message"] = msg
 
     return HttpResponseRedirect(last_url)
 
@@ -164,7 +164,7 @@ def favorite_venue(request, dayvenue_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
         # Create a Error Message
-        request.session["Error_Message"] = ERROR_FAV_NoLOGIN
+        request.session["Error_Message"] = ERROR_FAV_NO_LOGIN
         return HttpResponseRedirect(last_url)
 
     # Create a FavoriteDay relation
@@ -174,7 +174,7 @@ def favorite_venue(request, dayvenue_id):
 
     # create a success message
     msg = "Added venue from Favorite List"
-    request.session["success_Message"] = msg
+    request.session["Success_Message"] = msg
     return HttpResponseRedirect(last_url)
 
 
@@ -182,7 +182,7 @@ def unfavorite_venue(request, dayvenue_id):
     last_url = request.GET.get("last")
     if request.user.is_anonymous:
         # Create a Error Message
-        request.session["Error_Message"] = ERROR_FAV_NoLOGIN
+        request.session["Error_Message"] = ERROR_FAV_NO_LOGIN
         return HttpResponseRedirect(last_url)
     # Remove a FavoriteDay relation
     dayvenue = DayVenue.objects.get(pk=dayvenue_id)
@@ -190,5 +190,5 @@ def unfavorite_venue(request, dayvenue_id):
     FavoriteVenue.objects.get(user=request.user, venue=venue).delete()
     # Create a success message
     msg = "Removed venue from Favorite List"
-    request.session["success_Message"] = msg
+    request.session["Success_Message"] = msg
     return HttpResponseRedirect(last_url)

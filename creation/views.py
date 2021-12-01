@@ -145,6 +145,10 @@ def search(request, context):
     user_input_param2 = request.POST["user_input_location"]
 
     business_data = yelp_client.search(user_input_param1, user_input_param2)
+    if "businesses" not in business_data:
+        context["error"] = "Your input is invalid"
+        return render(request, "creation/search_page.html", context)
+
     context["search_results"] = business_data["businesses"]
     coordinates = []
     # [{"latitude":<lat_val>,"longitude":<long_val>,"name":<name>}]

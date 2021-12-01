@@ -54,17 +54,18 @@
                     </div>
                     <div class="columns">
                         <button id="btn_{{dv.dayvenue.id}}" class="button is-outline for-collector column" data-dv_id="{{dv.dayvenue.id}}">More Details...</button>
-                        {% if dv.is_fav %}
-                            <a href="unfavorite_venue/{{ dv.dayvenue.id }}?last={{ request.path }}" class="column is-outline for-collector">
-                                <i class="fas fa-heart"></i>
-                            </a>
-                        {% else %}
+                    </div>
+                </div>
+                <div class="media-right">
+                    {% if dv.is_fav %}
+                        <a href="unfavorite_venue/{{ dv.dayvenue.id }}?last={{ request.path }}" class="column is-outline for-collector">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                    {% else %}
                         <a href="favorite_venue/{{ dv.dayvenue.id }}?last={{ request.path }}" class="column is-outline for-collector">
                             <i class="far fa-heart"></i>
                         </a>
-                        {% endif %}
-
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
