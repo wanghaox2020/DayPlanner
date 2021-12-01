@@ -14,6 +14,23 @@
             {% if cats %}
                 {% include 'explore/cat_panel.html' with cats=cats %}
             {% endif %}
+
+            {% if error %}
+                <article class="message is-danger">
+                    <div class="message-body">
+                        {{ error }}
+                    </div>
+                </article>
+            {% endif %}
+
+            {% if message %}
+                <article class="message is-primary">
+                    <div class="message-body">
+                        {{ message }}
+                    </div>
+                </article>
+            {% endif %}
+
         <div class="box has-background-light">
         <div class="columns is-multiline">
         {% for day in days %}
@@ -22,25 +39,36 @@
                     <article class="media">
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                 <a href="/explore/{{ day.id }}">
-                                    <img src="{{day.dayvenue_set.first.venue.yelp__image_url}}">
+                                 <a href="/explore/{{ day.day.id }}">
+                                    <img src="{{day.day.dayvenue_set.first.venue.yelp__image_url}}">
                                 </a>
                             </p>
                         </figure>
 
                         <div class="media-content">
-                            <a href="/explore/{{ day.id }}">
-                                <strong>{{day.name}}</strong>
+                            <a href="/explore/{{ day.day.id }}">
+                                <strong>{{day.day.name}}</strong>
                             </a>
                             <br>
-                            <a href="/profilepage/{{ day.creator.pk }}">
-                                <small>{{day.creator}}</small>
+                            <a href="/profilepage/{{ day.day.creator.pk }}">
+                                <small>{{day.day.creator}}</small>
                             </a>
                             <br>
-                            {% for daycat in day.daycategory_set.all|slice:"0:3" %}
+                            {% for daycat in day.day.daycategory_set.all|slice:"0:3" %}
                                 <span class="button is-static">#{{daycat.cat}}</span>
                             {% endfor %}
                         </div>
+                        <br>
+                        {% if day.is_fav %}
+                            <a href="unfavorite_day/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                        {% else %}
+                            <a href="favorite_day/{{ day.day.pk }}?last={{ request.path }}" class="has-text-right">
+                                <i class="far fa-heart"></i>
+                            </a>
+                        {% endif %}
+
                     </article>
                 </div>
             </div>

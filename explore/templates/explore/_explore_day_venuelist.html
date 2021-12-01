@@ -1,0 +1,150 @@
+{% for dv in dayvenue_list %}
+    <div class="card">
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-128x128 is-square">
+                        <img src="{{dv.dayvenue.venue.yelp__image_url}}" alt="Image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-4 has-text-black">
+                        {{dv.dayvenue.venue.yelp__name}}
+                    </p>
+                    <p class="subtitle is-6" style="color: goldenrod">
+                        {% if dv.dayvenue.venue.yelp__rating >= 1 %}
+                            <span class="icon"><i class="fas fa-star"></i></span>
+                        {%endif%}
+                        {% if dv.dayvenue.venue.yelp__rating >= 2 %}
+                            <span class="icon"><i class="fas fa-star"></i></span>
+                        {%endif%}
+                        {% if dv.dayvenue.venue.yelp__rating >= 3 %}
+                            <span class="icon"><i class="fas fa-star"></i></span>
+                        {%endif%}
+                        {% if dv.dayvenue.venue.yelp__rating >= 4 %}
+                            <span class="icon"><i class="fas fa-star"></i></span>
+                        {%endif%}
+                        {% if dv.dayvenue.venue.yelp__rating >= 5 %}
+                            <span class="icon"><i class="fas fa-star"></i></span>
+                        {%endif%}
+
+                        {% if dv.dayvenue.venue.yelp__rating|stringformat:"s" in '0.5 1.5 2.5 3.5 4.5' %}
+                            <span class="icon"><i class="fas fa-star-half-alt"></i></span>
+                        {% endif %}
+                    </p>
+
+                    <div class="modal BulmaModal" id="myModal_{{dv.dayvenue.id}}" data-dv_id="{{dv.dayvenue.id}}" style="z-index:2000">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">{{dv.dayvenue.venue.yelp__name}}</p>
+                                <button class="delete" aria-label="close" data-bulma-modal="close"></button>
+                            </header>
+                            <section class="modal-card-body">
+                                <p>{{dv.dayvenue.venue.yelp__name}}</p>
+                            </section>
+                            <footer class="modal-card-foot">
+                                <button class="button">
+                                    <a href="/resources/venues/for_yelp_id/{{ dv.dayvenue.venue.yelp_id }}">
+                                        View on Yelp
+                                    </a>
+                                </button>
+                            </footer>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <button id="btn_{{dv.dayvenue.id}}" class="button is-outline for-collector column" data-dv_id="{{dv.dayvenue.id}}">More Details...</button>
+                    </div>
+                </div>
+                <div class="media-right">
+                    {% if dv.is_fav %}
+                        <a href="unfavorite_venue/{{ dv.dayvenue.id }}?last={{ request.path }}" class="column is-outline for-collector">
+                            <i class="fas fa-heart"></i>
+                        </a>
+                    {% else %}
+                        <a href="favorite_venue/{{ dv.dayvenue.id }}?last={{ request.path }}" class="column is-outline for-collector">
+                            <i class="far fa-heart"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+
+
+
+{% endfor %}
+
+<script>
+    class BulmaModal {
+        constructor(selector) {
+            this.elem = document.querySelector(selector)
+            this.close_data()
+        }
+
+        show() {
+            this.elem.classList.toggle('is-active')
+            this.on_show()
+        }
+
+        close() {
+            this.elem.classList.toggle('is-active')
+            this.on_close()
+        }
+
+        close_data() {
+            var modalClose = this.elem.querySelectorAll("[data-bulma-modal='close'], .modal-background")
+            var that = this
+            modalClose.forEach(function(e) {
+                e.addEventListener("click", function() {
+
+                    that.elem.classList.toggle('is-active')
+
+                    var event = new Event('modal:close')
+
+                    that.elem.dispatchEvent(event);
+                })
+            })
+        }
+
+        on_show() {
+            var event = new Event('modal:show')
+
+            this.elem.dispatchEvent(event);
+        }
+
+        on_close() {
+            var event = new Event('modal:close')
+
+            this.elem.dispatchEvent(event);
+        }
+
+        addEventListener(event, callback) {
+            this.elem.addEventListener(event, callback)
+        }
+    }
+
+    var all_mdls = document.querySelectorAll(".BulmaModal")
+
+    all_mdls.forEach(function(mdl_c) {
+        const dv_id = mdl_c.dataset.dv_id
+        var mdl = new BulmaModal(`#myModal_${dv_id}`)
+
+        mdl.addEventListener('modal:show', function() {
+            console.log("opened")
+        })
+
+        mdl.addEventListener('modal:close', function() {
+            console.log("closed")
+        })
+
+        const btn_c = document.querySelector(`#btn_${dv_id}`)
+
+        btn_c.addEventListener("click", function(){
+            mdl.show()
+        })
+    })
+
+</script>
