@@ -33,7 +33,7 @@ YELP_API = os.environ.get("YELP_API")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', True)
 
 ALLOWED_HOSTS = [
     "0.0.0.0",
