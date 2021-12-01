@@ -1,7 +1,7 @@
 from unittest.mock import patch
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from .models import Day, DayVenue
+from .models import Day, DayVenue, FavoriteDay
 from resources.venues.models import Venue
 from django.test import Client
 from dayplanner.services.yelp_client import YelpRequest
@@ -168,3 +168,23 @@ class EditViewTest(TestCase):
                 "/resources/days/%i/edit" % self.day2.id, {"yelp_id": "test_id"}
             )
             self.assertEqual(len(self.day2.dayvenue_set.all()), 1)
+
+
+class FavoriteDayTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="test_user",
+            email="test_user@test.test",
+            password="test_password",
+            first_name="test_first_name",
+            last_name="test_last_name",
+        )
+        self.day = Day.objects.create(creator=self.user, name="test1 Day")
+
+    def test_favorite_count(self):
+        fav = FavoriteDay.objects.create(user=self.user, day=self.day)
+        self.assertEqual(self.day.favoriteday_set.count(), 1)
+
+        fav.delete()
+        self.assertEqual(self.day.favoriteday_set.count(), 0)
