@@ -118,9 +118,7 @@ def search_handeler(request, search_key):
     try:
         # search_key = request.POST["search_input"]
         request.session["search_key"] = search_key
-        days = Day.objects.all().filter(
-            name__contains=search_key, is_active=True
-        )
+        days = Day.objects.all().filter(name__contains=search_key, is_active=True)
         day_list = []
         for day in days:
             if day.dayvenue_set.count() >= 1:

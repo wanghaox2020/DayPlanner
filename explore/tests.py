@@ -42,11 +42,11 @@ class TestExplore(TestCase):
 
     def test_explore_day_searchEmpty(self):
         response = self.client.post("/explore/search", self.search_empty)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_explore_day_search(self):
         response = self.client.post("/explore/search", self.search_test)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
     def test_explore_categories(self):
         response = self.client.get("/explore/search/" + self.test_cat.cat)
