@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from dotenv import load_dotenv, find_dotenv
-
+import django_heroku
 from pathlib import Path
 import os
 import sys
@@ -177,12 +177,4 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-if "HEROKU" in os.environ:
-    import django_heroku
-
-    django_heroku.settings(locals())
-elif "CI" in os.environ:
-    import django_heroku
-
-    django_heroku.settings(locals(), test_runner=False)
+django_heroku.settings(locals())
