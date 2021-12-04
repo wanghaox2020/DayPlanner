@@ -10,11 +10,3 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField()
     is_private = models.BooleanField(default=False)
-
-
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-
-
-# post_save.connect(create_user_profile, sender=User)
