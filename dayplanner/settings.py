@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "day-planner-dev.herokuapp.com",
     "day-planner-prod.herokuapp.com",
+    "day-planner-bug-fix.herokuapp.com",
 ]
 
 
