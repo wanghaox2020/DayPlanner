@@ -11,9 +11,9 @@ class Profile(models.Model):
     is_private = models.BooleanField(default=False)
 
 
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
 
 
-post_save.connect(create_user_profile, sender=User)
+# post_save.connect(create_user_profile, sender=User)
