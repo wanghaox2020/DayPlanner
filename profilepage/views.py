@@ -23,8 +23,8 @@ class ProfileView(DetailView):
         print(page_user)
         context["page_user"] = page_user
 
-        userObject = User.objects.get(id=self.kwargs["pk"])
-        print(userObject)
-        context["userDayList"] = userObject.day_set.all().filter(is_active=True)
+        # userObject = User.objects.get(id=self.kwargs["pk"])
+        # print(userObject)
+        # context["userDayList"] = userObject.day_set.all().filter(is_active=True)
 
         return context
