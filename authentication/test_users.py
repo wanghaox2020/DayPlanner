@@ -1,7 +1,6 @@
 def create_test_users():
     from django.contrib.auth import get_user_model
     from django.db import transaction
-    from profilepage.models import Profile
 
     User = get_user_model()
 
@@ -14,12 +13,11 @@ def create_test_users():
                 if existing_user:
                     continue
 
-                user = User.objects.create_user(
+                User.objects.create_user(
                     email="%s@mailinator.com" % username,
                     username=username,
                     password="asdf",
                 )
-                Profile.objects.create(user=user)
         except Exception as e:
             print("Encountered Error while creating test users:\n%s" % e)
             break

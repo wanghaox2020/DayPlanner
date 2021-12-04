@@ -4,12 +4,9 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-from django.db import transaction
 
 # TODO: REMOVE this import.  We SHOULD use csrf
 from django.views.decorators.csrf import csrf_exempt
-
-from profilepage.models import Profile
 
 
 # TODO: REMOVE this decorator.  We SHOULD use csrf
@@ -24,16 +21,13 @@ def register_view(request):
         password2 = request.POST["password2"]
         if password1 != password2:
             return HttpResponse("two password must align with eachother")
-        else:
-            with transaction.atomic():
-                try:
-                    user = User.objects.create_user(
-                        email=email, username=username, password=password1
-                    )
-                    Profile.objects.create(user=user)
-                    login(request, user)
-                except Exception as e:
-                    return HttpResponse("Error Code: %s" % e)
+        try:
+            user = User.objects.create_user(
+                email=email, username=username, password=password1
+            )
+            login(request, user)
+        except Exception as e:
+            return HttpResponse("Error Code: %s" % e)
 
     return HttpResponseRedirect("index")
 
