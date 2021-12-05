@@ -13,7 +13,6 @@
     <div class="container">
 
       <div class="columns is-centered">
-
         <div class="column is-3">
 
                       <div class="box">
@@ -56,14 +55,10 @@
                       </div>
 
         </div>
-
         <div class="column">
-
           <div class="container">
-
               <div class="box">
-
-                <div class="tabs is-boxed is-centered is-medium">
+                <div class="tabs is-boxed is-fullwidth is-medium">
                   <div class="container">
                       <ul>
                         <li class="tab is-active" onclick="openTab(event,'authoredDays')">
@@ -72,44 +67,53 @@
                             <span>Authored Days</span>
                           </a>
                         </li>
-
                         <li class="tab" onclick="openTab(event,'favDays')">
                           <a >
                             <span class="icon is-small"><i class="fas fa-calendar-day" aria-hidden="true"></i></span>
                             <span>My Featured Days</span>
                           </a>
                         </li>
-
                         <li class="tab" onclick="openTab(event,'favVenues')">
                           <a >
                             <span class="icon is-small"><i class="fas fa-pen" aria-hidden="true"></i></span>
                             <span>My Featured Venues</span>
                           </a>
                         </li>
-
                       </ul>
                   </div>
                 </div>
-
                 <div class="container section">                  
                   <div id="authoredDays" class="content-tab">
-                    <div class="box">
-                      <table class="table">
-                          <tr class="has-text-centered">
-                              <th>Days Created</th>
-                          </tr>
-                          {% for day in userDayList %}
-                          <tr class="has-text-centered">
-                              <td>
-                                <a href="/explore/{{ day.id }}" class="button is-primary is-fullwidth is-light is-outlined">{{day.name}}</a>
-                              </td>
-                          </tr>
-                          {% endfor %}
-                      </table>
-                    </div>
-
+                    {% for day in userDayList %}
+                      <div class="card">
+                          <div class="card-content">
+                              <div class="media">
+                                  <div class="media-left">
+                                      <figure class="image is-128x128 is-square">
+                                          <img src="{{day.dayvenue_set.first.venue.yelp__image_url}}" alt="Image">
+                                      </figure>
+                                  </div>
+                                  <div class="media-content">
+                                      <p class="title is-4 has-text-black">
+                                          <a href="/explore/{{ fav_day.day.id }}">
+                                              <strong>{{day.name}}</strong>
+                                          </a>
+                                      </p>
+                                      <br>
+                                      <a href="/profilepage/{{ user.id }}">
+                                          <small>{{day.creator}}</small>
+                                      </a>
+                                      <br>
+                                      {% for daycat in day.daycategory_set.all|slice:"0:3" %}
+                                          <span class="button is-static">#{{daycat.cat}}</span>
+                                      {% endfor %}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <br>
+                    {% endfor %}
                   </div>
-
                   <div id="favDays" class="content-tab" style="display:none">
                     {% for fav_day in favorite_day %}
                       <div class="card">
@@ -141,7 +145,6 @@
                       <br>
                     {% endfor %}
                   </div>
-
                   <div id="favVenues" class="content-tab" style="display:none">
                       {% for fav_venue in favorite_venue %}
                           <div class="card">
@@ -206,7 +209,6 @@
                           <br>
                       {% endfor %}
                   </div> 
-
                 </div>  
             </div>
           </div>   
