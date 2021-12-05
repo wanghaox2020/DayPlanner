@@ -5,148 +5,200 @@
 {% block body %}
 
 <section class="hero is-primary is-fullheight">
-    <div class="hero-head">
-        {% include 'dayplanner/_navbar.html' %}
+  <div class="hero-head">
+    {% include 'dayplanner/_navbar.html' %}
+  </div>
+    
+  <div class="hero-body">
+    <div class="container">
+
+      <div class="columns is-centered">
+
+        <div class="column is-3">
+
+                      <div class="box">
+                          <div class="field">
+                              {% if page_user.is_private %}
+
+                              <label class="label">This is a Private Page</p>
+
+                              {% else %}
+
+                              <br>
+
+                              <div class="columns is-centered">
+                                <figure class="image is-128x128">
+                                  <img src="https://www.seekpng.com/png/full/41-410093_circled-user-icon-user-profile-icon-png.png">
+                                </figure>
+                              </div>
+
+                              <br>
+
+                              <label class="label is-medium">Username:</label>
+                              <label class="label has-text-weight-normal">{{ page_user.user}}</label>
+                              
+                              <br>
+
+                              <label class="label is-medium">Email:</label>
+                              <label class="label">{{ page_user.user.email}}</label>
+
+                              <br>
+
+                              <label class="label is-medium">Neighborhood:</label>
+                              <label class="label"></label>
+                              <br>
+
+
+                              <label class="label is-medium">Bio:</label>
+                              <label class="label">{{ page_user.bio}}</label>
+                            {% endif %}
+                          </div>
+                      </div>
+
         </div>
 
-            <div class="hero-body">
-              <div class="container">
-                <div class="columns is-centered">
+        <div class="column">
 
-                    <div class="column">
+          <div class="container">
 
-                        <div class="box">
-                            <div class="field">
-                                {% if page_user.is_private %}
+              <div class="box">
 
-                                <label class="label">This is a Private Page</p>
-
-                                {% else %}
-
-                                <br>
-
-                                <div class="columns is-centered">
-                                  <figure class="image is-128x128">
-                                    <img src="https://www.seekpng.com/png/full/41-410093_circled-user-icon-user-profile-icon-png.png">
-                                  </figure>
-                                </div>
-
-                                <br>
-
-                                <label class="label is-medium">Username:</label>
-                                <label class="label has-text-weight-normal">{{ page_user.user}}</label>
-
-                                <br>
-
-
-                                <label class="label is-medium">Email:</label>
-                                <label class="label">{{ page_user.user.email}}</label>
-
-                                <br>
-
-
-                                <label class="label is-medium">Neighborhood:</label>
-                                <label class="label"></label>
-
-                                <br>
-
-
-                                <label class="label is-medium">Bio:</label>
-                                <label class="label">{{ page_user.bio}}</label>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="column">
-                      <div class="box">
-                        <table class="table">
-                            <tr class="has-text-centered">
-                                <th>Days Created</th>
-                            </tr>
-                            {% for day in userDayList %}
-                            <tr class="has-text-centered">
-                                <td>
-                                  <a href="/explore/{{ day.id }}" class="button is-primary is-fullwidth is-light is-outlined">{{day.name}}</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                      </div>
-                    </div>
-
-                    <div class="column">
-
-                        <div class="box">
-                            <div class="field">
-                              <label for="" class="label">Days Reviewed Recently</label>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 1" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 2" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 3" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 4" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 5" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 6" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="column">
-
-                        <div class="box">
-                            <div class="field">
-                              <label for="" class="label">Days Completed Recently</label>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 1" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 2" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 3" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                              <div class="control">
-                                <input placeholder="Day 4" class="input is-primary" disabled>
-                              </div>
-                              <br>
-                        </div>
-                      </div>
-
-                    </div>
-
+                <div class="tabs is-boxed is-centered is-medium">
+                  <div class="container">
+                      <ul>
+                        <li class="tab" onclick="openTab(event,'authoredDays')"><a >Authored Days</a></li>
+                        <li class="tab is-active" onclick="openTab(event,'favDays')"><a >Favorite Days</a></li>
+                        <li class="tab" onclick="openTab(event,'favVenues')"><a >Favorite Venues</a></li>
+                      </ul>
+                  </div>
                 </div>
 
+                <div class="container section">                  
+                  <div id="authoredDays" class="content-tab" style="display:none">
+                    <div class="box">
+                      <table class="table">
+                          <tr class="has-text-centered">
+                              <th>Days Created</th>
+                          </tr>
+                          {% for day in userDayList %}
+                          <tr class="has-text-centered">
+                              <td>
+                                <a href="/explore/{{ day.id }}" class="button is-primary is-fullwidth is-light is-outlined">{{day.name}}</a>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </table>
+                    </div>
 
-    <!-- <div class="container has-text-centered">
-    </div> -->
+                  </div>
 
-    <div class="hero-foot has-text-left">
-    </div>
-    
+                  <div id="favDays" class="content-tab" >
+                    {% for fav_day in favorite_day %}
+                      <div class="card">
+                          <div class="card-content">
+                              <div class="media">
+                                  <div class="media-left">
+                                      <figure class="image is-128x128 is-square">
+                                          <img src="{{fav_day.day.dayvenue_set.first.venue.yelp__image_url}}" alt="Image">
+                                      </figure>
+                                  </div>
+                                  <div class="media-content">
+                                      <p class="title is-4 has-text-black">
+                                          <a href="/explore/{{ fav_day.day.id }}">
+                                              <strong>{{fav_day.day.name}}</strong>
+                                          </a>
+                                      </p>
+                                      <br>
+                                      <a href="/profilepage/{{ user.id }}">
+                                          <small>{{fav_day.day.creator}}</small>
+                                      </a>
+                                      <br>
+                                      {% for daycat in fav_day.day.daycategory_set.all|slice:"0:3" %}
+                                          <span class="button is-static">#{{daycat.cat}}</span>
+                                      {% endfor %}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <br>
+                    {% endfor %}
+                  </div>
+
+                  <div id="favVenues" class="content-tab" style="display:none">
+                      {% for fav_venue in favorite_venue %}
+                          <div class="card">
+                              <div class="card-content">
+                                  <div class="media">
+                                      <div class="media-left">
+                                          <figure class="image is-128x128 is-square">
+                                              <img src="{{fav_venue.venue.yelp__image_url}}" alt="Image">
+                                          </figure>
+                                      </div>
+                                      <div class="media-content">
+                                          <p class="title is-4 has-text-black">
+                                              {{fav_venue.venue.yelp__name}}
+                                          </p>
+                                          <p class="subtitle is-6" style="color: goldenrod">
+                                              {% if fave_venue.venue.yelp__rating >= 1 %}
+                                              <span class="icon"><i class="fas fa-star"></i></span>
+                                              {%endif%}
+                                              {% if fav_venue.venue.yelp__rating >= 2 %}
+                                              <span class="icon"><i class="fas fa-star"></i></span>
+                                              {%endif%}
+                                              {% if fav_venue.venue.yelp__rating >= 3 %}
+                                              <span class="icon"><i class="fas fa-star"></i></span>
+                                              {%endif%}
+                                              {% if fav_venue.venue.yelp__rating >= 4 %}
+                                              <span class="icon"><i class="fas fa-star"></i></span>
+                                              {%endif%}
+                                              {% if fav_venue.venue.yelp__rating >= 5 %}
+                                              <span class="icon"><i class="fas fa-star"></i></span>
+                                              {%endif%}
+
+                                              {% if fav_venue.venue.yelp__rating|stringformat:"s" in '0.5 1.5 2.5 3.5 4.5' %}
+                                              <span class="icon"><i class="fas fa-star-half-alt"></i></span>
+                                              {% endif %}
+                                          </p>
+
+                                          <div class="modal BulmaModal" id="myModal_{{fav_venue.id}}" data-dv_id="{{fav_venue.id}}" style="z-index:2000">
+                                              <div class="modal-background"></div>
+                                              <div class="modal-card">
+                                              <header class="modal-card-head">
+                                                  <p class="modal-card-title">{{fav_venue.venue.yelp__name}}</p>
+                                                  <button class="delete" aria-label="close" data-bulma-modal="close"></button>
+                                              </header>
+                                              <section class="modal-card-body">
+                                                  <p>{{fav_venue.venue.yelp__name}}</p>
+                                              </section>
+                                              <footer class="modal-card-foot">
+                                                  <button class="button">
+                                                      <a href="https://www.yelp.com/biz/{{ fav_venue.venue.yelp_id }}" target = "_blank">
+                                                          View on Yelp
+                                                      </a>
+                                                  </button>
+                                              </footer>
+                                              </div>
+                                          </div>
+                                          <button id="btn_{{fav_venue.id}}" class="button is-outline for-collector" data-dv_id="{{fav_venue.id}}">More Details...</button>
+
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <br>
+                      {% endfor %}
+                  </div> 
+
+                </div>  
+            </div>
+          </div>   
+
+        </div>
+
+      </div>
+
+  </div>
+   
 </section>
 
 
