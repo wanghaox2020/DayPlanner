@@ -30,33 +30,46 @@
                       <img src="https://www.seekpng.com/png/full/41-410093_circled-user-icon-user-profile-icon-png.png">
                     </figure>
                   </div>
-
                   <br>
 
                   <label class="label is-medium">Username:</label>
                   <label class="label has-text-weight-normal">{{ page_user.user}}</label>
-                  
                   <br>
 
                   <label class="label is-medium">Email:</label>
-                  <label class="label">{{ page_user.user.email}}</label>
-
-                  <br>
-
-                  <label class="label is-medium">Neighborhood:</label>
-                  <label class="label"></label>
+                  <label class="label has-text-weight-normal">{{ page_user.user.email}}</label>
                   <br>
 
 
                   <label class="label is-medium">Bio:</label>
-                  <label class="label">{{ page_user.bio}}</label>
+                  <label class="label has-text-weight-normal">{{ page_user.bio}}</label>
+                  <br>
 
-                  <a href="/explore/unfavorite_day/{{ day.day.pk }}?last={{ request.path }}" class="button is-fullwidth is-warning">
-                    <span class="icon is-small">
-                      <i class="fas fa-eye"></i>
-                    </span>
-                    <p> Mark Private </p>
-                  </a>
+                  {% if page_user.id == curr_user.id %}
+                    {% if page_user.is_private == 0 %}
+                      <a href="/explore/unfavorite_day/{{ day.day.pk }}?last={{ request.path }}" class="button is-fullwidth is-warning">
+                        <span class="icon is-small">
+                          <i class="fas fa-eye"></i>
+                        </span>
+                        <p> Mark Private </p>
+                      </a>
+                    {% else %}
+                      <a href="/explore/unfavorite_day/{{ day.day.pk }}?last={{ request.path }}" class="button is-fullwidth is-warning">
+                        <span class="icon is-small">
+                          <i class="fas fa-eye"></i>
+                        </span>
+                        <p> Mark Public </p>
+                      </a>
+                    {% endif %}
+                  {% else %}
+                    <a class="button is-fullwidth is-success">
+                      <span class="icon is-small">
+                        <i class="fas fa-eye"></i>
+                      </span>
+                      <p> This is a public profile. </p>
+                    </a>
+                  {% endif %}
+
                 {% endif %}
               </div>
           </div>
