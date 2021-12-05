@@ -24,9 +24,9 @@ class ProfileView(DetailView):
 
         page_user = get_object_or_404(Profile, user_id=self.kwargs["pk"])
         context["page_user"] = page_user
-        context["favorite_day"] = FavoriteDay.objects.filter(user=page_user)
-        context["favorite_venue"] = FavoriteVenue.objects.filter(user=page_user)
         userObject = User.objects.get(id=self.kwargs["pk"])
         context["userDayList"] = userObject.day_set.all().filter(is_active=True)
+        context["favorite_day"] = FavoriteDay.objects.filter(user=userObject)
+        context["favorite_venue"] = FavoriteVenue.objects.filter(user=userObject)
 
         return context
