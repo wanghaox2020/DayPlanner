@@ -66,15 +66,15 @@
                 <div class="tabs is-boxed is-centered is-medium">
                   <div class="container">
                       <ul>
-                        <li class="tab" onclick="openTab(event,'authoredDays')"><a >Authored Days</a></li>
-                        <li class="tab is-active" onclick="openTab(event,'favDays')"><a >Favorite Days</a></li>
-                        <li class="tab" onclick="openTab(event,'favVenues')"><a >Favorite Venues</a></li>
+                        <li class="tab is-active" onclick="openTab(event,'authoredDays')"><a >Authored Days</a></li>
+                        <li class="tab" onclick="openTab(event,'favDays')"><a >My Featured Days</a></li>
+                        <li class="tab" onclick="openTab(event,'favVenues')"><a >My Featured Venues</a></li>
                       </ul>
                   </div>
                 </div>
 
                 <div class="container section">                  
-                  <div id="authoredDays" class="content-tab" style="display:none">
+                  <div id="authoredDays" class="content-tab">
                     <div class="box">
                       <table class="table">
                           <tr class="has-text-centered">
@@ -92,7 +92,7 @@
 
                   </div>
 
-                  <div id="favDays" class="content-tab" >
+                  <div id="favDays" class="content-tab" style="display:none">
                     {% for fav_day in favorite_day %}
                       <div class="card">
                           <div class="card-content">
