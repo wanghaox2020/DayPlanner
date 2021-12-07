@@ -3,7 +3,7 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from dayplanner.services.helper import handle_message
 
 # TODO: REMOVE this import.  We SHOULD use csrf
 from django.views.decorators.csrf import csrf_exempt
@@ -72,10 +72,3 @@ def index_view(request):
     return render(request, "dayplanner/index.html", locals())
 
 
-def handle_message(request, context):
-    if "Error_Message" in request.session:
-        context["error"] = request.session["Error_Message"]
-        del request.session["Error_Message"]
-    elif "Success_Message" in request.session:
-        context["message"] = request.session["Success_Message"]
-        del request.session["Success_Message"]

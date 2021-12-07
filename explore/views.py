@@ -6,6 +6,9 @@ from dayplanner.services import yelp_client
 from resources.days.models import Day, FavoriteDay, DayVenue
 from resources.categories.models import Category
 from resources.venues.models import FavoriteVenue
+# Import self defined helper methods
+from dayplanner.services.helper import handle_message
+
 
 ERROR_FAV_NO_LOGIN = "To Save your Favourite day, Please Log in First"
 
@@ -204,12 +207,3 @@ def unfavorite_venue(request, dayvenue_id):
     msg = "Removed venue from Favorite List"
     request.session["Success_Message"] = msg
     return HttpResponseRedirect(last_url)
-
-
-def handle_message(request, context):
-    if "Error_Message" in request.session:
-        context["error"] = request.session["Error_Message"]
-        del request.session["Error_Message"]
-    elif "Success_Message" in request.session:
-        context["message"] = request.session["Success_Message"]
-        del request.session["Success_Message"]

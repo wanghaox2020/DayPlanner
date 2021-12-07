@@ -6,6 +6,7 @@ from dayplanner.services import yelp_client
 from resources.days.models import Day, DayVenue
 from resources.categories.models import Category, DayCategory
 from resources.venues.models import Venue
+from dayplanner.services.helper import handle_message
 
 
 def viewMap(request, day_id):
@@ -213,12 +214,3 @@ def remove_daycategory(request, day_id, daycat_id):
         except Exception as e:
             print("-- deletion error %s") % (e)
     return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
-
-
-def handle_message(request, context):
-    if "Error_Message" in request.session:
-        context["error"] = request.session["Error_Message"]
-        del request.session["Error_Message"]
-    elif "Success_Message" in request.session:
-        context["message"] = request.session["Success_Message"]
-        del request.session["Success_Message"]
