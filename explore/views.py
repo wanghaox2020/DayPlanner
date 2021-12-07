@@ -6,6 +6,7 @@ from dayplanner.services import yelp_client
 from resources.days.models import Day, FavoriteDay, DayVenue
 from resources.categories.models import Category
 from resources.venues.models import FavoriteVenue
+
 # Import self defined helper methods
 from dayplanner.services.helper import handle_message
 

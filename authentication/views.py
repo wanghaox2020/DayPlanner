@@ -22,7 +22,9 @@ def register_view(request):
         password1 = request.POST["password1"]
         password2 = request.POST["password2"]
         if password1 != password2:
-            request.session["Error_Message"] = "Password and Repeat Password should be the same!"
+            request.session[
+                "Error_Message"
+            ] = "Password and Repeat Password should be the same!"
             return HttpResponseRedirect(request.path)
         try:
             user = User.objects.create_user(
@@ -70,5 +72,3 @@ def logout(request):
 def index_view(request):
     login_user = request.user
     return render(request, "dayplanner/index.html", locals())
-
-

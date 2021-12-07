@@ -139,7 +139,10 @@ def addVenue(request, day):
     DayVenue.objects.create(day=day, venue=venue, pos=day.dayvenue_set.count() + 1)
     rootpath = request.path.split("?")[0]
     # Create Success message
-    request.session["Success_Message"] = "Added %s into Day: %s" % (venue.yelp_id, day.id)
+    request.session["Success_Message"] = "Added %s into Day: %s" % (
+        venue.yelp_id,
+        day.id,
+    )
     return HttpResponseRedirect(rootpath)
 
 
