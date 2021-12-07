@@ -17,19 +17,11 @@
             <p>Please fill out this form to access your account.</p><br>
 
               {% if error %}
-                  <article class="message is-danger">
-                      <div class="message-body">
-                          {{ error }}
-                      </div>
-                  </article>
+                  {% include 'dayplanner/_error_message.html' %}
               {% endif %}
 
               {% if message %}
-                  <article class="message is-primary">
-                      <div class="message-body">
-                          {{ message }}
-                      </div>
-                  </article>
+                  {% include 'dayplanner/_message.html' %}
               {% endif %}
             <form action="/authentication/login" method ="post" class="box">{% csrf_token %}
               <div class="field">

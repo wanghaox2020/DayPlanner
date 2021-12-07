@@ -18,20 +18,13 @@
     {% include 'dayplanner/_navbar.html' %}
   </div>
     {% if error %}
-        <article class="message is-danger">
-            <div class="message-body">
-                {{ error }}
-            </div>
-        </article>
+        {% include 'dayplanner/_error_message.html' %}
     {% endif %}
 
     {% if message %}
-        <article class="message is-primary">
-            <div class="message-body">
-                {{ message }}
-            </div>
-        </article>
+        {% include 'dayplanner/_message.html' %}
     {% endif %}
+
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
