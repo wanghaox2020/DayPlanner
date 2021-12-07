@@ -167,7 +167,8 @@ def daylist(request):
     if request.method == "POST":
         # create a new day here
         dayname = request.POST["day_name"]
-        Day.objects.create(creator=request.user, name=dayname)
+        day = Day.objects.create(creator=request.user, name=dayname)
+        return HttpResponseRedirect("/creation/%s/detail" % day.id)
 
     userObject = request.user
     context = {
