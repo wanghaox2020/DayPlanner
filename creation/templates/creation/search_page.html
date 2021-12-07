@@ -17,7 +17,21 @@
   <div class="hero-head">
     {% include 'dayplanner/_navbar.html' %}
   </div>
+    {% if error %}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{ error }}
+            </div>
+        </article>
+    {% endif %}
 
+    {% if message %}
+        <article class="message is-primary">
+            <div class="message-body">
+                {{ message }}
+            </div>
+        </article>
+    {% endif %}
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">

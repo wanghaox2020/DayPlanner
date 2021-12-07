@@ -115,7 +115,8 @@ def searchpage(request, day_id):
     # Given day_id try to access the day object
     day = get_object_or_404(Day, pk=day_id)
     context["day"] = day
-
+    # Handle message if any
+    handle_message(request, context)
     if request.method == "GET":
         # Case the the user send a GET URL with a query String Yelp_id:<id>
         # For example: /creation/editday/1?yelp_id=x86
@@ -135,7 +136,9 @@ def addVenue(request, day):
     yelp_id = request.GET.get("yelp_id")
     venue, created = Venue.objects.get_or_create(yelp_id=yelp_id)
     DayVenue.objects.create(day=day, venue=venue, pos=day.dayvenue_set.count() + 1)
-    rootpath = request.path.split("/searchpage")[0]
+    rootpath = request.path.split("?")[0]
+    # Create Success message
+    request.session["Success_Message"] = "Added %s into Day: %s" % (venue.yelp_id, day.id)
     return HttpResponseRedirect(rootpath)
 
 
@@ -210,3 +213,12 @@ def remove_daycategory(request, day_id, daycat_id):
         except Exception as e:
             print("-- deletion error %s") % (e)
     return HttpResponseRedirect("/creation/%i/edit/categories" % day_id)
+
+
+def handle_message(request, context):
+    if "Error_Message" in request.session:
+        context["error"] = request.session["Error_Message"]
+        del request.session["Error_Message"]
+    elif "Success_Message" in request.session:
+        context["message"] = request.session["Success_Message"]
+        del request.session["Success_Message"]
