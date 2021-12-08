@@ -26,3 +26,13 @@ class TestProfile(TestCase):
     def test_profilepage(self):
         response = self.client.get(profilepage_url + str(self.user.id))
         self.assertEqual(response.status_code, 301)
+
+    def test_profile_private(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(profilepage_url + "private")
+        self.assertEqual(response.status_code, 302)
+
+    def test_profile_public(self):
+        self.client.login(username="testuser", password="testpassword")
+        response = self.client.get(profilepage_url + "public")
+        self.assertEqual(response.status_code, 302)
