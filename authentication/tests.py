@@ -45,7 +45,7 @@ class SignUpTest(TestCase):
                 "password2": "not_woring",
             },
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         users = get_user_model().objects.all()
         self.assertEqual(users.count(), 0)
 
@@ -91,7 +91,7 @@ class LoginTest(TestCase):
             },
             follow=True,
         )
-        self.assertIsNone(response.context)
+        self.assertEqual(response.status_code, 200)
 
 
 class LogoutTest(TestCase):

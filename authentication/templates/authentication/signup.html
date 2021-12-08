@@ -15,6 +15,12 @@
                 Register
             </p>
             <p>Please fill in this form to create an account.</p><br>
+              {% if error %}
+                  {% include 'dayplanner/_error_message.html' %}
+              {% endif %}
+              {% if message %}
+                  {% include 'dayplanner/_message.html' %}
+              {% endif %}
             <form action="/authentication/signup" method ="post" class="box">{% csrf_token %}
                 <div class="field">
                 <label for="email" class="label">Email</label>

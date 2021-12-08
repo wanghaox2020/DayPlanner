@@ -6,7 +6,6 @@ def create_test_users():
     User = get_user_model()
 
     usernames = ["prof", "ta", "test1", "test2", "test3", "test4", "test5"]
-
     for username in usernames:
         try:
             with transaction.atomic():
