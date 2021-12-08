@@ -18,9 +18,6 @@
         <a href="/explore" class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO DAY CURATION AND RANKING -->
             Explore
         </a>
-        <a href="/curation" class="navbar-item"> <!-- PLACEHOLDER FOR BUTTON TO PAGE IN AUTHENTICATION ENCOURAGING REGISTRATION BUTTON -->
-            Curate
-        </a>
         {% if user.is_authenticated %}
         <span class="navbar-item">
             <button class="button is-warning is-dark has-text-centered">
@@ -50,3 +47,13 @@
     </div>
     </div>
 </nav>
+
+<script>
+document.querySelectorAll('.navbar-burger').forEach(el => {
+    el.addEventListener('click', () => {
+        const target = document.getElementById(el.dataset.target);
+        el.classList.toggle('is-active');
+        target.classList.toggle('is-active');
+    });
+})
+</script>
