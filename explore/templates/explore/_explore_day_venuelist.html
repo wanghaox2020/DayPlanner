@@ -8,28 +8,28 @@
                     </figure>
                 </div>
                 <div class="media-content">
-                    <p class="title is-4 has-text-black">
+                    <p class="title is-size-6-mobile is-4 has-text-black">
                         {{dv.dayvenue.venue.yelp__name}}
                     </p>
-                    <p class="subtitle is-6" style="color: goldenrod">
+                    <p class="subtitle is-size-7-mobile is-6" style="color: goldenrod">
                         {% if dv.dayvenue.venue.yelp__rating >= 1 %}
-                            <span class="icon"><i class="fas fa-star"></i></span>
+                            <span class="icon is-small"><i class="fas fa-star"></i></span>
                         {%endif%}
                         {% if dv.dayvenue.venue.yelp__rating >= 2 %}
-                            <span class="icon"><i class="fas fa-star"></i></span>
+                            <span class="icon is-small"><i class="fas fa-star"></i></span>
                         {%endif%}
                         {% if dv.dayvenue.venue.yelp__rating >= 3 %}
-                            <span class="icon"><i class="fas fa-star"></i></span>
+                            <span class="icon is-small"><i class="fas fa-star"></i></span>
                         {%endif%}
                         {% if dv.dayvenue.venue.yelp__rating >= 4 %}
-                            <span class="icon"><i class="fas fa-star"></i></span>
+                            <span class="icon is-small"><i class="fas fa-star"></i></span>
                         {%endif%}
                         {% if dv.dayvenue.venue.yelp__rating >= 5 %}
-                            <span class="icon"><i class="fas fa-star"></i></span>
+                            <span class="icon is-small"><i class="fas fa-star"></i></span>
                         {%endif%}
 
                         {% if dv.dayvenue.venue.yelp__rating|stringformat:"s" in '0.5 1.5 2.5 3.5 4.5' %}
-                            <span class="icon"><i class="fas fa-star-half-alt"></i></span>
+                            <span class="icon is-small"><i class="fas fa-star-half-alt"></i></span>
                         {% endif %}
                     </p>
 
@@ -52,9 +52,7 @@
                             </footer>
                         </div>
                     </div>
-                    <div class="columns">
-                        <button id="btn_{{dv.dayvenue.id}}" class="button is-outline for-collector column" data-dv_id="{{dv.dayvenue.id}}">More Details...</button>
-                    </div>
+                    <button id="btn_{{dv.dayvenue.id}}" class="button is-size-7-mobile is-outline for-collector column" data-dv_id="{{dv.dayvenue.id}}">More Details...</button>
                 </div>
                 <div class="media-right">
                     {% if dv.is_fav %}
