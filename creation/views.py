@@ -139,9 +139,7 @@ def addVenue(request, day):
     DayVenue.objects.create(day=day, venue=venue, pos=day.dayvenue_set.count() + 1)
     rootpath = request.path.split("?")[0]
     # Create Success message
-    request.session["Success_Message"] = "Added Venue into Day: %s" % (
-        day.id
-    )
+    request.session["Success_Message"] = "Added Venue into Day: %s" % (day.id)
     return HttpResponseRedirect(rootpath)
 
 
