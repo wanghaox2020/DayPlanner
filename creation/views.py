@@ -6,6 +6,7 @@ from dayplanner.services import yelp_client
 from resources.days.models import Day, DayVenue
 from resources.categories.models import Category, DayCategory
 from resources.venues.models import Venue
+from dayplanner.services.helper import handle_message
 
 
 def viewMap(request, day_id):
@@ -115,7 +116,8 @@ def searchpage(request, day_id):
     # Given day_id try to access the day object
     day = get_object_or_404(Day, pk=day_id)
     context["day"] = day
-
+    # Handle message if any
+    handle_message(request, context)
     if request.method == "GET":
         # Case the the user send a GET URL with a query String Yelp_id:<id>
         # For example: /creation/editday/1?yelp_id=x86
@@ -135,7 +137,9 @@ def addVenue(request, day):
     yelp_id = request.GET.get("yelp_id")
     venue, created = Venue.objects.get_or_create(yelp_id=yelp_id)
     DayVenue.objects.create(day=day, venue=venue, pos=day.dayvenue_set.count() + 1)
-    rootpath = request.path.split("/searchpage")[0]
+    rootpath = request.path.split("?")[0]
+    # Create Success message
+    request.session["Success_Message"] = "Added Venue into Day: %s" % (day.name)
     return HttpResponseRedirect(rootpath)
 
 
@@ -167,7 +171,8 @@ def daylist(request):
     if request.method == "POST":
         # create a new day here
         dayname = request.POST["day_name"]
-        Day.objects.create(creator=request.user, name=dayname)
+        day = Day.objects.create(creator=request.user, name=dayname)
+        return HttpResponseRedirect("/creation/%s/detail" % day.id)
 
     userObject = request.user
     context = {

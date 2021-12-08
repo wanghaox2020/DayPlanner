@@ -15,6 +15,14 @@
                 Login
             </p>
             <p>Please fill out this form to access your account.</p><br>
+
+              {% if error %}
+                  {% include 'dayplanner/_error_message.html' %}
+              {% endif %}
+
+              {% if message %}
+                  {% include 'dayplanner/_message.html' %}
+              {% endif %}
             <form action="/authentication/login" method ="post" class="box">{% csrf_token %}
               <div class="field">
                 <label for="email" class="label">Username</label>

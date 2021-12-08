@@ -17,12 +17,20 @@
   <div class="hero-head">
     {% include 'dayplanner/_navbar.html' %}
   </div>
+    {% if error %}
+        {% include 'dayplanner/_error_message.html' %}
+    {% endif %}
+
+    {% if message %}
+        {% include 'dayplanner/_message.html' %}
+    {% endif %}
 
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-4">
           <div class="box has-text-centered">
+              <a href="/creation/{{ day.id }}/edit" class="button is-primary"> Back to Edit</a>
             <div class="container">
               <label class="label is-medium">Locations</label>
               <p>Please perform your location searches here to start populating your day.</p>

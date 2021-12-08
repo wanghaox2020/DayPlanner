@@ -7,6 +7,10 @@ from resources.days.models import Day, FavoriteDay, DayVenue
 from resources.categories.models import Category
 from resources.venues.models import FavoriteVenue
 
+# Import self defined helper methods
+from dayplanner.services.helper import handle_message
+
+
 ERROR_FAV_NO_LOGIN = "To Save your Favourite day, Please Log in First"
 
 
@@ -66,13 +70,17 @@ def explore_cats(requests, cat):
 
 def day_summary(requests, day_id):
     day = get_object_or_404(Day, pk=day_id)
+    if day.creator == requests.user:
+        return HttpResponseRedirect("/creation/%s/detail" % day.id)
     context = {}
     context["day"] = day
     context["active_categories"] = day.daycategory_set.all()
     DayVenues = day.dayvenue_set.all()
     fetch_list = []
     dayvenue_list = []
+    # if the user is the one who created it, redirect to the creation page
 
+    # Handle the message
     handle_message(requests, context)
 
     for dv in DayVenues:
@@ -200,12 +208,3 @@ def unfavorite_venue(request, dayvenue_id):
     msg = "Removed venue from Favorite List"
     request.session["Success_Message"] = msg
     return HttpResponseRedirect(last_url)
-
-
-def handle_message(request, context):
-    if "Error_Message" in request.session:
-        context["error"] = request.session["Error_Message"]
-        del request.session["Error_Message"]
-    elif "Success_Message" in request.session:
-        context["message"] = request.session["Success_Message"]
-        del request.session["Success_Message"]
