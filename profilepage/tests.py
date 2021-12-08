@@ -36,4 +36,3 @@ class TestExplore(TestCase):
         self.client.login(username="testuser", password="testpassword")
         response = self.client.get(profilepage_url + "public")
         self.assertEqual(response.status_code, 302)
-
