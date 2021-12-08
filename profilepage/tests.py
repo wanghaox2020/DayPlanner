@@ -7,7 +7,7 @@ User = get_user_model()
 profilepage_url = "/profilepage/"
 
 
-class TestProfile(TestCase):
+class TestProfilePage(TestCase):
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(
