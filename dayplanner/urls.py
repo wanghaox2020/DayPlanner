@@ -27,6 +27,6 @@ urlpatterns = [
     path("creation/", include("creation.urls")),
     path("explore/", include("explore.urls")),
     path("curation/", include("curation.urls")),
-    path("about", views.index),
+    path("about", views.about),
     path("", views.index),
 ]
