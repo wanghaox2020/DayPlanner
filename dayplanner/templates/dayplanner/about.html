@@ -3,13 +3,44 @@
 {% block title %} About {% endblock %}
 
 {% block body %}
+{% load static %}
 <section class="hero is-primary is-fullheight">
     <div class="hero-head">
         {% include 'dayplanner/_navbar.html' %}
     </div>
 
     <div class="hero-body">
-        <div class="container has-text-left">
+        <div class="columns is-multiline">
+            <div class="column is-one-third">
+                <div class="card">
+                    <div class="card-image">
+                    <figure class="image">
+                        <img src="{% static 'sammy.JPG' %}" alt="Samuel Ballan">
+                    </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title has-text-black is-4">
+                                    Samuel Ballan
+                                </p>
+                                <p class="subtitle has-text-black is-5">
+                                    Product Owner/Lead Developer
+                                </p>
+                                <p class="has-text-black is-size-5 is-size-3-mobile">
+                                    <a class="icon is-large" href="https://github.com/sballan">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+
+                                    <a class="icon is-large has-text-link" href="https://www.linkedin.com/in/samuel-ballan-65844764/">
+                                        <i class="fab fa-linkedin"></i>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
         </div>
     </div>
 
